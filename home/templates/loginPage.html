@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>loginpage</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="css/my_style.css"> -->
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <style>
+        .main-content {
+            margin-top: 120px;
+        }
+
+        .main-content img {
+            width: 10%;
+            height: 10%;
+        }
+
+
+
+        .main-content p {
+            color: rgb(83, 191, 199);
+            font-weight: bold;
+            font-family: poppins;
+        }
+
+        .main-content a {
+            color: rgb(82, 82, 82);
+            font-family: poppins;
+        }
+
+        .main-content input {
+            font-family: poppins;
+            border: 2px solid rgb(83, 191, 199);
+            width: 200px;
+            border-top-right-radius: 7px 7px;
+            border-top-left-radius: 7px 7px;
+            border-bottom-left-radius: 7px 7px;
+            border-bottom-right-radius: 7px 7px;
+        }
+
+        .main-content button {
+            border: none;
+            color: white;
+            padding: 5px 35px;
+            border-top-right-radius: 4px 4px;   
+            border-top-left-radius: 4px 4px;   
+            border-bottom-right-radius: 4px 4px;   
+            border-bottom-left-radius: 4px 4px;   
+            background-color: #a7cfdf; background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
+            background-image: -webkit-linear-gradient(top, #23b3ec, #07527e);
+            background-image: -moz-linear-gradient(top, #23b3ec, #07527e);
+            background-image: -ms-linear-gradient(top, #23b3ec, #07527e);
+            background-image: -o-linear-gradient(top, #23b3ec, #07527e);
+            background-image: linear-gradient(to bottom, #23b3ec, #07527e);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a7cfdf, endColorstr=#23538a);
+        }
+
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            height: 220px;
+            margin-top: 30px;
+            width: 100%;
+            
+        }
+
+        .footer img {
+            position: fixed;
+            bottom: 0;
+            height: 210px;
+            width: 100%;
+        }
+  </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row text-center main-content">
+            <img src="../static/images/logo.png"/> 
+				<form id="login-form" method="POST">
+					<input type="text" name="username" id="login-username" placeholder="Employee ID"style=""/><br><br>
+                    &nbsp;<button type="button" id="loginButton"><a style="text-decoration:none;color:white;">LOG IN</a></button>
+				</form>
+				<br>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <img src="../static/images/footer.png">
+    </footer>
+
+<script>
+    var baseUrl = 'http://localhost:8000/'
+   
+    $("#loginButton").click(function(){
+        var emp_id = $('#login-username').val();
+
+        $.post( baseUrl + "empLoginCheck/",
+        {
+          id: emp_id,
+        },
+        function(data, status){
+            dataObj=JSON.parse(data);
+            if(dataObj.result == "fail") {
+                alert(dataObj.description);
+            } else if( dataObj.result == "success"){
+                $.post( baseUrl + "storeSession/",
+                {
+                    id: emp_id,
+                },
+                function(data, status){
+                    dataObj=JSON.parse(data);
+                    if(dataObj.result == "fail") {
+                        alert(dataObj.description)
+                    } else if( dataObj.result == "success"){
+                        window.location.href = "http://localhost:8000/homePage/"
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
