@@ -159,22 +159,15 @@ def storeEmpLog(emp, isLoggingIn):
         # print(timeNow.time().replace(second=0, microsecond=0))
         # print(timeNow.date())
 
-# @csrf_exempt
-# def date_handler(obj):
-#     if hasattr(obj, 'isoformat'):
-#         return obj.isoformat()
-#     else:
-#         raise TypeError
-#     print json.dumps(data, default=date_handler)
 
 @csrf_exempt
 def getEmpLogInfo(empInstance):
     try:
-        # today = timezone.now()
-        # today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        empStatus = EmpStatus.objects.get(employeeID = empInstance, date = str(datetime.datetime.now().date()))
+        currDate = str(datetime.datetime.now().date())
+        
         # Taking only initial login time. there can be multiple logins.
-        # print(empStatus[0])
+        empStatus = EmpStatus.objects.get(employeeID = empInstance, date = currDate)
+       
         if empStatus == None:
             return None
         return empStatus
@@ -186,6 +179,7 @@ def getEmpLogInfo(empInstance):
 def empLoginCheck(request):
     if (request.method == "POST"):
         id = request.POST.get("id", None)
+        password = request.POST.get("password", None)
         if id == None or id == '':
             return fail("Enter Employee Id")
         else:
@@ -194,6 +188,10 @@ def empLoginCheck(request):
 
             except Exception as e:
                 return fail("Employee Id Not Foud")
+
+            #password check
+            if password != employee.password:
+                return fail("Wrong password")
                 
             #handle session here
             storeSession(request)
@@ -203,6 +201,7 @@ def empLoginCheck(request):
 
             return success('employee logged in')
     return fail("Bad Request")
+
 
 @csrf_exempt
 def storeLogoutTime(request):
