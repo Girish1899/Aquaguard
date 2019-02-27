@@ -9,6 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/aquaguardTimer.js"></script>
 <style>
 .navbar
 {
@@ -437,14 +438,14 @@ $(document).ready(function() {
 
 
 <script>
-	var baseUrl = 'http://localhost:8000/';
+	// var baseUrl = 'http://localhost:8000/';
 	$("#callsButton").click(function() {
 		window.location.href = baseUrl + "homePageContactLeads/"
 	});
 </script>
 
 <script>
-	var baseUrl = 'http://localhost:8000/';
+	// var baseUrl = 'http://localhost:8000/';
 	$("#commitButton").click(function() {
 		window.location.href = baseUrl + "homePageCommittedLeads/"
 	});
@@ -453,7 +454,7 @@ $(document).ready(function() {
 
 <script>
 	var emp_id = '';
-	var baseUrl = 'http://localhost:8000/';
+	// var baseUrl = 'http://localhost:8000/';
 
 	$(document).ready(function() {
 
@@ -482,7 +483,6 @@ $(document).ready(function() {
 				var fname = dataObj.description['fname']
 				var lname = dataObj.description['lname']
 				var loginTime = dataObj.description['loginTime']
-				console.log(loginTime)
 				var d = new Date(loginTime);
 				//cuz jan starts with 0
 				var date = d.getMonth() + 1

@@ -40,7 +40,7 @@ td,th{
 .username
 {
 	margin-left:12%;
-	margin-top:-1%;
+	margin-top:-3%;
 	color:#4B7594;
 	font-size:25px;
 	font-family:poppins;
@@ -50,7 +50,7 @@ h1
 {
 	font-family:poppins;
 	color:#06BBE1;
-	margin-left:18%;
+	margin-left:20%;
 }
 
 
@@ -297,7 +297,8 @@ span p
 	<div class="container">
 
 		<img src="/static/images/download.png" class="user"/>
-			<p class="text-right"style="font-family:poppins;opacity: 1;font-size:18px;color: rgba(250,251,252,1);">logged in at 08:00 am<br>DATE :08-02-2018</p>
+			<p id="loginTime" class="text-right"style="font-family:poppins;opacity: 1;font-size:18px;color: rgba(250,251,252,1);"></p>
+			<p id="loginDate" class="text-right"style="font-family:poppins;opacity: 1;font-size:18px;color: rgba(250,251,252,1);"></p>
 				<p id="welcomeTag" class="username"></p>
 
 	</div>
@@ -409,6 +410,38 @@ span p
 	</div></div>
 <br>
 	<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+
+
+
+<div id="myModal" class="modal fade" role="dialog" style="border: 3px solid #7CB9E8;">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+      	<div style="margin-bottom: 150px">
+      	<img src="/static/images/download.png" class="user"/>
+      </div>
+      </div>
+
+      <div class="modal-body">
+      	  <h4 class="modal-title text-center">Paused</h4>
+      	
+      	      
+      	    <div class="text-center">    
+        <p id="ptime" style="font-weight: bold;"></p>
+    </div>
+      </div>
+      <div class="modal-footer">
+        <div class="text-center">
+        	<input type="submit" id="resume" value="Resume" class="btn btn-primary" style="color: white">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <script>
 window.onscroll = function() {myFunction()};
 
@@ -547,35 +580,6 @@ $.ajax({
 
 
 
-	$.post( baseUrl + "getSession/",
-	{},
-	function(data, status) {
-		dataObj=JSON.parse(data);
-		if(dataObj.result=="fail") {
-			window.location.href = baseUrl
-		}else{
-			emp_id = dataObj.description;
-			getUserData(emp_id);
-		}
-	});
-
-	/*function getUserData(emp_id) {
-		$.post( baseUrl + "getUserData/",
-		{
-			id: emp_id,
-		},
-		function(data, status) {
-			dataObj=JSON.parse(data);
-			if(dataObj.result=="fail") {
-				alert("failed to receive");
-			}else{
-				//To a change welcome
-				$("#welcomeTag").text(dataObj.description);
-			}
-			getCallTable(emp_id)
-		});
-	}
-*/
 
 
 	/*function getCallTable(emp_id) {
@@ -645,33 +649,51 @@ $.ajax({
 
 </script>
 
-<div id="myModal" class="modal fade" role="dialog" style="border: 3px solid #7CB9E8;">
-  <div class="modal-dialog">
+<script>
+	$(document).ready(function() {
+		$.post( baseUrl + "getSession/",
+		{},
+		function(data, status) {
+			dataObj=JSON.parse(data);
+			if(dataObj.result=="fail") {
+				window.location.href = baseUrl
+			}else{
+				emp_id = dataObj.description;
+				getUserData(emp_id);
+			}
+		});
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-      	<div style="margin-bottom: 150px">
-      	<img src="/static/images/download.png" class="user"/>
-      </div>
-      </div>
+		function getUserData(emp_id) {
+			$.post( baseUrl + "getUserData/",
+			{
+				id: emp_id,
+			},
+			function(data, status) {
+				dataObj=JSON.parse(data);
+				if(dataObj.result=="fail") {
+					alert("failed to receive");
+				}else{
+					var fname = dataObj.description['fname']
+					var lname = dataObj.description['lname']
+					var loginTime = dataObj.description['loginTime']
+					var d = new Date(loginTime);
+					//cuz jan starts with 0
+					var date = d.getMonth() + 1
 
-      <div class="modal-body">
-      	  <h4 class="modal-title text-center">Paused</h4>
-      	
-      	      
-      	    <div class="text-center">    
-        <p id="ptime" style="font-weight: bold;"></p>
-    </div>
-      </div>
-      <div class="modal-footer">
-        <div class="text-center">
-        	<input type="submit" id="resume" value="Resume" class="btn btn-primary" style="color: white">
-        </div>
-      </div>
-    </div>
+					$("#loginTime").text('Logged in at: ' + d.getHours() + ' : ' + d.getMinutes())
+					$("#loginDate").text('DATE: ' + d.getDate() + '-' + date + '-' + d.getFullYear())
 
-  </div>
-</div>
+					$("#welcomeTag").text(fname + ' ' +lname);
+					//To a change welcome
+
+				}
+				// getCallTable(emp_id)
+			});
+		}
+
+	})
+
+</script>
+
 </body>
 </html>
