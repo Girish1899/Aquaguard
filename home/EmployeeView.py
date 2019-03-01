@@ -96,17 +96,17 @@ def updateEmployee(request):
             return fail("Employee id is not provided")
 
         empObj = Employee.objects.get(empID = emp_id)
-        if fname is None:
+        if fname is not None:
             empObj.fname = fname
-        if lname is None:
+        if lname is not None:
             empObj.lname = lname
-        if phone is None:
+        if phone is not None:
             empObj.phone = phone
-        if email is None:
+        if email is not None:
             empObj.email = email
-        if pincode is None:
+        if pincode is not None:
             empObj.pincode = pincode
-        if address is None:
+        if address is not None:
             empObj.address = address
         empObj.save()
         return success("Employee information updated")

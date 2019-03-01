@@ -394,23 +394,24 @@ def editLead(request):
             print(e)
             return fail("Lead is not present in the db")
 
-        if fname != None:
+        if fname is not None:
             lead.fname = fname
-        if lname != None:
+        if lname is not None:
             lead.lname = lname
-        if address != None:
+        if address is not None:
             lead.address = address
-        if email != None:
+        if email is not None:
             lead.email = email
-        if phone != None:
+        if phone is not None:
             lead.phone = phone
-        if alternatePhone != None:
+        if alternatePhone is not None:
             lead.alternatePhone = alternatePhone
-        if purchaseDate != None:
+        if purchaseDate is not None:
             lead.purchaseDate = purchaseDate
-        if pincode != None:
+        if pincode is not None:
             lead.pincode = pincode
-        if comments != None:
+        if comments is not None:
+            # this part need to be fixed
             lead.comments += comments
         lead.save()
         return success("Lead info updated")
