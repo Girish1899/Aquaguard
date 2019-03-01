@@ -31,13 +31,15 @@ class EmpStatus(models.Model):
     pauseTime = models.CharField(max_length=10, null=True)
 
 
+
 class EmpTarget(models.Model):
     id = models.AutoField(primary_key=True)
     employeeID = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
     callTarget = models.IntegerField()
     commitTarget = models.IntegerField()
-    startingDate = models.CharField(max_length=10, null=True)
-    endingDate = models.CharField(max_length=10, null=True)
+    startDate = models.CharField(max_length=10, null=True)
+    endDate = models.CharField(max_length=10, null=True)
+
 
 
 class Product(models.Model):

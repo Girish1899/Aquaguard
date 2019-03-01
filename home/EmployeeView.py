@@ -2,8 +2,9 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from .views import success,fail
-from .models import Employee
+from .models import Employee, EmpTarget
 from django.shortcuts import HttpResponse
+import datetime
 
 
 @csrf_exempt
@@ -95,6 +96,46 @@ def uploadEmployeeProfilePic(request):
                 print(e)
                 return fail("failed")
     return fail("Bad request")
+
+@csrf_exempt
+def setEmpTarget(request):
+    if request.method=="POST":
+        currDate = str(datetime.datetime.now().date())
+        emp_id = request.POST.get("id", None)
+        if emp_id == None or emp_id == '':
+            return fail("employee id hasn't provided")
+        try:
+            empObj = Employee.objects.get(empID = emp_id)
+        except Exception as e:
+            print(e)
+        callTarget = request.POST.get("callTarget", None)
+        commitTarget = request.POST.get("commitTarget", None)
+        endDate = request.POST.get("endDate", None)
+
+        # Just incase if they don't want to use the progress bar.
+        if callTarget == None:
+            callTarget = 0
+        if commitTarget == None:
+            commitTarget = 0
+        try:
+            targetObj =  EmpTarget.objects.get(employeeID = empObj)
+        except Exception as e:
+            # if no employee there in the table the try would fail.
+            targetObj = EmpTarget()
+            targetObj.employeeID = empObj
+            targetObj.callTarget = callTarget
+            targetObj.commitTarget = commitTarget
+            targetObj.startDate = currDate
+            targetObj.endDate = endDate
+        # if the employee data already exist in the the table do this
+        targetObj.callTarget = callTarget
+        targetObj.commitTarget = commitTarget
+        targetObj.startDate = currDate
+        targetObj.endDate = endDate
+        targetObj.save()
+        return success("Target has been saved")
+    return fail("Error in request")
+
 
 
 
