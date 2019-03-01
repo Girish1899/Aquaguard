@@ -9,13 +9,13 @@ class Employee(models.Model):
     password = models.CharField(max_length=20, default='password')
     pincode = models.CharField(max_length=6, default="000000")
     email = models.CharField(max_length=30, default="None")
-    type = models.CharField(max_length=2, default='tc')
+    role = models.CharField(max_length=2, default='tc')
     isActive = models.BooleanField(default=False)
     fname = models.CharField(max_length=20)
     lname = models.CharField(max_length=20)
     profilePicture = models.ImageField(null=True, upload_to="home/static/images/employee/")
 #EMPLOYEE TYPE
-#'tc'->tele caller 
+#'tc'->telecaller 
 #'tn'->technician
 #'ts'->tech support
 #'ad'->admin
@@ -27,6 +27,8 @@ class EmpStatus(models.Model):
     loginTime = models.CharField(max_length=10, null=True)
     logoutTime = models.CharField(max_length=10, null=True)
     date = models.CharField(max_length=10, null=True)
+    isPause = models.BooleanField(default=False)
+    pauseTime = models.CharField(max_length=10, null=True)
 
 
 
@@ -95,13 +97,6 @@ class CallData(models.Model):
     phone = models.CharField(max_length=12, default=None)
     remarks = models.TextField(default=None)
     recordLink = models.TextField()
-
-
-
-
-
-
-
 
 
 

@@ -5,7 +5,7 @@ from .models import Employee, Customers, Product
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .views import fail,success
+from .views import fail, success
 
 # #REGISTER BOOKING
 # @csrf_exempt

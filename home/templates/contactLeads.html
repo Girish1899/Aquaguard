@@ -539,11 +539,8 @@ $.ajax({
 			url: baseUrl+"getLeadsNotContacted/",
 			data: {},
 			success: function (data) {
-				console.log(data);
 					data=JSON.parse(data);
 					data=data.description;
-					console.log(Object.keys(data).length);
-					console.log(data);
 				$.each(data, function(key,value) {
 
 

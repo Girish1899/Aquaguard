@@ -7,13 +7,13 @@ from .views import success,fail
 @csrf_exempt
 def createNewDevice(request):
     if request.method=="POST":
-        name=request.POST.get("name",None)
-        year=request.POST.get("year",None)
-        product_id=request.POST.get("product_id",None)
-        cost=request.POST.get("cost",None)
-        description=request.POST.get("description",None)
-        category=request.POST.get("category",None)
-        feature=request.POST.get("feature",None)
+        name=request.POST.get("name", None)
+        year=request.POST.get("year", None)
+        product_id=request.POST.get("product_id", None)
+        cost=request.POST.get("cost", None)
+        description=request.POST.get("description", None)
+        category=request.POST.get("category", None)
+        feature=request.POST.get("feature", None)
         if (not(name==None and year==None and product_id==None and cost==None and description==None and category==None and feature==None)):
             print (name)
             print(year)

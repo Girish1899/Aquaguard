@@ -86,7 +86,8 @@
 					<input type="password" name="password" id="login-password" placeholder="Employee Password"style=""/><br><br>
                     &nbsp;<button type="button" id="loginButton"><a style="text-decoration:none;color:white;">LOG IN</a></button>
 				</form>
-				<br>
+                <br>
+                <a id="forgotPassword">forgot password?</a>
         </div>
     </div>
 
@@ -126,6 +127,14 @@
             }
         });
     });
+</script>
+
+<script>
+    $(window).ready(function() {
+        $("#forgotPassword").click(function() {
+            window.location.href = baseUrl + "forgotPassword/"
+        });
+    })
 </script>
 
 

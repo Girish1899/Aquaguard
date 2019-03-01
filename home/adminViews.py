@@ -4,14 +4,12 @@ from .views import success,fail
 from .models import Customers, Employee, Leads, EmpStatus
 from django.shortcuts import HttpResponse, render
 from .tests import cleanDatabase, fill_database_with_dummy_values
-
 from django.utils import timezone
+from django_otp.oath import hotp
 import pytz
 import json
 import datetime
-
-
-
+import pandas as pd
 
 
 #----------------------- Page Renders ---------------------------#
@@ -36,6 +34,11 @@ def homePageCommittedLeads(request):
 @csrf_exempt
 def homePageContactLeads(request):
     return render(request, 'contactLeads.html')
+
+
+@csrf_exempt
+def forgotPassword(request):
+    return render(request, 'forgotpassword.html')
 
 
 @csrf_exempt
@@ -90,10 +93,22 @@ def flushSession(request, isLocalUse=None):
 
 
 @csrf_exempt
+def generateOTP(request):
+    if (request.method == "POST"):
+        secret_key = b'1234567890123467890'
+        now = int(time.time())
+        for delta in range(10, 110, 20):
+            print(totp(key=secret_key, step=10, digits=6, t0=(now-delta)))
+
+
+
+
+
+@csrf_exempt
 def getUserData(request):
     if (request.method == "POST"):
-        id=request.POST.get("id", None)
-        if id == None or id=='':
+        id = request.POST.get("id", None)
+        if id == None or id == '':
             return fail("Enter Employee Id")
         try:
             #get his first and lastname
@@ -116,6 +131,32 @@ def getUserData(request):
 
 
     return fail("Invalid method")
+
+@csrf_exempt
+def togglePause(request):
+    if (request.method == "POST"):
+        timeNow = str(datetime.datetime.now())
+        currDate = str(datetime.datetime.now().date())
+
+        emp_id = request.POST.get("id", None)
+        isPause = request.POST.get("isPause", None)
+        if emp_id == None or emp_id == '':
+            return fail("Enter Employee Id")
+        try:
+            empObj = Employee.objects.get(id=emp_id)
+            empStatObj = EmpStatus.objects.filter(employeeID=empObj, date=currDate)
+        except Exception as e:
+            print(e)
+            return fail("Couldn't get desired object")
+        if isPause is True:
+            empStatObj.pauseTime = timeNow
+            empStatObj.isPause = True
+            return success("Pause time has been captured")
+        if isPause is False:
+            empStatObj.pauseTime = ''
+            empStatObj.isPause = False
+            return success("Pause has been released")
+    return fail("Error in request")
 
 
 
@@ -328,26 +369,110 @@ def getLeadsNotContacted(request):
     return fail("Error In Request")
 
 
+@csrf_exempt
+def editLead(request):
+    if request.method == "POST":
+        leadID = request.POST.get("id", None)
+        fname = request.POST.get("fname", None)
+        lname = request.POST.get("lname", None)
+        address = request.POST.get("address", None)
+        email = request.POST.get("email", None)
+        phone = request.POST.get("phone", None)
+        alternatePhone = request.POST.get("alternatePhone", None)
+        purchaseDate = request.POST.get("purchaseDate", None)
+        pincode = request.POST.get("pincode", None)
+        comments = request.POST.get("comments", None)
+        
+        try:
+            lead = Leads.objects.get(id = leadID)
+        except Exception as e:
+            print(e)
+            return fail("Lead is not present in the db")
+
+        if fname != None:
+            lead.fname = fname
+        if lname != None:
+            lead.lname = lname
+        if address != None:
+            lead.address = address
+        if email != None:
+            lead.email = email
+        if phone != None:
+            lead.phone = phone
+        if alternatePhone != None:
+            lead.alternatePhone = alternatePhone
+        if purchaseDate != None:
+            lead.purchaseDate = purchaseDate
+        if pincode != None:
+            lead.pincode = pincode
+        if comments != None:
+            lead.comments += comments
+        return success("Lead info updated")
+    return fail("Error in request")
+
+@csrf_exempt
+def getSingleLead(request):
+    if (request.method=="POST"):
+        leadID = request.POST.get("id",None)
+        leadObj=Customer.objects.get(id = leadID)
+        lead={}
+        lead['fname']=leadObj.fname
+        lead['lname']=leadObj.lname
+        lead['email']=leadObj.email
+        lead['mobile']=leadObj.phone
+        lead['alternativeMobile']=leadObj.alternativeMobile
+        lead['address']=leadObj.address
+        lead['purchaseDate']=leadObj.purchaseDate
+        lead['pincode']=leadObj.pincode
+        lead['comments']=leadObj.comments
+        return success(lead)
+    return HttpResponse("Error In Request")
 
 
-# @csrf_exempt
-# def displaySingleLead(request):
-#     if (request.method=="POST"):
-#         id = request.POST.get("id",None)
-#         leadObj=Customer.objects.get(id = id)
-#         lead={}
-#         lead['fname']=leadObj.fname
-#         lead['lname']=leadObj.lname
-#         lead['email']=leadObj.email
-#         lead['mobile']=leadObj.mobile
-#         lead['alternativeMobile']=leadObj.alternativeMobile
-#         lead['address']=leadObj.address
-#         lead['land']=leadObj.land
-#         lead['pincode']=leadObj.pincode
-#         lead['status']=leadObj.status
-#         lead['comments']=leadObj.comments
-#         return success(lead)
-#     return HttpResponse("Error In Request")
+@csrf_exempt
+def changePassword(request):
+    if request.method == "POST":
+        leadID = request.POST.get("id", None)
+        oldPassword = request.POST.get("oldPassword", None)
+        newPassword = request.POST.get("newPassword", None)
+        
+        try:
+            lead = Leads.objects.get(id = leadID)
+        except Exception as e:
+            print(e)
+        if lead.password != oldPassword:
+            return fail("Wrong password provided")
+        lead.password = newPassword
+        return success("Password successfully changed.")
+    return fail("Error in Request")
+
+
+@csrf_exempt
+def makeCall(request):
+    if (request.method == "POST"):
+        phone = request.POST.get("phone", None)
+        # connect to vici dialler api
+
+@csrf_exempt
+def leadParser(request):
+    if (request.method == "POST"):
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        data = pd.read_excel(uploaded_file_url)
+        row, col = data.shape
+        rows = []
+        for i in range(row):
+            email, fname, lname, address, phone, alternatePhone, pincode, purchasedDate = data.loc[i,['email', 'fname', 'lname', 'address', 'phone', 'alternatePhone', 'pincode', 'purchasedDate']]
+            lead = Leads(email=email, fname=fname, lname=lname, address=address, phone=phone, alternatePhone=alternatePhone, pincode=pincode, purchasedDate=purchasedDate)
+            rows.append(lead)
+        Leads.objects.bulk_create(
+            rows
+        )
+        print(data)
+        return success("completed upload")
+    return fail("Error in request")
 
 # @csrf_exempt
 # def getCallCount(request):

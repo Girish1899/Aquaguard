@@ -9,6 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/aquaguardTimer.js"></script>
 <style>
 .navbar
 {
@@ -193,7 +194,7 @@ input[type=file]
 				<div class="panel-body"><p id="change">Change Display Picture</p></div><br>
 					<img id="blah" src="/static/images/Imageicon.png" style="margin-left:40%;"/><br><br>
 						<div class="form-group">
-							<input type='file' onchange="readURL(this);"/>
+							<input id="profilepic" type='file' onchange="readURL(this);"/>
 							</div>
 			</div>
 		</div>
@@ -238,16 +239,15 @@ $(document).ready(function(){
 
 <script>
 $(document).ready(function(){
-	baseUrl = "http://localhost:8080/";
 	
 	$("#cancelButton").click(function() {
 		window.location.href = baseUrl + "homePage/"
 
 	$("#doneButton").click(function() {
-		var userImage = $('').val();
+		var userImage = $('#profilepic').val();
 		$.post( baseUrl + 'addProfilePic/',
 		{
-			image: userImage
+			profile_pic: userImage
 		},
 		function(date, status) {
 

@@ -83,17 +83,17 @@ def editEmployee(request):
 @csrf_exempt
 def uploadEmployeeProfilePic(request):
     if(request.method=="POST"):
-        # id=request.session['emp_id']
-        id=1002
-        try:
-            emp=Employee.objects.get(empID=id)
-            emp.profilePicture=request.FILES['profile_pic']
-            emp.save()
-            return success("success")
-            # return success("profile image saved at "+emp.profilePicture)
-        except Exception as e:
-            print(e)
-            return fail("failed")
+        id=request.POST.get("id", None)
+        if id == None or id == '':
+            try:
+                emp = Employee.objects.get(empID=id)
+                emp.profilePicture=request.FILES['profile_pic']
+                emp.save()
+                return success("success")
+                # return success("profile image saved at "+emp.profilePicture)
+            except Exception as e:
+                print(e)
+                return fail("failed")
     return fail("Bad request")
 
 
