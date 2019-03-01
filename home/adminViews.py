@@ -151,10 +151,12 @@ def togglePause(request):
         if isPause is True:
             empStatObj.pauseTime = timeNow
             empStatObj.isPause = True
+            empStatObj.save()
             return success("Pause time has been captured")
         if isPause is False:
             empStatObj.pauseTime = ''
             empStatObj.isPause = False
+            empStatObj.save()
             return success("Pause has been released")
     return fail("Error in request")
 
@@ -178,6 +180,7 @@ def storeEmpLog(emp, isLoggingIn):
 
                 #employee made active
                 emp.isActive = True
+                emp.save()
         except Exception as e:
             # This is for a new employee.
             empStatus = EmpStatus()
@@ -188,6 +191,7 @@ def storeEmpLog(emp, isLoggingIn):
 
             #employee made active
             emp.isActive = True
+            emp.save()
 
     else:
         empStatus.logoutTime = timeNow
@@ -195,6 +199,7 @@ def storeEmpLog(emp, isLoggingIn):
 
         #employee made inactive
         emp.isActive = False
+        emp.save()
 
         # print("This is the time now")
         # print(timeNow.time().replace(second=0, microsecond=0))
@@ -407,6 +412,7 @@ def editLead(request):
             lead.pincode = pincode
         if comments != None:
             lead.comments += comments
+        lead.save()
         return success("Lead info updated")
     return fail("Error in request")
 
@@ -443,6 +449,7 @@ def changePassword(request):
         if lead.password != oldPassword:
             return fail("Wrong password provided")
         lead.password = newPassword
+        lead.save()
         return success("Password successfully changed.")
     return fail("Error in Request")
 

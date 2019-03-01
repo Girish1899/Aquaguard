@@ -2,7 +2,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from .views import success,fail
-from .models import Employee, EmpTarget
+from .models import Employee, EmpTarget, Leads
 from django.shortcuts import HttpResponse
 import datetime
 
@@ -52,34 +52,66 @@ def displayAllEmployee(request):
 @csrf_exempt
 def deactivateEmployee(request):
     if request.method =='POST':
-        employee_id=request.POST['employee_id']
-        if(not(employee_id==None)):
-            employee=Employee.objects.get(id=employee_id)
-            if(not(employee==None)):
-                employee.isActive=False
-                employee.save()
-                return success("Employee deactivated successfully")
+        emp_id=request.POST.get("id", None)
+        if emp_id == None or emp_id == '':
+            return fail("Employee id not provided")
+        try:
+            empObj = Employee.objects.get(id = emp_id)
+        except Exception as e:
+            return fail("Employee doesn't exist")
+        empObj.isActive=False
+        empObj.save()
+        return success("Employee deactivated successfully")
+    return fail("Error in request")
 
 
-    return fail("unable to delete employee")
+@csrf_exempt
+def getSingleEmployee(request):
+    if (request.method == "POST"):
+        emp_id = request.POST.get("id",None)
+        empObj = Employee.objects.get(id=emp_id)
+        employee = {}
+        employee['fname'] = empObj.fname
+        employee['lname'] = empObj.lname
+        employee['email'] = empObj.email
+        employee['phone'] = empObj.phone
+        employee['address'] = empObj.address
+        employee['isActive'] = empObj.purchaseDate
+        employee['profilePicture'] = empObj.pincode
+        employee['role'] = empObj.comments
+        return success(employee)
+    return HttpResponse("Error In Request")
 
-def editEmployee(request):
-    if (request.method=="POST"):
-        first_name=request.POST.get("fname",None)
-        last_name=request.POST.get("lname",None)
-        phone=request.POST.get("phone",None)
-        email=request.POST.get("mail",None)
-        id=request.POST.get("id",None)
-        print(phone)
-        print(first_name)
-        print(email)
-        if(first_name==None and last_name==None and phone==None and email==None):
-           return fail("Invalid details")
-        else:
-            employee = Employee(first_name=first_name, last_name=last_name, phone=phone, email=email,type="tc")
-            employee.save()
-            return success("New employee created!")
-    return HttpResponse("Invalid Page")
+def updateEmployee(request):
+    if (request.method == "POST"):
+        emp_id = request.POST.get("id", None)
+        fname = request.POST.get("fname", None)
+        lname = request.POST.get("lname", None)
+        phone = request.POST.get("phone", None)
+        email = request.POST.get("mail", None)
+        pincode = request.POST.get("pincode", None)
+        address = request.POST.get("address", None)
+
+        if emp_id == None or emp_id == '':
+            return fail("Employee id is not provided")
+
+        empObj = Employee.objects.get(empID = emp_id)
+        if fname is None:
+            empObj.fname = fname
+        if lname is None:
+            empObj.lname = lname
+        if phone is None:
+            empObj.phone = phone
+        if email is None:
+            empObj.email = email
+        if pincode is None:
+            empObj.pincode = pincode
+        if address is None:
+            empObj.address = address
+        empObj.save()
+        return success("Employee information updated")
+    return fail("Error in request")
+
 
 @csrf_exempt
 def uploadEmployeeProfilePic(request):
@@ -136,6 +168,29 @@ def setEmpTarget(request):
         return success("Target has been saved")
     return fail("Error in request")
 
+
+
+@csrf_exempt
+def assignLeads(request):
+    if request.method=="POST":
+        # currDate = str(datetime.datetime.now().date())
+        emp_id = request.POST.get("id", None)
+        if emp_id == None or emp_id == '':
+            return fail("employee id hasn't provided")
+        try:
+            empObj = Employee.objects.get(empID = emp_id)
+        except Exception as e:
+            print(e)
+        startRow = request.POST.get("startRow", None)
+        endRow = request.POST.get("endRow", None)
+        leads = Leads.objects.filter(id__range(startRow, endRow))
+        for lead in leads:
+            lead.assignee = empObj
+            lead.save()
+        return success("Successfully assigned")
+    return fail("Error in request")
+
+        
 
 
 

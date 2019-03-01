@@ -9,6 +9,7 @@ class Employee(models.Model):
     password = models.CharField(max_length=20, default='password')
     pincode = models.CharField(max_length=6, default="000000")
     email = models.CharField(max_length=30, default="None")
+    address = models.CharField(max_length=500, default="None")
     role = models.CharField(max_length=2, default='tc')
     isActive = models.BooleanField(default=False)
     fname = models.CharField(max_length=20)
