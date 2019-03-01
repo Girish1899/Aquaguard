@@ -14,7 +14,7 @@ class Employee(models.Model):
     fname = models.CharField(max_length=20)
     lname = models.CharField(max_length=20)
     profilePicture = models.ImageField(null=True, upload_to="home/static/images/employee/")
-#EMPLOYEE TYPE
+#EMPLOYEE ROLE
 #'tc'->telecaller 
 #'tn'->technician
 #'ts'->tech support
@@ -30,6 +30,14 @@ class EmpStatus(models.Model):
     isPause = models.BooleanField(default=False)
     pauseTime = models.CharField(max_length=10, null=True)
 
+
+class EmpTarget(models.Model):
+    id = models.AutoField(primary_key=True)
+    employeeID = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
+    callTarget = models.IntegerField()
+    commitTarget = models.IntegerField()
+    startingDate = models.CharField(max_length=10, null=True)
+    endingDate = models.CharField(max_length=10, null=True)
 
 
 class Product(models.Model):
