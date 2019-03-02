@@ -417,6 +417,10 @@ def getLeadsNotContacted(request):
 @csrf_exempt
 def editLead(request):
     if request.method == "POST":
+        timeNow = str(datetime.datetime.now())
+        # Also require employee id to store along with remarks
+        emp_id = request.POST.get("emp_id", None)
+
         leadID = request.POST.get("id", None)
         fname = request.POST.get("fname", None)
         lname = request.POST.get("lname", None)
@@ -426,7 +430,7 @@ def editLead(request):
         alternatePhone = request.POST.get("alternatePhone", None)
         purchaseDate = request.POST.get("purchaseDate", None)
         pincode = request.POST.get("pincode", None)
-        comments = request.POST.get("comments", None)
+        newComments = request.POST.get("comments", None)
         
         try:
             lead = Leads.objects.get(id = leadID)
@@ -452,7 +456,8 @@ def editLead(request):
             lead.pincode = pincode
         if comments is not None:
             # this part need to be fixed
-            lead.comments += comments
+            oldComment = lead.comments 
+            newComment = oldComment + "\n\n\n" + "----------------------------" + "\n" + newComment + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
         lead.save()
         return success("Lead info updated")
     return fail("Error in request")
