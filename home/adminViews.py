@@ -477,20 +477,17 @@ def getSingleLead(request):
 
 
 @csrf_exempt
-def changePassword(request):
+def changeEmpPass(request):
     if request.method == "POST":
-        leadID = request.POST.get("id", None)
-        oldPassword = request.POST.get("oldPassword", None)
+        emp_id = request.POST.get("id", None)
         newPassword = request.POST.get("newPassword", None)
         
         try:
-            lead = Leads.objects.get(id = leadID)
+            empObj = Employee.objects.get(id = emp_id)
         except Exception as e:
             print(e)
-        if lead.password != oldPassword:
-            return fail("Wrong password provided")
-        lead.password = newPassword
-        lead.save()
+        empObj.password = newPassword
+        empObj.save()
         return success("Password successfully changed.")
     return fail("Error in Request")
 
