@@ -84,6 +84,7 @@ class Complaints(models.Model):
     request_date = models.DateField(auto_now_add=True)
     recording_data_url = models.TextField()
     severity = models.IntegerField(validators=[MaxValueValidator(4)], default=1)
+    isActive = models.BooleanField(default=True)
 #INFO:
 #req_id is same as booking_id
 
