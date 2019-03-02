@@ -81,6 +81,7 @@ class Complaints(models.Model):
     technician = models.ForeignKey(Employee, on_delete=models.SET_NULL,null=True)
     request_date = models.DateField(auto_now_add=True)
     recording_data_url = models.TextField()
+    severity = models.IntegerField(max_length=5, default=1)
 #INFO:
 #req_id is same as booking_id
 
