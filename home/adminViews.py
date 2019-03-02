@@ -5,11 +5,13 @@ from .models import Customers, Employee, Leads, EmpStatus
 from django.shortcuts import HttpResponse, render
 from .tests import cleanDatabase, fill_database_with_dummy_values
 from django.utils import timezone
-from django_otp.oath import hotp
+# from django_otp.oath import hotp
 import pytz
 import json
 import datetime
 import pandas as pd
+
+IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 
 #----------------------- Page Renders ---------------------------#
@@ -64,7 +66,6 @@ def storeSession(request):
         except Exception as e:
             return fail("Employee Id Not Foud")
 
-
     
 @csrf_exempt
 def getSession(request, isLocalUse=None):
@@ -92,13 +93,13 @@ def flushSession(request, isLocalUse=None):
         return success("Session cleared")
 
 
-@csrf_exempt
-def generateOTP(request):
-    if (request.method == "POST"):
-        secret_key = b'1234567890123467890'
-        now = int(time.time())
-        for delta in range(10, 110, 20):
-            print(totp(key=secret_key, step=10, digits=6, t0=(now-delta)))
+# @csrf_exempt
+# def generateOTP(request):
+#     if (request.method == "POST"):
+#         secret_key = b'1234567890123467890'
+#         now = int(time.time())
+#         for delta in range(10, 110, 20):
+#             print(totp(key=secret_key, step=10, digits=6, t0=(now-delta)))
 
 
 
@@ -131,6 +132,45 @@ def getUserData(request):
 
 
     return fail("Invalid method")
+
+
+@csrf_exempt
+def addProfilePicture(request):
+    if (request.method == "POST"):
+        id = request.POST.get("id", None)
+        if id == None or id == '':
+            return fail("Provide employee id")
+        else:
+            try:
+                employee = Employee.objects.get(empID = id)
+            except Exception as e:
+                return fail("Employee Id Not Foud")
+            employee.profile_logo = request.FILES['profile_logo']
+            file_type = employee.profile_logo.url.split('.')[-1]
+            file_type = file_type.lower()
+            if file_type not in IMAGE_FILE_TYPES:
+                return fail("Image file must be PNG, JPG, or JPEG")
+            employee.save()            
+        return success("Picture Uploaded Successfully")
+    return fail("Bad request")
+
+
+@csrf_exempt
+def getProfilePicture(request):
+    if (request.method == "POST"):
+        id = request.POST.get("id", None)
+        if id == None or id == '':
+            return fail("Provide employee id")
+        else:
+            try:
+                employee = Employee.objects.get(empID=id)
+            except Exception as e:
+                return fail("Employee Id Not Foud")
+            return success(employee.profile_logo.url)
+    return fail("Bad request")
+
+
+
 
 @csrf_exempt
 def togglePause(request):
@@ -377,6 +417,10 @@ def getLeadsNotContacted(request):
 @csrf_exempt
 def editLead(request):
     if request.method == "POST":
+        timeNow = str(datetime.datetime.now())
+        # Also require employee id to store along with remarks
+        emp_id = request.POST.get("emp_id", None)
+
         leadID = request.POST.get("id", None)
         fname = request.POST.get("fname", None)
         lname = request.POST.get("lname", None)
@@ -386,7 +430,7 @@ def editLead(request):
         alternatePhone = request.POST.get("alternatePhone", None)
         purchaseDate = request.POST.get("purchaseDate", None)
         pincode = request.POST.get("pincode", None)
-        comments = request.POST.get("comments", None)
+        newComments = request.POST.get("comments", None)
         
         try:
             lead = Leads.objects.get(id = leadID)
@@ -412,7 +456,8 @@ def editLead(request):
             lead.pincode = pincode
         if comments is not None:
             # this part need to be fixed
-            lead.comments += comments
+            oldComment = lead.comments 
+            newComment = oldComment + "\n\n\n" + "----------------------------" + "\n" + newComment + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
         lead.save()
         return success("Lead info updated")
     return fail("Error in request")
@@ -437,20 +482,17 @@ def getSingleLead(request):
 
 
 @csrf_exempt
-def changePassword(request):
+def changeEmpPass(request):
     if request.method == "POST":
-        leadID = request.POST.get("id", None)
-        oldPassword = request.POST.get("oldPassword", None)
+        emp_id = request.POST.get("id", None)
         newPassword = request.POST.get("newPassword", None)
         
         try:
-            lead = Leads.objects.get(id = leadID)
+            empObj = Employee.objects.get(id = emp_id)
         except Exception as e:
             print(e)
-        if lead.password != oldPassword:
-            return fail("Wrong password provided")
-        lead.password = newPassword
-        lead.save()
+        empObj.password = newPassword
+        empObj.save()
         return success("Password successfully changed.")
     return fail("Error in Request")
 

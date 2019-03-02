@@ -76,9 +76,10 @@ def getSingleEmployee(request):
         employee['email'] = empObj.email
         employee['phone'] = empObj.phone
         employee['address'] = empObj.address
-        employee['isActive'] = empObj.purchaseDate
-        employee['profilePicture'] = empObj.pincode
-        employee['role'] = empObj.comments
+        employee['isActive'] = empObj.isActive
+        employee['pincode'] = empObj.pincode
+        employee['profilePicture'] = empObj.profilePicture
+        employee['role'] = empObj.role
         return success(employee)
     return HttpResponse("Error In Request")
 

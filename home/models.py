@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator
 
 # Create your models here.
 
@@ -14,6 +15,7 @@ class Employee(models.Model):
     isActive = models.BooleanField(default=False)
     fname = models.CharField(max_length=20)
     lname = models.CharField(max_length=20)
+    profile_logo = models.FileField(null=True)
     profilePicture = models.ImageField(null=True, upload_to="home/static/images/employee/")
 #EMPLOYEE ROLE
 #'tc'->telecaller 
@@ -81,6 +83,8 @@ class Complaints(models.Model):
     technician = models.ForeignKey(Employee, on_delete=models.SET_NULL,null=True)
     request_date = models.DateField(auto_now_add=True)
     recording_data_url = models.TextField()
+    severity = models.IntegerField(validators=[MaxValueValidator(4)], default=1)
+    isActive = models.BooleanField(default=True)
 #INFO:
 #req_id is same as booking_id
 
