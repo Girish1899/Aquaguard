@@ -14,6 +14,7 @@ class Employee(models.Model):
     isActive = models.BooleanField(default=False)
     fname = models.CharField(max_length=20)
     lname = models.CharField(max_length=20)
+    profile_logo = models.FileField(null=True)
     profilePicture = models.ImageField(null=True, upload_to="home/static/images/employee/")
 #EMPLOYEE ROLE
 #'tc'->telecaller 
