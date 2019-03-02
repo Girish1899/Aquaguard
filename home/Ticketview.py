@@ -143,3 +143,32 @@ def checkMail(request):
 #     print("invalid page option")
 #     return HttpResponse("Invalid page")
 
+
+#INFO: cid is customer id
+@csrf_exempt
+def createTicketForExistingCustomer(request):
+    if request.method=="POST":
+        cid=request.POST.get("cid",None)
+        subject=request.POST.get("subject",None)
+        severity=request.POST.get('severity',None)
+        problem_description=request.POST.get("problem_description",None)
+        customer=Customer.objects.get(id=cid)
+        complaints=Complaints(subject=subject,problem_description=problem_description
+        ,customer=customer,severity=severity)
+        complaints.save()
+        return success(complaints.id)
+        
+
+
+
+
+
+
+def fetchData(inputList,request):
+    outputList=[]
+    try:
+        for i in inputList:
+            outputList.append(request.POST[i])
+        return outputList
+    except:
+        return None

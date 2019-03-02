@@ -16,11 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from .views import login,registration
-from .EmployeeView import uploadEmployeeProfilePic
-from .ProductViews import createNewDevice,displayAllDevice,deleteDevice
+from .EmployeeView import updateEmployee,uploadEmployeeProfilePic
+from .ProductViews import createNewDevice,displayAllDevice,deleteDevice,getProductDetails
 # from .adminViews import addNewLead, displayAssignedLeads, displaySingleLead, updateStatus,empLogin,getCallCount,setCallCount, loginPage, homePage, getSession
 
-from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads, getLeadsNotContacted, storeLogoutTime, makeCall
+from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads,getSingleLead, getLeadsNotContacted, storeLogoutTime, makeCall
 from .adminViews import loginPage, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword
 # from .EmployeeView import createNewEmployee,displayAllEmployee,deactivateEmployee
 # from .Ticketview import CustomerProblemRegistration,displayAllTickets,checkPhone,checkMail,existCustomerProblemRegistration
@@ -32,7 +32,7 @@ urlpatterns = [
     # path("updateStatus/",updateStatus),
     # path("getCallCount/",getCallCount),
     # path("setCallCount/",setCallCount),
-    # path("displaySingleLead/",displaySingleLead),
+    path("displaySingleLead/",getSingleLead),
     # path("registerTicketExist/",existCustomerProblemRegistration),
     # path("registerTicket/",CustomerProblemRegistration),
     # path("checkPhone/",checkPhone),
@@ -61,5 +61,10 @@ urlpatterns = [
     path("homePageContactLeads/", homePageContactLeads),
     path("changedp/", changedp),
     path("forgotPassword/", forgotPassword),
-    path("logoutPage/", logoutPage)
+    path("logoutPage/", logoutPage),
+
+#-------------changes by rahul -----------------#
+    path("updateEmployee/",updateEmployee),
+    path("getProductDetail/",getProductDetails),
+
 ]

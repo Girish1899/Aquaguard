@@ -82,6 +82,7 @@ def getSingleEmployee(request):
         return success(employee)
     return HttpResponse("Error In Request")
 
+@csrf_exempt
 def updateEmployee(request):
     if (request.method == "POST"):
         emp_id = request.POST.get("id", None)
@@ -91,6 +92,7 @@ def updateEmployee(request):
         email = request.POST.get("mail", None)
         pincode = request.POST.get("pincode", None)
         address = request.POST.get("address", None)
+        image=request.FILES.get("profilePic",None)
 
         if emp_id == None or emp_id == '':
             return fail("Employee id is not provided")
@@ -108,16 +110,21 @@ def updateEmployee(request):
             empObj.pincode = pincode
         if address is not None:
             empObj.address = address
+        if image is not None:
+            empObj.profilePicture= image
         empObj.save()
         return success("Employee information updated")
     return fail("Error in request")
 
 
+
 @csrf_exempt
 def uploadEmployeeProfilePic(request):
+    print(request.POST)
+    print(request.FILES)
     if(request.method=="POST"):
         id=request.POST.get("id", None)
-        if id == None or id == '':
+        if id is not None:
             try:
                 emp = Employee.objects.get(empID=id)
                 emp.profilePicture=request.FILES['profile_pic']

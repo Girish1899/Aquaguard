@@ -68,5 +68,29 @@ def deleteDevice(request):
         else:
             return fail("fail")
 
+#Returns the data related to a specific product
+#input param: pid
+@csrf_exempt
+def getProductDetails(request):
+    if request.method=="POST":
+        product_id=request.POST.get("pid",None)
+        if(not(product_id==None)):
+            try:
+                pro=Product.objects.get(product_id=product_id)
+                data={}
+                data['name']=pro.name
+                data['year']=pro.year
+                data['product_id']=pro.product_id
+                data['cost']=pro.cost
+                data['description']=pro.description
+                data['feature']=pro.features
+                data['category']=pro.category
+
+                return success(data)
+            except:
+                return fail("Product id does not exist")
+        else:
+            return fail("fail")
+
 
 
