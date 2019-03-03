@@ -62,7 +62,7 @@ class Product(models.Model):
 
 class Customers(models.Model):
     id = models.AutoField(primary_key=True)
-    cust_ID = models.CharField(max_length=30, unique=True, default=None)
+    # cust_ID = models.CharField(max_length=30, unique=True, default=None)
     fname = models.CharField(max_length=30, default=None)
     lname = models.CharField(max_length=20, default=None)
     email = models.CharField(max_length=30, default=None)
