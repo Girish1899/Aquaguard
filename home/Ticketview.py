@@ -8,9 +8,6 @@ import json
 import datetime
 from .views import fail, success
 
-
-# create a customer
-
 # register a complaint
 @csrf_exempt
 def createComplaint(request):
@@ -86,6 +83,31 @@ def updateComplaint(request):
         return success("Complaint has been saved")
     return fail("Error in request")
 
+
+# Fn to get all complains registered by given customer.
+@csrf_exempt
+def getAllComplaints(request):
+    if request.method == "POST":
+        custID = request.POST.get('custID', None)
+
+        try:
+            custObj = Customers.objects.get(id=custID)
+            complaintObj = Complaints.objects.filter(customer=custObj, isActive=True)
+        except Exception as e:
+            return fail("There is no complaint existing by this customer")
+
+        complaint_list = []
+        for eachComplaint in complaintObj:
+            complaint = {}
+            complaint["subject"] = eachComplaint.subject
+            complaint["problem_description"] = eachComplaint.problem_description
+            complaint["request_date"] = eachComplaint.request_date
+            complaint["recording_date_url"] = eachComplaint.recording_data_url
+            complaint["severity"] = eachComplaint.severity
+            complaint_list.append(complaint)
+        return success(complaint_list)
+    return fail("Error in request")
+            
 
 
 
