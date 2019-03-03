@@ -70,6 +70,7 @@ class Customers(models.Model):
     alternativeMobile = models.CharField(max_length=12, default=None)
     address = models.CharField(max_length=300, default=None)
     pincode = models.CharField(max_length=6, default=None)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
 
 
 

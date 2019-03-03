@@ -306,25 +306,25 @@ def storeLogoutTime(request):
     return fail("Bad request")
 
 
+# If you want to manually add a lead
 @csrf_exempt
 def addNewLead(request):
     if (request.method == "POST"):
-        fname = request.POST.get("fname",None)
-        lname = request.POST.get("lname",None)
-        mobile = request.POST.get("mobile",None)
-        email = request.POST.get("email",None)
-        address = request.POST.get("address",None)
-        pincode = request.POST.get("pincode",None)
-        land = request.POST.get("land",None)
-        alternativeMobile = request.POST.get("alternativeMobile",None)
+        fname = request.POST.get("fname", None)
+        lname = request.POST.get("lname", None)
+        mobile = request.POST.get("mobile", None)
+        email = request.POST.get("email", None)
+        address = request.POST.get("address", None)
+        pincode = request.POST.get("pincode", None)
+        alternatePhone = request.POST.get("alternatePhone", None)
+        purchaseDate = request.POST.get("purchaseDate", None)
         if(fname == None or lname ==  None or mobile ==  None or email ==  None or
-                address ==  None or pincode ==  None or land ==  None or alternativeMobile ==  None):
+                address ==  None or pincode ==  None or purchaseDate == None or alternatePhone ==  None):
            return fail("Invalid details")
-        else:
-            lead = Customer(fname = fname, lname = lname, mobile = mobile, email = email,
-            	address = address, pincode = pincode,land = land, alternativeMobile = alternativeMobile)
-            lead.save()
-            return success("New Lead created!")
+        lead = Leads(fname = fname, lname = lname, mobile = mobile, email = email,
+            address = address, pincode = pincode, purchaseDate = purchaseDate, alternatePhone = alternatePhone)
+        lead.save()
+        return success("New Lead created!")
     return fail("Invalid Admin Page")
 
 
@@ -466,7 +466,7 @@ def editLead(request):
 def getSingleLead(request):
     if (request.method=="POST"):
         leadID = request.POST.get("id",None)
-        leadObj=Customer.objects.get(id = leadID)
+        leadObj=Leads.objects.get(id = leadID)
         lead={}
         lead['fname']=leadObj.fname
         lead['lname']=leadObj.lname

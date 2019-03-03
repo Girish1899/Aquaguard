@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponse
-from .models import Employee, Customers, Product
+from .models import Employee, Customers, Product, Complaints
 # from .models import Employee,Customer,CurrentBooking,Product
 
 # Create your views here.
@@ -7,51 +7,62 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from .views import fail, success
 
-# #REGISTER BOOKING
+
+# create a customer
+
+# register a complaint
+@csrf_exempt
+def createComplaint(request):
+    if(request.method=="POST"):
+        custID = request.POST.get('id', None)
+        try:
+            custObj = Customers.objects.get(id=custID)
+        except Exception as e:
+            return fail("Customer doesn't exist")
+
+        problem_description = request.POST.get('problem_description', None)
+        severity = request.POST.get('severity', None)
+        subject = request.POST.get('subject', None)
+        if(problem_description==None and severity==None and subject==None):
+            return fail("Invalid data")
+
+        complaint = Complaints()
+        complaint.problem_description = problem_description
+        complaint.severity = severity
+        complaint.subject = subject
+        complaint.save()
+        return success("Complaint has been saved")
+    return fail("Error in request")
+
+
+
+
+
+# register a complaint
 # @csrf_exempt
-# def CustomerProblemRegistration(request):
+# def createComplaint(request):
 #     if(request.method=="POST"):
-#         print("hello")
-#         #userRelated data
-#         fname,lname,email=request.POST.get('fname',None),request.POST.get('lname',None),request.POST.get('email',None)
-#         mobile,altermobile=request.POST.get("phone",None),request.POST.get('alter',None)
-#         address,devicename,pincode=request.POST.get('address',None),request.POST.get('device',None),request.POST.get('pincode',None)
-#         problem_description=request.POST.get('problem',None)
-#         land=request.POST.get('land',None)
-#         print(fname)
-#         print(lname)
-#         print(email)
-#         print(mobile)
-#         print(altermobile)
-#         print(address)
-#         print(devicename)
-#         print(pincode)
-#         print(problem_description)
-#         if(fname==None and address==None and devicename==None and pincode==None and problem_description==None):
+#         custID = request.POST.get('id', None)
+#         try:
+#             custObj = Customers.objects.get(id=custID)
+#         except Exception as e:
+#             return fail("Customer doesn't exist")
+
+#         problem_description = request.POST.get('problem_description', None)
+#         severity = request.POST.get('severity', None)
+#         subject = request.POST.get('subject', None)
+#         if(problem_description==None and severity==None and subject==None):
 #             return fail("Invalid data")
-#         else:
-#             # device problem registration
-#             prod=Product.objects.get(product_id=devicename)
-#             print(prod)
-#             print("creating customer")
-#             customer = Customer(fname=fname, lname=lname, email=email, mobile=mobile,alternativeMobile=altermobile,address=address,pincode=pincode, Equipment=prod,isClient=True,land=land)
-#             res=customer.save()
-#             print(res)
-#             print("customer created")
-#             print(customer.id)
 
-#             if (customer.id >= 0):
-#                 ticket = CurrentBooking(problem_description=problem_description, customer=customer)
-#                 ticket.save()
-#                 ticket_details = {}
-#                 ticket_details['ticket_id'] = ticket.bookingId
-#                 ticket_details['resp'] = "New ticket raised"
-#                 return success("ticke is hosted")
-#     else:
-#         return fail("post operation is required")
+#         complaint = Complaints()
+#         complaint.problem_description = problem_description
+#         complaint.severity = severity
+#         complaint.subject = subject
+#         complaint.save()
+#         return success("Complaint has been saved")
+#     return fail("Error in request")
 
-#     print("invalid page option")
-#     return HttpResponse("Invalid page")
+
 
 
 # def displayAllTickets(request):
@@ -143,32 +154,3 @@ def checkMail(request):
 #     print("invalid page option")
 #     return HttpResponse("Invalid page")
 
-
-#INFO: cid is customer id
-@csrf_exempt
-def createTicketForExistingCustomer(request):
-    if request.method=="POST":
-        cid=request.POST.get("cid",None)
-        subject=request.POST.get("subject",None)
-        severity=request.POST.get('severity',None)
-        problem_description=request.POST.get("problem_description",None)
-        customer=Customer.objects.get(id=cid)
-        complaints=Complaints(subject=subject,problem_description=problem_description
-        ,customer=customer,severity=severity)
-        complaints.save()
-        return success(complaints.id)
-        
-
-
-
-
-
-
-def fetchData(inputList,request):
-    outputList=[]
-    try:
-        for i in inputList:
-            outputList.append(request.POST[i])
-        return outputList
-    except:
-        return None
