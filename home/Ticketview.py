@@ -5,6 +5,7 @@ from .models import Employee, Customers, Product, Complaints
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 import json
+import datetime
 from .views import fail, success
 
 
@@ -30,6 +31,7 @@ def createComplaint(request):
         complaint.problem_description = problem_description
         complaint.severity = severity
         complaint.subject = subject
+        complaint.customer = custObj
         complaint.save()
         return success("Complaint has been saved")
     return fail("Error in request")
@@ -39,28 +41,50 @@ def createComplaint(request):
 
 
 # register a complaint
-# @csrf_exempt
-# def createComplaint(request):
-#     if(request.method=="POST"):
-#         custID = request.POST.get('id', None)
-#         try:
-#             custObj = Customers.objects.get(id=custID)
-#         except Exception as e:
-#             return fail("Customer doesn't exist")
+@csrf_exempt
+def updateComplaint(request):
+    timeNow = str(datetime.datetime.now())
+    if(request.method=="POST"):
+        complaintID = request.POST.get('complaintID', None)
+        try:
+            complaintObj = Complaints.objects.get(id=complaintID)
+        except Exception as e:
+            return fail("Complaint doesn't exist to update")
 
-#         problem_description = request.POST.get('problem_description', None)
-#         severity = request.POST.get('severity', None)
-#         subject = request.POST.get('subject', None)
-#         if(problem_description==None and severity==None and subject==None):
-#             return fail("Invalid data")
+        emp_id = request.POST.get('emp_id', None)
+        problem_description = request.POST.get('problem_description', None)
+        severity = request.POST.get('severity', None)
+        subject = request.POST.get('subject', None)
+        technician = request.POST.get('technician', None)
+        recording_data_url = request.POST.get('recording_data_url', None)
+        isActive = request.POST.get('isActive', None)
 
-#         complaint = Complaints()
-#         complaint.problem_description = problem_description
-#         complaint.severity = severity
-#         complaint.subject = subject
-#         complaint.save()
-#         return success("Complaint has been saved")
-#     return fail("Error in request")
+        if(problem_description==None and severity==None and subject==None, technician==None and recording_data_url==None and isActive==None):
+            return fail("Invalid data")
+
+        if technician is not None:
+            try:
+                technicianObj = Employee.objects.get(id = technician)
+            except Exception as e:
+                return fail("Technician doesn't exist")
+            complaint = Complaints()
+            complaint.severity = severity
+            complaint.subject = subject
+            complaint.technician = technicianObj
+            oldDescription = complaint.problem_description
+            newDescription = oldDescription + "\n\n\n" + "----------------------------" + "\n" + problem_description + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
+            complaint.save()
+            return success("Complaint has been saved")
+
+        # technician not specified
+        complaint = Complaints()
+        complaint.severity = severity
+        complaint.subject = subject
+        oldDescription = complaint.problem_description
+        newDescription = oldDescription + "\n\n\n" + "----------------------------" + "\n" + problem_description + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
+        complaint.save()
+        return success("Complaint has been saved")
+    return fail("Error in request")
 
 
 

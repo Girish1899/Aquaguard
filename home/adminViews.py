@@ -457,7 +457,7 @@ def editLead(request):
         if comments is not None:
             # this part need to be fixed
             oldComment = lead.comments 
-            newComment = oldComment + "\n\n\n" + "----------------------------" + "\n" + newComment + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
+            newComment = oldComment + "\n\n\n" + "----------------------------" + "\n" + comments + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
         lead.save()
         return success("Lead info updated")
     return fail("Error in request")
