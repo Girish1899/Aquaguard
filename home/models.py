@@ -41,6 +41,9 @@ class Notifications(models.Model):
     time = models.CharField(max_length=10, null=True)
     date = models.CharField(max_length=10, null=True)
     noteForAll = models.BooleanField(default=False)
+    noteType = models.TextField(null=True)
+    #noteType=notfication -> for employees page
+    #noteType=issue -> for admin page
 
 class EmpTarget(models.Model):
     id = models.AutoField(primary_key=True)

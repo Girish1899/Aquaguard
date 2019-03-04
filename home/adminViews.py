@@ -174,6 +174,7 @@ def getProfilePicture(request):
 def setNotification(request):
     if (request.method == "POST"):
         noteForAll = False
+        noteType = request.POST.get("noteType", None)
         date = str(datetime.datetime.now().date())
         time = str(datetime.datetime.now().time())
         time = time[:8] 
@@ -189,7 +190,8 @@ def setNotification(request):
                 employee = Employee.objects.get(empID=id)
             except Exception as e:
                 return fail("Employee Id Not Found")
-        note = Notifications(message=message, date=date, employeeID=employee, time=time, noteForAll=noteForAll)
+        note = Notifications(message=message, date=date, employeeID=employee,
+                             time=time, noteType=noteType, noteForAll=noteForAll)
         note.save()
         return success("Notification Successfully Triggered")
     return fail("Bad request")
@@ -203,6 +205,7 @@ def getNotification(request):
         time = time[:8]
         message = None
         id = request.POST.get("id", None)
+        noteType = request.POST.get("noteType", None)
         if id == None or id == '':
             employee = None
             noteForAll = True
@@ -211,7 +214,7 @@ def getNotification(request):
                 employee = Employee.objects.get(empID=id)
             except Exception as e:
                 return fail("Employee Id Not Found")
-        notes = Notifications.objects.all().filter(employeeID=employee, date=date,noteForAll=noteForAll)
+        notes = Notifications.objects.all().filter(employeeID=employee, noteType=noteType, date=date, noteForAll=noteForAll)
         if len(notes) == 0:
             return fail("No Noification Today")
         else:
