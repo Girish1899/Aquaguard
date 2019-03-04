@@ -49,11 +49,9 @@ class Product(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
     description = models.TextField()
-    product_id = models.CharField(max_length=30, unique=True)
-    year = models.CharField(max_length=20)
+    builtYear = models.CharField(max_length=20)
     cost = models.IntegerField()
-    category = models.CharField(max_length=2, default='mn')
-    features = models.TextField(null=True)
+    category = models.CharField(max_length=2, default='sp')
 #CATEGORIES
 #'eq'-EQUIPMENT
 #'mn'-MACHINE

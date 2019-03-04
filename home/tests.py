@@ -171,3 +171,8 @@ def addDummyLeads():
 
 
 
+def addProduct():
+    product=Product(name="filter",description="for filtering water",builtYear="2019",cost=3000,category="sp")
+    product.save()
+    product=Product(name="purifier",description="for filtering water",builtYear="2019",cost=3000,category="sp")
+    product.save()
