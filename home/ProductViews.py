@@ -5,53 +5,45 @@ from .views import success,fail
 
 
 @csrf_exempt
-def createNewDevice(request):
+def addNewProduct(request):
     if request.method=="POST":
         name=request.POST.get("name", None)
-        year=request.POST.get("year", None)
-        product_id=request.POST.get("product_id", None)
+        builtYear=request.POST.get("builtYear", None)
         cost=request.POST.get("cost", None)
         description=request.POST.get("description", None)
         category=request.POST.get("category", None)
-        feature=request.POST.get("feature", None)
-        if (not(name==None and year==None and product_id==None and cost==None and description==None and category==None and feature==None)):
-            print (name)
-            print(year)
-            print(category)
-            print("thats all")
+        if (not(name==None and builtYear==None and cost==None and description==None and category==None)):
             try:
-                newProduct=Product(name=name,year=year,product_id=product_id,cost=cost,description=description,category=category,features=feature)
+                newProduct = Product(name=name, builtYear=builtYear, cost=cost, description=description, category=category)
                 newProduct.save()
-                print(newProduct.id)
-                return success("new product saved")
+                return success("Product has been created")
 
-            except:
-                return fail("Product id already exists")
-
+            except Exception as e:
+                print(e)
+                return fail("Something went wrong")
         else:
-            return fail("Invalid credentials")
+            return fail("Invalid data")
 
-    return fail("something went wrong")
+    return fail("Error in request")
 
 
 @csrf_exempt
-def displayAllDevice(request):
-    products=Product.objects.all()
-    out=[]
-    for i in range(len(products)):
-        pro=products[i]
-        product={}
-        product['id']=pro.id;
-        product['name']=pro.name
-        product['year']=pro.year
-        product['product_id']=pro.product_id
-        product['cost']=pro.cost
-        product['description']=pro.description
-        product['feature']=pro.features
-        product['category']=pro.category
-        out.append(product)
-
-    return success(out)
+def getAllProducts(request):
+    if request.method=="POST":
+        products = Product.objects.all()
+        out=[]
+        for i in range(len(products)):
+            productObj = products[i]
+            product = {}
+            product['id'] = productObj.id;
+            product['name'] = productObj.name
+            product['builtYear'] = productObj.year
+            product['cost'] = productObj.cost
+            product['description'] = productObj.description
+            product['category'] = productObj.category
+            out.append(product)
+        return success(out)
+    return fail("Error in request")
 
 
 @csrf_exempt
@@ -60,37 +52,70 @@ def deleteDevice(request):
         product_id=request.POST.get("product_id",None)
         if(not(product_id==None)):
             try:
-                product=Product.objects.get(product_id=product_id)
+                product=Product.objects.get(id=product_id)
                 product.delete()
                 return success("Item deleted")
             except:
                 return fail("Product id does not exist")
         else:
-            return fail("fail")
+            return fail("Product is not present")
+    return fail("Error in request")
 
 #Returns the data related to a specific product
 #input param: pid
 @csrf_exempt
-def getProductDetails(request):
+def getSingleProduct(request):
     if request.method=="POST":
         product_id=request.POST.get("pid",None)
         if(not(product_id==None)):
             try:
-                pro=Product.objects.get(product_id=product_id)
+                productObj=Product.objects.get(id=product_id)
                 data={}
-                data['name']=pro.name
-                data['year']=pro.year
-                data['product_id']=pro.product_id
-                data['cost']=pro.cost
-                data['description']=pro.description
-                data['feature']=pro.features
-                data['category']=pro.category
+                data['name']=productObj.name
+                data['buitlYear']=productObj.builtYear
+                data['cost']=productObj.cost
+                data['description']=productObj.description
+                data['category']=productObj.category
 
                 return success(data)
             except:
                 return fail("Product id does not exist")
         else:
-            return fail("fail")
+            return fail("Product doesn't exist")
+    return fail("Error in request")
+
+
+@csrf_exempt
+def updateProduct(request):
+    if request.method=="POST":
+        prod_id = request.POST.get("pid", None)
+        name = request.POST.get("name", None)
+        description = request.POST.get("description", None)
+        builtYear = request.POST.get("builtYear", None)
+        cost = request.POST.get("cost", None)
+        category = request.POST.get("category", None)
+        
+        if id == None or id == '':
+            return fail("Provide employee id")
+        
+        if(not(name==None and description==None and builtYear==None and cost==None and category==None)):
+            try:
+                prodObj = Product.objects.get(id=prod_id)
+            except Exception as e:
+                return fail("Product doesn't exist")
+            if name is not None:
+                prodObj.name = name            
+            if description is not None:
+                prodObj.description = description            
+            if builtYear is not None:
+                prodObj.builtYear = builtYear            
+            if cost is not None:
+                prodObj.cost = cost            
+            if category is not None:
+                prodObj.category = category            
+            
+            return success("Product successfully updated")
+    return fail("Error in request")
 
 
 
