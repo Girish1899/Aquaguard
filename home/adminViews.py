@@ -1,7 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 # from django.core import serializers
 from .views import success,fail
-from .models import Customers, Employee, Leads, EmpStatus
+from .models import Customers, Employee, Leads, EmpStatus, Notifications
 from django.shortcuts import HttpResponse, render
 from .tests import cleanDatabase, fill_database_with_dummy_values
 from django.utils import timezone
@@ -170,6 +170,59 @@ def getProfilePicture(request):
     return fail("Bad request")
 
 
+@csrf_exempt
+def setNotification(request):
+    if (request.method == "POST"):
+        noteForAll = False
+        date = str(datetime.datetime.now().date())
+        time = str(datetime.datetime.now().time())
+        time = time[:8] 
+        id = request.POST.get("id", None)
+        message = request.POST.get("message", None)
+        if message == None or message == '':
+            return fail("Message Cannot Be NULL")
+        if id == None or id == '':
+            noteForAll = True
+            employee = None
+        else:
+            try:
+                employee = Employee.objects.get(empID=id)
+            except Exception as e:
+                return fail("Employee Id Not Found")
+        note = Notifications(message=message, date=date, employeeID=employee, time=time, noteForAll=noteForAll)
+        note.save()
+        return success("Notification Successfully Triggered")
+    return fail("Bad request")
+
+@csrf_exempt
+def getNotification(request):
+    if (request.method == "POST"):
+        noteForAll = False
+        date = str(datetime.datetime.now().date())
+        time = str(datetime.datetime.now().time())
+        time = time[:8]
+        message = None
+        id = request.POST.get("id", None)
+        if id == None or id == '':
+            employee = None
+            noteForAll = True
+        else:
+            try:
+                employee = Employee.objects.get(empID=id)
+            except Exception as e:
+                return fail("Employee Id Not Found")
+        notes = Notifications.objects.all().filter(employeeID=employee, date=date,noteForAll=noteForAll)
+        if len(notes) == 0:
+            return fail("No Noification Today")
+        else:
+            notes_list = []
+            for note in notes:
+                eachRow = {}
+                eachRow['message'] = note.message   
+                eachRow['time'] = note.time   
+                notes_list.append(eachRow)
+            return success(notes_list)
+    return fail("Bad request")
 
 
 @csrf_exempt

@@ -20,8 +20,14 @@ from .EmployeeView import updateEmployee,uploadEmployeeProfilePic
 from .ProductViews import createNewDevice,displayAllDevice,deleteDevice,getProductDetails
 # from .adminViews import addNewLead, displayAssignedLeads, displaySingleLead, updateStatus,empLogin,getCallCount,setCallCount, loginPage, homePage, getSession
 
+<<<<<<< Updated upstream
 from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads,getSingleLead, getLeadsNotContacted, storeLogoutTime, makeCall, addProfilePicture, getProfilePicture
 from .adminViews import loginPage, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword
+=======
+from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads, getLeadsNotContacted, storeLogoutTime, makeCall
+from .adminViews import loginPage, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword
+from .adminViews import addProfilePicture, getProfilePicture, setNotification, getNotification
+>>>>>>> Stashed changes
 # from .EmployeeView import createNewEmployee,displayAllEmployee,deactivateEmployee
 # from .Ticketview import CustomerProblemRegistration,displayAllTickets,checkPhone,checkMail,existCustomerProblemRegistration
 
@@ -43,7 +49,7 @@ urlpatterns = [
     path("addNewProduct/", createNewDevice),
     path("displayAllDevice/", displayAllDevice),
     path("deleteDevice/", deleteDevice),
-    path("getAssignedLeads/", getAssignedLeads),
+    path("getAssignedLeads/", getAssignedLeads), 
     path("getInterestedLeads/", getInterestedLeads),
     path("getLeadsNotContacted/", getLeadsNotContacted),
     path("getUserData/", getUserData),
@@ -56,6 +62,8 @@ urlpatterns = [
     path("makeCall/", makeCall),
     path("addProfilePicture/", addProfilePicture),
     path("getProfilePicture/", getProfilePicture),
+    path("setNotification/", setNotification),
+    path("getNotification/", getNotification),
 #----------------------------------------------#
     path("", loginPage),
     path("homePage/", homePage),

@@ -34,6 +34,13 @@ class EmpStatus(models.Model):
     pauseTime = models.CharField(max_length=10, null=True)
 
 
+class Notifications(models.Model):
+    id = models.AutoField(primary_key=True)
+    employeeID = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
+    message = models.TextField(null=True)
+    time = models.CharField(max_length=10, null=True)
+    date = models.CharField(max_length=10, null=True)
+    noteForAll = models.BooleanField(default=False)
 
 class EmpTarget(models.Model):
     id = models.AutoField(primary_key=True)
@@ -42,8 +49,6 @@ class EmpTarget(models.Model):
     commitTarget = models.IntegerField()
     startDate = models.CharField(max_length=10, null=True)
     endDate = models.CharField(max_length=10, null=True)
-
-
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
@@ -57,7 +62,6 @@ class Product(models.Model):
 #'mn'-MACHINE
 #'fl'-FILTER
 
-
 class Customers(models.Model):
     id = models.AutoField(primary_key=True)
     # cust_ID = models.CharField(max_length=30, unique=True, default=None)
@@ -69,9 +73,6 @@ class Customers(models.Model):
     address = models.CharField(max_length=300, default=None)
     pincode = models.CharField(max_length=6, default=None)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-
-
-
 
 class Complaints(models.Model):
     id = models.AutoField(primary_key=True)
@@ -102,7 +103,6 @@ class Leads(models.Model):
     assignee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     isContacted = models.BooleanField(default=False)
     isInterested = models.BooleanField(default=False)
-
 
 class CallData(models.Model):
     id = models.IntegerField(auto_created=True, primary_key=True)
