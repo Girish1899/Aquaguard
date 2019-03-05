@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
-
+from django.utils import timezone
 # Create your models here.
 
 class Employee(models.Model):
@@ -100,10 +100,11 @@ class Leads(models.Model):
     email = models.EmailField(default=None, null=True)
     phone = models.CharField(max_length=12, default=None, null=True)
     alternatePhone = models.CharField(max_length=12, default=None, null=True)
-    purchaseDate = models.DateTimeField(auto_now_add=True)
+    purchaseDate = models.CharField(max_length=12, null=True)
     pincode = models.CharField(max_length=6, default="000000")
     comments = models.TextField(null=True)
     assignee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
+    dateAssigned = models.DateTimeField(default=timezone.now())
     isContacted = models.BooleanField(default=False)
     isInterested = models.BooleanField(default=False)
 
