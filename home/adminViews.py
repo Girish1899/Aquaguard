@@ -342,7 +342,7 @@ def empLoginCheck(request):
             storeEmpLog(employee, True)
 
             return success('employee logged in')
-    return fail("Bad Request")
+    return fail("Error in Request")
 
 
 @csrf_exempt
