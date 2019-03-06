@@ -1,0 +1,126 @@
+.main-content {
+    margin-top: 120px;
+}
+
+.main-content img {
+    width: 10%;
+    height: 10%;
+}
+
+
+
+.main-content p {
+    color: rgb(83, 191, 199);
+    font-weight: bold;
+    font-family: poppins;
+}
+
+.main-content a {
+    color: rgb(82, 82, 82);
+    font-family: poppins;
+}
+
+.main-content input {
+    font-family: poppins;
+    border: 2px solid rgb(83, 191, 199);
+    width: 200px;
+    border-top-right-radius: 7px 7px;
+    border-top-left-radius: 7px 7px;
+    border-bottom-left-radius: 7px 7px;
+    border-bottom-right-radius: 7px 7px;
+}
+
+.main-content button {
+    border: none;
+    color: white;
+    padding: 5px 35px;
+    border-top-right-radius: 4px 4px;   
+    border-top-left-radius: 4px 4px;   
+    border-bottom-right-radius: 4px 4px;   
+    border-bottom-left-radius: 4px 4px;   
+    background-color: #a7cfdf; background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
+    background-image: -webkit-linear-gradient(top, #23b3ec, #07527e);
+    background-image: -moz-linear-gradient(top, #23b3ec, #07527e);
+    background-image: -ms-linear-gradient(top, #23b3ec, #07527e);
+    background-image: -o-linear-gradient(top, #23b3ec, #07527e);
+    background-image: linear-gradient(to bottom, #23b3ec, #07527e);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a7cfdf, endColorstr=#23538a);
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    height: 220px;
+    margin-top: 30px;
+    width: 100%;
+    
+}
+
+.footer img {
+    position: fixed;
+    bottom: 0;
+    height: 210px;
+    width: 100%;
+}
+
+/* ---------------------------------- */
+.nav-content{
+    height:80px;
+    background: -webkit-linear-gradient(left,#a8e9ff, #0085b2);
+}
+
+
+.nav-content p{
+    text-align: center;
+   
+}
+
+.main2-content {
+    position: relative;
+    margin-top: 70px;
+}
+
+.fear-smiley {
+    position: relative;
+
+}
+
+textarea {
+    
+    border: 5px solid rgb(160, 160, 160);
+    border-top-right-radius: 7px 7px;
+    border-top-left-radius: 7px 7px;
+    border-bottom-left-radius: 7px 7px;
+    border-bottom-right-radius: 7px 7px;  
+}
+
+
+#ab {
+    position: relative;
+    font-weight: 0px;
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(44, 144, 151);
+    font-family: poppins;
+}
+
+#bc {
+    position: relative;
+    margin-top: 16px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #b1b1b1;
+    font-family: poppins;
+}
+
+.description_submit_button {
+    font-family: poppins;
+    border: none;
+    color: white;
+    background-color: #b1b7b9;
+    padding: 5px 25px;
+    border-top-right-radius: 4px 4px;   
+    border-top-left-radius: 4px 4px;   
+    border-bottom-right-radius: 4px 4px;   
+    border-bottom-left-radius: 4px 4px;   
+}

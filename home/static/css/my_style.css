@@ -1,36 +1,111 @@
-.main-content {
-    margin-top: 120px;
+@import '~pretty-checkbox/src/pretty-checkbox.scss';
+body
+{
+	overflow-x:hidden;
 }
 
-.main-content img {
-    width: 10%;
-    height: 10%;
+.table-scroll {
+	position: relative;
+	max-width: 1280px;
+	width:100%;
+	margin: auto;
+	display:table;
+	border:3px solid #7CB9E8;
+	border-radius:5px;
+}
+.table-wrap {
+	width: 100%;
+	display:block;
+	height: 300px;
+	overflow: auto;
+	position:relative;
+	z-index:1;
+}
+.table-scroll table {
+	width: 100%;
+	margin: auto;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+.table-scroll th, .table-scroll td {
+	padding: 5px 5px;
+	
+	
+	
+}
+.faux-table table {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	pointer-events: none;
+}
+.faux-table table + table {
+	top: auto;
+	bottom: 0;
+}
+.faux-table table tbody, .faux-table  tfoot {
+	visibility: hidden;
+	border-color: transparent;
+	
+}
+.faux-table table + table thead {
+	visibility: hidden;
+	border-color: transparent;
+}
+.faux-table table + table  tfoot{
+	visibility:visible;
+
 }
 
-
-
-.main-content p {
+.faux-table {
+	position:absolute;
+	top:0;
+	right:3px;
+	left:0;
+	bottom:0;
+	overflow-y:scroll;
+}
+.faux-table thead, .faux-table tfoot, .faux-table thead th, .faux-table tfoot th, .faux-table tfoot td {
+	position:relative;
+	z-index:2;
+	background-color:#fff;
+}
+#login-form img
+{
+	width:100px;
+	height:100px;
+}
+a 
+{
+   text-decoration: none; 
+}
+a:hover
+{
+	text-decoration: none;
+	color:#FFF;
+}
+.main-content
+{
+	margin-top:10vh;
+}
+.main-content p 
+{
     color: rgb(83, 191, 199);
     font-weight: bold;
     font-family: poppins;
 }
-
-.main-content a {
-    color: rgb(82, 82, 82);
+.main-content a 
+{
+    color: white;
     font-family: poppins;
 }
-
-.main-content input {
-    font-family: poppins;
-    border: 2px solid rgb(83, 191, 199);
-    width: 200px;
-    border-top-right-radius: 7px 7px;
-    border-top-left-radius: 7px 7px;
-    border-bottom-left-radius: 7px 7px;
-    border-bottom-right-radius: 7px 7px;
+#circle
+{
+	font-size:20px;
 }
-
-.main-content button {
+.main-content button 
+{
     border: none;
     color: white;
     padding: 5px 35px;
@@ -43,84 +118,506 @@
     background-image: -moz-linear-gradient(top, #23b3ec, #07527e);
     background-image: -ms-linear-gradient(top, #23b3ec, #07527e);
     background-image: -o-linear-gradient(top, #23b3ec, #07527e);
-    background-image: linear-gradient(to bottom, #23b3ec, #07527e);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a7cfdf, endColorstr=#23538a);
+}
+#login-form input
+{
+	text-align:center;
+	border-radius:5px;
+	border-color:#7CB9E8;
+	border:2px solid #7CB9E8;
+}
+#forgot_password 
+{
+	white-space: nowrap;
+	font-family: Poppins;
+	font-size: 24px;
+	color: rgba(112,112,112,1);
+}
+.footer 
+{
+	  position: fixed;
+	  left: 0;
+	  bottom: 0;
+	  width: 100%;
+ 
+}
+.navbar
+{
+	  height:100px;
+	  width:auto;
+	  background: -webkit-linear-gradient(right,#007FFF,#007FFF,#7CB9E8);
+}
+.user
+{
+	width:100px;
+	height:100px;
+	border-radius:50%;
+	margin-top:7vh;
+}
+.username
+{
+	margin-left:10%;
+	margin-top:-5vh;
+	color:#4B7594;
+	font-size:25px;
+	font-family:poppins;
+	font-weight:bold;
 }
 
 
-.footer {
-    position: fixed;
-    bottom: 0;
-    height: 220px;
-    margin-top: 30px;
-    width: 100%;
-    
+.logintime
+{	margin-top:-120px;
+   text-align:right;
+	font-family:poppins;
+	color:#FFF;
+	font-weight:bold;
+	font-size:20px;
 }
 
-.footer img {
-    position: fixed;
-    bottom: 0;
-    height: 210px;
-    width: 100%;
+.logindate
+{	margin-top:-160px;
+  text-align:right;
+	font-family:poppins;
+	color:rgb(20, 0, 0);
+	font-weight:bold;
+	font-size:20px;
 }
 
-/* ---------------------------------- */
-.nav-content{
-    height:80px;
-    background: -webkit-linear-gradient(left,#a8e9ff, #0085b2);
+.dashboard
+{
+	font-family:poppins;
+	color:#06BBE1;
+	font-size:30px;
+	margin-top:-2vh;
+	margin-left:21%;
+	font-weight:bold;
+}
+i
+{
+	color:#7CB9E8;
+	font-size:35px;
+	margin-top:-10vh;
+	
+}
+.customerid
+{
+	width:25%;
+	border-radius:5px;
+	border-color:#7CB9E8;
+	border:2px solid #7CB9E8;
+}
+button
+{
+	border:1px solid #06BBE1;
+	border-radius:5px;
+	background-color:white;
+	
+	color:#7CB9E8;
+	font-size: 25px;
+}
+button:hover
+{
+	background-color: #06BBE1;
+	color:white;
+}
+#pass
+{
+	border:1px solid #06BBE1;
+	border-radius:5px;
+	background-color:white;
+	
+	color:#7CB9E8;
+	font-size: 25px;
+}
+#pass:hover
+{
+	background-color: #06BBE1;
+	color:white;
+}
+.progress
+{
+	border:3px solid #06BBE1;
+	border-radius:20px;
+	background-color:white;
+	height:38px;
+}
+.progress-bar 
+{
+		
+	position:relative;
+	width:70%;
+	margin-left:1%;
+	border-radius:30px;
+	margin-top:5px;
+	height:76%;
+	background-color: #66E1FD;
+}
+.progress-bar1 
+{
+		
+	position:relative;
+	width:40%;
+	margin-left:1%;
+	border-radius:30px;
+	margin-top:1%;
+	height:76%;
+	background-color: #66E1FD;
+}
+#ID28
+{
+	opacity: 1;
+	font-family: Poppins;
+	font-size: 25px;
+	color: rgba(6,184,225,1);
+	letter-spacing: -1.2px;
+}
+#leadlist
+{
+	opacity: 1;
+	filter: drop-shadow(0px 3px 6px rgba(158, 249, 240, 1));
+	font-family: Poppins;
+	font-size: 25px;
+	color: rgba(6,184,225,1);
+}
+span p
+{
+	padding:10px;
+	border-radius:6px;
+	background-color: #D1F8FB  ;
+	width:19%;
+	margin-left:76%;
+	font-family: Poppins;
+	font-size: 23px;
+	color: rgba(112,112,112,1);
+	margin-top:-5%;
+	
+}
+.iconbox button:hover
+{
+	background-color:white;
+	
+}
+.iconbox  a:hover
+{
+	color:black;
+	
+}
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #707070;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot1 {
+  height: 25px;
+  width: 25px;
+  background-color: #FD9B1A;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot2 {
+   height: 25px;
+  width: 25px;
+  background-color: #FA5454;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot3 {
+  height: 25px;
+  width: 25px;
+  background-color: #F5ED06;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 
-.nav-content p{
-    text-align: center;
-   
+
+
+
+
+.dot4 {
+   height: 25px;
+  width: 25px;
+  background-color: #09B788;
+  border-radius: 50%;
+  display: inline-block;
+}
+#Employees_A27
+{
+		filter: drop-shadow(0px 3px 6px rgba(158, 249, 240, 1));
+		white-space: nowrap;
+		font-family: Poppins;
+		font-size: 25px;
+		color: rgba(6,184,225,1);
+}
+.scrollbar-ripe-malinka::-webkit-scrollbar-track 
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 100);
+	background-color: #F5F5F5;
+	border-radius: 0px; 
+}
+.scrollbar-ripe-malinka::-webkit-scrollbar 
+{
+	width: 20px;
+	background-color: #F5F5F5; 
+}
+.scrollbar-ripe-malinka::-webkit-scrollbar-thumb 
+{
+	border-radius: 0px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 100);
+	background-image: linear-gradient(120deg, #66E1FD 0%, #66E1FD 100%); 
+}
+.example-1 
+{
+	position: relative;
+	overflow-y: scroll;
+	height: 300px;
+	border:2px solid #06BBE1;
+	border-radius:5px;
+}
+p
+{
+	opacity: 1;
+	font-family: Poppins;
+	font-size:15px;
+	color: rgba(112,112,112,1);
 }
 
-.main2-content {
-    position: relative;
-    margin-top: 70px;
+::placeholder
+{
+	opacity: 1;
+	font-family: Poppins;
+	color: rgba(112,112,112,1);
+}
+.call-card 
+{
+	position: absolute;
+	height: 280px;
+	width: 150px;
+	margin-top: -22%;
+	margin-left:78%;
+	border-radius:20px;
+	background: -webkit-linear-gradient(top,#8bf1f8,#00c3ca);
+}
+.call-user-icon img 
+{
+	background-color: white;
+	border-radius: 50%;
+	width: 35%;
+}
+.call-card-user-name 
+{
+	position: relative;
+	text-align: center;
+		
+}
+.caller-name 
+{
+	font-family: poppins;
+	font-size: 20px;
+	color:black;
+	font-weight: bold;
+}
+.form-check-label .checkmark:after 
+{
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+.form-check-label-input
+{
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.form-check-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
 }
 
-.fear-smiley {
-    position: relative;
-
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
 }
 
-textarea {
-    
-    border: 5px solid rgb(160, 160, 160);
-    border-top-right-radius: 7px 7px;
-    border-top-left-radius: 7px 7px;
-    border-bottom-left-radius: 7px 7px;
-    border-bottom-right-radius: 7px 7px;  
+/* On mouse-over, add a grey background color */
+.form-check-label:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.form-check-label input:checked ~ .checkmark {
+  background-color: #06BBE1;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.form-check-label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.form-check-label .checkmark:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
 }
 
 
-#ab {
-    position: relative;
-    font-weight: 0px;
-    font-size: 25px;
-    font-weight: bold;
-    color: rgb(44, 144, 151);
-    font-family: poppins;
+
+.form-check-label1 .checkmark:after 
+{
+ 	
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+.form-check-label1-input
+{
+  display: block;
+  position: relative;
+ 
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.form-check-label1 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
 }
 
-#bc {
-    position: relative;
-    margin-top: 16px;
-    font-weight: bold;
-    font-size: 16px;
-    color: #b1b1b1;
-    font-family: poppins;
+/* Create a custom radio button */
+.checkmark1 {
+  position: absolute;
+  
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
 }
 
-.description_submit_button {
-    font-family: poppins;
-    border: none;
-    color: white;
-    background-color: #b1b7b9;
-    padding: 5px 25px;
-    border-top-right-radius: 4px 4px;   
-    border-top-left-radius: 4px 4px;   
-    border-bottom-right-radius: 4px 4px;   
-    border-bottom-left-radius: 4px 4px;   
+/* On mouse-over, add a grey background color */
+.form-check-label1:hover input ~ .checkmark1 {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.form-check-label1 input:checked ~ .checkmark1 {
+  background-color: #06BBE1;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark1:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.form-check-label1 input:checked ~ .checkmark1:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.form-check-label1 .checkmark1:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+
+
+
+#panel
+{
+		width:40%;
+		padding:6px;
+}
+.modelname
+{
+	width:50%;
+	border-radius:5px;
+	border:1px solid #06BBE1;
+}
+#Rob___Team_Manger 
+{
+		font-family: Poppins;
+		font-size: 20px;
+		color: rgba(112,112,112,1);
+}
+#Attention_all__Deadlines_are_u 
+{
+		font-family: Poppins;
+		font-size: 15px;
+		color: rgba(112,112,112,1);
+}
+.time
+{
+		font-family: Poppins;
+		font-size: 25px;
+		color: rgba(6,184,225,1);
+}
+.btn
+{
+	border:1px solid #06BBE1;
+	border-radius:5px;
+	background-color:white;
+	font-weight:bold;
+	color:#7CB9E8;
+}
+.btn:hover
+{
+	background-color: #06BBE1;
+	color:white;
+}
+#call-duration
+{
+	color:white;
+	font-size:20px;
+}
+
+footer
+{
+	position:relative;
+	left:0;
+	bottom:0;
+	width:100%;
+	border:1px solid #EDF3F5;
+	background-color:#EDF3F5;
+	color:white;
+	text-align:center;
 }
