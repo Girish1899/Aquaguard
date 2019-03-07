@@ -42,8 +42,8 @@ class Notifications(models.Model):
     date = models.CharField(max_length=10, null=True)
     noteForAll = models.BooleanField(default=False)
     noteType = models.TextField(null=True)
-    #noteType=notfication -> for employees page
-    #noteType=issue -> for admin page
+#noteType=notfication -> for employees page
+#noteType=issue -> for admin page
 
 class EmpTarget(models.Model):
     id = models.AutoField(primary_key=True)
@@ -114,9 +114,6 @@ class CallData(models.Model):
     phone = models.CharField(max_length=12, default=None)
     remarks = models.TextField(default=None)
     recordLink = models.TextField()
-
-
-
 
 # ------------------------------------------------------------------------- #
 

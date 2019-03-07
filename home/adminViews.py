@@ -85,7 +85,6 @@ def getSession(request, isLocalUse=None):
     return fail("Bad request")
 
 
-
 @csrf_exempt
 def flushSession(request, isLocalUse=None):
     if (request.method == "POST"):
@@ -100,10 +99,6 @@ def flushSession(request, isLocalUse=None):
 #         now = int(time.time())
 #         for delta in range(10, 110, 20):
 #             print(totp(key=secret_key, step=10, digits=6, t0=(now-delta)))
-
-
-
-
 
 @csrf_exempt
 def getUserData(request):
@@ -196,6 +191,7 @@ def setNotification(request):
         return success("Notification Successfully Triggered")
     return fail("Bad request")
 
+
 @csrf_exempt
 def getNotification(request):
     if (request.method == "POST"):
@@ -255,7 +251,6 @@ def togglePause(request):
             empStatObj.save()
             return success("Pause has been released")
     return fail("Error in request")
-
 
 
 @csrf_exempt
@@ -533,6 +528,7 @@ def getSingleLead(request):
         lead['purchaseDate']=leadObj.purchaseDate
         lead['pincode']=leadObj.pincode
         lead['comments']=leadObj.comments
+        
         return success(lead)
     return HttpResponse("Error In Request")
 
@@ -558,6 +554,7 @@ def makeCall(request):
     if (request.method == "POST"):
         phone = request.POST.get("phone", None)
         # connect to vici dialler api
+
 
 @csrf_exempt
 def leadParser(request):
@@ -629,5 +626,3 @@ def leadParser(request):
 #             lead.save()
 #             return success("New Lead created!")
 #     return HttpResponse("Error In Request")
-
-
