@@ -21,7 +21,7 @@ from .EmployeeView import updateEmployee,uploadEmployeeProfilePic
 # from .adminViews import addNewLead, displayAssignedLeads, displaySingleLead, updateStatus,empLogin,getCallCount,setCallCount, loginPage, homePage, getSession
 
 
-from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads,getSingleLead, getLeadsNotContacted, storeLogoutTime, makeCall, addProfilePicture, getProfilePicture
+from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads,getSingleLead, getLeadsNotContacted, storeLogoutTime, makeCall, addProfilePicture, getProfilePicture, setCommit
 from .adminViews import loginPage, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword
 
 from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads, getLeadsNotContacted, storeLogoutTime, makeCall
@@ -64,6 +64,7 @@ urlpatterns = [
     path("getProfilePicture/", getProfilePicture),
     path("setNotification/", setNotification),
     path("getNotification/", getNotification),
+    path("setCommit/", setCommit),
 #----------------------------------------------#
     path("", loginPage),
     path("homePage/", homePage),

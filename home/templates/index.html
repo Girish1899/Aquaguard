@@ -383,7 +383,6 @@ $('#pass').click(function(){
 
 				$("#loginTime").text('Logged in at: ' + d.getHours() + ' : ' + d.getMinutes())
 				$("#loginDate").text('DATE: ' + d.getDate() + '-' + date + '-' + d.getFullYear())
-
 				$("#welcomeTag").text(fname + ' ' +lname);
 				//To a change welcome
 			}
@@ -393,7 +392,7 @@ $('#pass').click(function(){
 
 	$('#commit').click(function () {
 			var val = $('#commit').val();
-			
+
 			if (val == "SETCOMMIT") {
 				$('#commit').val("COMMIT");
 			}
