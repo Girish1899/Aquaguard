@@ -25,7 +25,7 @@ def homePage(request):
     currentSession = getSession(request, True)
     if currentSession == '':
         loginPage(request)
-    return render(request, 'tempHomePage.html')
+    return render(request, 'index.html')
 
 
 @csrf_exempt
@@ -337,7 +337,7 @@ def empLoginCheck(request):
             storeEmpLog(employee, True)
 
             return success('employee logged in')
-    return fail("Bad Request")
+    return fail("Error in Request")
 
 
 @csrf_exempt
