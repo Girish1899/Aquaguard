@@ -439,6 +439,27 @@ def getInterestedLeads(request):
             return success(leads_list)
     return fail("Error In Request")
 
+@csrf_exempt
+def setCommit(request):
+    if request.method == "POST":
+        lead_id = request.POST.get("lead_id", None)
+        if lead_id == None or lead_id == '':
+            return fail("Lead id has not provided")
+        try:
+            leadObj = Leads.objects.get(id=lead_id)
+        except Exception as e:
+            return fail("Lead doesn't exist")
+        isCommit = request.POST.get("isCommit", None)
+        if isCommit:
+            leadObj.isInterested = True
+            leadObj.save()
+            return success("Lead stored as committed")
+        else: 
+            leadObj.isInterested = False
+            leadObj.save()
+            return success("Lead stored as notCommitted")
+    return fail("Error in request")
+
 
 # This should get you all leads yet to be called
 @csrf_exempt
