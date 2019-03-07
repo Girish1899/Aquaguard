@@ -343,6 +343,24 @@ $('#pass').click(function(){
 		});
 	})
 
+	// $("#newLead").click(function () {
+	// 		if (empFinal == '')
+	// 			alert("You need to Login");
+	// 		else {
+	// 			fname = $("#fname").val();
+	// 			$.post(baseUrl + "/",
+	// 				{
+	// 					fname: fname,
+	// 				},
+	// 				function (data, status) {
+	// 					dataObj = JSON.parse(data);
+	// 					alert(dataObj.description);
+	// 					console.log(dataObj.description);
+	// 					console.log(data);
+	// 				});
+	// 		}
+	// 	});
+
 	function getUserData(emp_id) {
 		$.post( baseUrl + "getUserData/",
 		{
@@ -372,6 +390,17 @@ $('#pass').click(function(){
 			getCallTable(emp_id)
 		});
 	}
+
+	$('#commit').click(function () {
+			var val = $('#commit').val();
+			
+			if (val == "SETCOMMIT") {
+				$('#commit').val("COMMIT");
+			}
+			else {
+				$('#commit').val("SETCOMMIT");
+			}
+		})
 
 
 	function getCallTable(emp_id) {
@@ -403,7 +432,7 @@ $('#pass').click(function(){
 					$("#main-table").append(row$);
 					row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">CallNow</button>'));
 					row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">SetCommit</button>'));
-					row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">Details</button>'));
+					row$.append($('<td/>').html('<button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>'));
 				}
 			}
 		});

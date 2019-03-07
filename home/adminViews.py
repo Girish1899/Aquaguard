@@ -1,6 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 # from django.core import serializers
-from .views import success,fail
+from .views import success, fail
 from .models import Customers, Employee, Leads, EmpStatus, Notifications
 from django.shortcuts import HttpResponse, render
 from .tests import cleanDatabase, fill_database_with_dummy_values
@@ -56,17 +56,17 @@ def changedp(request):
 
 @csrf_exempt
 def storeSession(request):
-    id=request.POST.get("id", None)
+    id = request.POST.get("id", None)
     if(id == None or id == ''):
         return fail("Haven't received any emp_id to create session")
     else:
         try:
             request.session['emp_id'] = id
-            return success('Session has been created') 
+            return success('Session has been created')
         except Exception as e:
             return fail("Employee Id Not Foud")
 
-    
+
 @csrf_exempt
 def getSession(request, isLocalUse=None):
     if (request.method == "POST"):
@@ -107,8 +107,8 @@ def getUserData(request):
         if id == None or id == '':
             return fail("Enter Employee Id")
         try:
-            #get his first and lastname
-            employee = Employee.objects.get(empID = id)
+            # get his first and lastname
+            employee = Employee.objects.get(empID=id)
         except Exception as e:
             return fail("Employee Id Not Foud")
 
@@ -125,7 +125,6 @@ def getUserData(request):
         }
         return success(dataReturn)
 
-
     return fail("Invalid method")
 
 
@@ -137,7 +136,7 @@ def addProfilePicture(request):
             return fail("Provide employee id")
         else:
             try:
-                employee = Employee.objects.get(empID = id)
+                employee = Employee.objects.get(empID=id)
             except Exception as e:
                 return fail("Employee Id Not Foud")
             employee.profile_logo = request.FILES['profile_logo']
@@ -145,7 +144,7 @@ def addProfilePicture(request):
             file_type = file_type.lower()
             if file_type not in IMAGE_FILE_TYPES:
                 return fail("Image file must be PNG, JPG, or JPEG")
-            employee.save()            
+            employee.save()
         return success("Picture Uploaded Successfully")
     return fail("Bad request")
 
@@ -172,7 +171,7 @@ def setNotification(request):
         noteType = request.POST.get("noteType", None)
         date = str(datetime.datetime.now().date())
         time = str(datetime.datetime.now().time())
-        time = time[:8] 
+        time = time[:8]
         id = request.POST.get("id", None)
         message = request.POST.get("message", None)
         if message == None or message == '':
@@ -210,15 +209,16 @@ def getNotification(request):
                 employee = Employee.objects.get(empID=id)
             except Exception as e:
                 return fail("Employee Id Not Found")
-        notes = Notifications.objects.all().filter(employeeID=employee, noteType=noteType, date=date, noteForAll=noteForAll)
+        notes = Notifications.objects.all().filter(
+            employeeID=employee, noteType=noteType, date=date, noteForAll=noteForAll)
         if len(notes) == 0:
             return fail("No Noification Today")
         else:
             notes_list = []
             for note in notes:
                 eachRow = {}
-                eachRow['message'] = note.message   
-                eachRow['time'] = note.time   
+                eachRow['message'] = note.message
+                eachRow['time'] = note.time
                 notes_list.append(eachRow)
             return success(notes_list)
     return fail("Bad request")
@@ -236,7 +236,8 @@ def togglePause(request):
             return fail("Enter Employee Id")
         try:
             empObj = Employee.objects.get(id=emp_id)
-            empStatObj = EmpStatus.objects.filter(employeeID=empObj, date=currDate)
+            empStatObj = EmpStatus.objects.filter(
+                employeeID=empObj, date=currDate)
         except Exception as e:
             print(e)
             return fail("Couldn't get desired object")
@@ -260,7 +261,8 @@ def storeEmpLog(emp, isLoggingIn):
     if isLoggingIn is True:
         try:
             # The try would pass if it isn't a new employee, else there wont be an entry with date column
-            empStatus = EmpStatus.objects.get(employeeID = emp, date = str(datetime.datetime.now().date()))
+            empStatus = EmpStatus.objects.get(
+                employeeID=emp, date=str(datetime.datetime.now().date()))
 
             # If it is a new day the login timstamp need to be stored
             if empStatus.date != str(datetime.datetime.now().date()):
@@ -269,7 +271,7 @@ def storeEmpLog(emp, isLoggingIn):
                 empStatus.date = dateToString
                 empStatus.save()
 
-                #employee made active
+                # employee made active
                 emp.isActive = True
                 emp.save()
         except Exception as e:
@@ -280,7 +282,7 @@ def storeEmpLog(emp, isLoggingIn):
             empStatus.date = dateToString
             empStatus.save()
 
-            #employee made active
+            # employee made active
             emp.isActive = True
             emp.save()
 
@@ -288,7 +290,7 @@ def storeEmpLog(emp, isLoggingIn):
         empStatus.logoutTime = timeNow
         empStatus.save()
 
-        #employee made inactive
+        # employee made inactive
         emp.isActive = False
         emp.save()
 
@@ -301,10 +303,11 @@ def storeEmpLog(emp, isLoggingIn):
 def getEmpLogInfo(empInstance):
     try:
         currDate = str(datetime.datetime.now().date())
-        
+
         # Taking only initial login time. there can be multiple logins.
-        empStatus = EmpStatus.objects.get(employeeID = empInstance, date = currDate)
-       
+        empStatus = EmpStatus.objects.get(
+            employeeID=empInstance, date=currDate)
+
         if empStatus == None:
             return None
         return empStatus
@@ -321,19 +324,19 @@ def empLoginCheck(request):
             return fail("Enter Employee Id")
         else:
             try:
-                employee = Employee.objects.get(empID = id)
+                employee = Employee.objects.get(empID=id)
 
             except Exception as e:
                 return fail("Employee Id Not Foud")
 
-            #password check
+            # password check
             if password != employee.password:
                 return fail("Wrong password")
-                
-            #handle session here
+
+            # handle session here
             storeSession(request)
 
-            #store employee login information here.
+            # store employee login information here.
             storeEmpLog(employee, True)
 
             return success('employee logged in')
@@ -349,8 +352,9 @@ def storeLogoutTime(request):
         else:
             timeNow = str(datetime.datetime.now())
             dateToday = str(datetime.datetime.now().date())
-            employee = Employee.objects.get(empID = id)
-            empStatus = EmpStatus.objects.get(employeeID = employee, date = dateToday)
+            employee = Employee.objects.get(empID=id)
+            empStatus = EmpStatus.objects.get(
+                employeeID=employee, date=dateToday)
             empStatus.logoutTime = timeNow
             empStatus.save()
         return success("logoutTime has been saved")
@@ -369,11 +373,11 @@ def addNewLead(request):
         pincode = request.POST.get("pincode", None)
         alternatePhone = request.POST.get("alternatePhone", None)
         purchaseDate = request.POST.get("purchaseDate", None)
-        if(fname == None or lname ==  None or mobile ==  None or email ==  None or
-                address ==  None or pincode ==  None or purchaseDate == None or alternatePhone ==  None):
-           return fail("Invalid details")
-        lead = Leads(fname = fname, lname = lname, mobile = mobile, email = email,
-            address = address, pincode = pincode, purchaseDate = purchaseDate, alternatePhone = alternatePhone)
+        if(fname == None or lname == None or mobile == None or email == None or
+                address == None or pincode == None or purchaseDate == None or alternatePhone == None):
+            return fail("Invalid details")
+        lead = Leads(fname=fname, lname=lname, mobile=mobile, email=email,
+                     address=address, pincode=pincode, purchaseDate=purchaseDate, alternatePhone=alternatePhone)
         lead.save()
         return success("New Lead created!")
     return fail("Invalid Admin Page")
@@ -459,7 +463,7 @@ def getLeadsNotContacted(request):
                 eachRow['email'] = lead.email
                 eachRow['phone'] = lead.phone
                 eachRow['address'] = lead.address
-                eachRow['pincode'] = lead.pincode   
+                eachRow['pincode'] = lead.pincode
                 leads_list.append(eachRow)
             return success(leads_list)
     return fail("Error In Request")
@@ -471,7 +475,6 @@ def editLead(request):
         timeNow = str(datetime.datetime.now())
         # Also require employee id to store along with remarks
         emp_id = request.POST.get("emp_id", None)
-
         leadID = request.POST.get("id", None)
         fname = request.POST.get("fname", None)
         lname = request.POST.get("lname", None)
@@ -482,9 +485,8 @@ def editLead(request):
         purchaseDate = request.POST.get("purchaseDate", None)
         pincode = request.POST.get("pincode", None)
         newComments = request.POST.get("comments", None)
-        
         try:
-            lead = Leads.objects.get(id = leadID)
+            lead = Leads.objects.get(id=leadID)
         except Exception as e:
             print(e)
             return fail("Lead is not present in the db")
@@ -507,28 +509,30 @@ def editLead(request):
             lead.pincode = pincode
         if comments is not None:
             # this part need to be fixed
-            oldComment = lead.comments 
-            newComment = oldComment + "\n\n\n" + "----------------------------" + "\n" + comments + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
+            oldComment = lead.comments
+            newComment = oldComment + "\n\n\n" + "----------------------------" + "\n" + \
+                comments + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
         lead.save()
         return success("Lead info updated")
     return fail("Error in request")
 
+
 @csrf_exempt
 def getSingleLead(request):
-    if (request.method=="POST"):
-        leadID = request.POST.get("id",None)
-        leadObj=Leads.objects.get(id = leadID)
-        lead={}
-        lead['fname']=leadObj.fname
-        lead['lname']=leadObj.lname
-        lead['email']=leadObj.email
-        lead['mobile']=leadObj.phone
-        lead['alternativeMobile']=leadObj.alternativeMobile
-        lead['address']=leadObj.address
-        lead['purchaseDate']=leadObj.purchaseDate
-        lead['pincode']=leadObj.pincode
-        lead['comments']=leadObj.comments
-        
+    if (request.method == "POST"):
+        leadID = request.POST.get("id", None)
+        leadObj = Leads.objects.get(id=leadID)
+        lead = {}
+        lead['fname'] = leadObj.fname
+        lead['lname'] = leadObj.lname
+        lead['email'] = leadObj.email
+        lead['mobile'] = leadObj.phone
+        lead['alternativeMobile'] = leadObj.alternativeMobile
+        lead['address'] = leadObj.address
+        lead['purchaseDate'] = leadObj.purchaseDate
+        lead['pincode'] = leadObj.pincode
+        lead['comments'] = leadObj.comments
+
         return success(lead)
     return HttpResponse("Error In Request")
 
@@ -538,9 +542,9 @@ def changeEmpPass(request):
     if request.method == "POST":
         emp_id = request.POST.get("id", None)
         newPassword = request.POST.get("newPassword", None)
-        
+
         try:
-            empObj = Employee.objects.get(id = emp_id)
+            empObj = Employee.objects.get(id=emp_id)
         except Exception as e:
             print(e)
         empObj.password = newPassword
@@ -567,8 +571,10 @@ def leadParser(request):
         row, col = data.shape
         rows = []
         for i in range(row):
-            email, fname, lname, address, phone, alternatePhone, pincode, purchasedDate = data.loc[i,['email', 'fname', 'lname', 'address', 'phone', 'alternatePhone', 'pincode', 'purchasedDate']]
-            lead = Leads(email=email, fname=fname, lname=lname, address=address, phone=phone, alternatePhone=alternatePhone, pincode=pincode, purchasedDate=purchasedDate)
+            email, fname, lname, address, phone, alternatePhone, pincode, purchasedDate = data.loc[i, [
+                'email', 'fname', 'lname', 'address', 'phone', 'alternatePhone', 'pincode', 'purchasedDate']]
+            lead = Leads(email=email, fname=fname, lname=lname, address=address, phone=phone,
+                         alternatePhone=alternatePhone, pincode=pincode, purchasedDate=purchasedDate)
             rows.append(lead)
         Leads.objects.bulk_create(
             rows
@@ -609,7 +615,7 @@ def leadParser(request):
 #             count = count + 1
 #             return success(lead)
 #     return HttpResponse("Error In Request")
-        
+
 # @csrf_exempt
 # def updateStatus(request):
 #     if (request.method=="POST"):
