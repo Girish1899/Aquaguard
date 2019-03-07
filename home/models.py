@@ -104,7 +104,7 @@ class Leads(models.Model):
     pincode = models.CharField(max_length=6, default="000000")
     comments = models.TextField(null=True)
     assignee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
-    dateAssigned = models.DateTimeField(default=timezone.now())
+    dateAssigned = models.DateTimeField(default=timezone.now)
     isContacted = models.BooleanField(default=False)
     isInterested = models.BooleanField(default=False)
 

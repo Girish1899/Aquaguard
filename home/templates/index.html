@@ -10,7 +10,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
-  <link rel="stylesheet" href="/static/css/my_style.css">
+  <link rel="stylesheet" href="../static/css/my_style.css">
 	<script type="text/javascript" src="/static/js/aquaguardTimer.js"></script>
 <style>
 .call-card 
@@ -125,71 +125,6 @@
 				<div id="faux-table" class="faux-table" aria="hidden"></div>
 					<div class="table-wrap scrollbar-ripe-malinka">
 						<table id="main-table" class="main-table">
-							<thead style="font-family: Poppins;font-weight: bold;font-size: 20px;color: rgba(6,184,225,1);">
-								<tr>
-								  <th>LEAD ID</th>
-								  <th>PHONE NUMBER</th>
-								  <th>NAME</th>
-								  <th>OPERATIONS</th>
-								  <th></th>
-								  <th></th>
-								</tr>
-							</thead>
-							<tbody style="font-family: Poppins;font-size: 15px;color: rgba(6,184,225,1);">
-							<tr>
-							  <td>AQ023</td>
-							  <td>9900652507</td>
-							  <td>Sathish Dhavan</td>
-							<td><button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>  <input type="button" class="btn"id="commit" value="SETCOMMIT">  <button type="button" class="btn"id="callnow">CallNow</button></td>
-							</tr>
-							<tr>
-							  <td>AQ023</td>
-							  <td>9900652507</td>
-							  <td>Sathish Dhavan</td>
-							<td><button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>  <input type="button" class="btn"id="commit" value="SETCOMMIT">  <button type="button" class="btn"id="callnow">CallNow</button></td>
-							</tr>
-							<tr>
-							  <td>AQ023</td>
-							  <td>9900652507</td>
-							  <td>Sathish Dhavan</td>
-							<td><button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>  <input type="button" class="btn"id="commit"value="SETCOMMIT">  <button type="button" class="btn"id="callnow">CallNow</button></td>
-							</tr>
-							<tr>
-							  <td>AQ023</td>
-							  <td>9900652507</td>
-							  <td>Sathish Dhavan</td>
-							<td><button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>  <input type="button" class="btn"id="commit"value="SETCOMMIT">  <button type="button" class="btn"id="callnow">CallNow</button></td>
-							</tr>
-							<tr>
-							  <td>AQ023</td>
-							  <td>9900652507</td>
-							  <td>Sathish Dhavan</td>
-							<td><button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>  <input type="button" class="btn"id="commit"value="SETCOMMIT">  <button type="button" class="btn"id="callnow">CallNow</button></td>
-							</tr>
-							<tr>
-							  <td>AQ023</td>
-							  <td>9900652507</td>
-							  <td>Sathish Dhavan</td>
-							<td><button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>  <input type="button" class="btn"id="commit"value="SETCOMMIT">  <button type="button" class="btn"id="callnow">CallNow</button></td>
-							</tr>
-							<tr>
-							  <td>AQ023</td>
-							  <td>9900652507</td>
-							  <td>Sathish Dhavan</td>
-							<td><button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>  <input type="button" class="btn"id="commit"value="SETCOMMIT">  <button type="button" class="btn"id="callnow">CallNow</button></td>
-							</tr>
-							<tr>
-							  <td>AQ023</td>
-							  <td>9900652507</td>
-							  <td>Sathish Dhavan</td>
-							<td><button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>  <input type="button" class="btn"id="commit"value="SETCOMMIT">  <button type="button" class="btn"id="callnow">CallNow</button></td>
-							</tr>
-							<tr>
-							  <td>AQ023</td>
-							  <td>9900652507</td>
-							  <td>Sathish Dhavan</td>
-							<td><button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>  <input type="button" class="btn"id="commit"value="SETCOMMIT">  <button type="button" class="btn"id="callnow">CallNow</button></td>
-							</tr>
 						</table> 
 						
 						</div>
@@ -437,6 +372,69 @@ $('#pass').click(function(){
 			getCallTable(emp_id)
 		});
 	}
+
+
+	function getCallTable(emp_id) {
+		// document.getElementById('dataTable').innerHTML=' ';
+		$.post( baseUrl + "getAssignedLeads/",
+		{
+			id: emp_id,
+		},
+		function(data, status){
+			dataObj = JSON.parse(data);
+			if(dataObj.result == 'fail') {
+				alert("Sorry No Data Assigned Yet");
+			}else{
+				// for (var i=0; i < dataObj.description.length; i++) {
+				// 	console.log(dataObj.description[i]['fname'])
+				// }
+				var columns = addAllColumnHeaders(dataObj.description);
+				for (var i = 0 ; i < dataObj.description.length ; i++) {
+					var row$ = $('<tr/>');
+					for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
+						var cellValue = dataObj.description[i][columns[colIndex]];
+						if (cellValue == null) { 
+							cellValue = ""; 
+						}
+							//arrange header
+							// var orderedCellValue = orderCells(cellValue);
+							row$.append($('<td/>').html(cellValue));
+					}
+					$("#main-table").append(row$);
+					row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">CallNow</button>'));
+					row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">SetCommit</button>'));
+					row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">Details</button>'));
+				}
+			}
+		});
+	}
+			// $('#excelDataTable').DataTable();
+
+	function orderCells(headers) {
+		for (var header of headers) {
+			console.log(header)
+		}
+	}
+
+	function addAllColumnHeaders(myList) {
+		var columnSet = [];
+		var headerTr$ = $('<tr/>');
+
+		for (var i = 0 ; i < dataObj.description.length ; i++) {
+			var rowHash = dataObj.description[i];
+			for (var key in rowHash) {
+				// i'm not using alernative mobile number
+				if ($.inArray(key, columnSet) == -1){
+					columnSet.push(key);
+					headerTr$.append($('<th />').html(key));
+				}
+			}
+		}
+		headerTr$.append($('<th />').html(' '));
+		$("#main-table").append(headerTr$);
+
+		return columnSet;
+	} 
 
 </script>
 

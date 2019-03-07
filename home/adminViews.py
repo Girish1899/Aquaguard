@@ -25,7 +25,7 @@ def homePage(request):
     currentSession = getSession(request, True)
     if currentSession == '':
         loginPage(request)
-    return render(request, 'tempHomePage.html')
+    return render(request, 'index.html')
 
 
 @csrf_exempt
