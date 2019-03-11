@@ -22,7 +22,7 @@ from .EmployeeView import updateEmployee,uploadEmployeeProfilePic
 
 
 from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads,getSingleLead, getLeadsNotContacted, storeLogoutTime, makeCall, addProfilePicture, getProfilePicture, setCommit
-from .adminViews import loginPage, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword
+from .adminViews import loginPage, editLead, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword
 
 from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads, getLeadsNotContacted, storeLogoutTime, makeCall
 from .adminViews import loginPage, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword
@@ -38,7 +38,8 @@ urlpatterns = [
     # path("updateStatus/",updateStatus),
     # path("getCallCount/",getCallCount),
     # path("setCallCount/",setCallCount),
-    path("displaySingleLead/",getSingleLead),
+    path("editLead/", editLead),
+    path("displaySingleLead/", getSingleLead),
     # path("registerTicketExist/",existCustomerProblemRegistration),
     # path("registerTicket/",CustomerProblemRegistration),
     # path("checkPhone/",checkPhone),
@@ -49,6 +50,7 @@ urlpatterns = [
     # path("addNewProduct/", createNewDevice),
     # path("displayAllDevice/", displayAllDevice),
     # path("deleteDevice/", deleteDevice),
+    path("changedp/", changedp),
     path("getAssignedLeads/", getAssignedLeads), 
     path("getInterestedLeads/", getInterestedLeads),
     path("getLeadsNotContacted/", getLeadsNotContacted),

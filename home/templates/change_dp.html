@@ -158,8 +158,6 @@ input[type=file]
 		color: rgba(6,184,225,1);
 	}
 	
-	
-}
 </style>
 </head>
 <body>
@@ -201,14 +199,6 @@ input[type=file]
 	</div>
 </div>
 
-
-
-
-
-
-
-
-
 <!-- <footer style="border:1px solid #EDF3F5;background-color: #EDF3F5; position:fixed;width:1540px; margin-top:80px;"><br>
 <div class="container">
 	<div class="row"> -->
@@ -237,7 +227,7 @@ $(document).ready(function(){
 
 </script>
 
-<script>
+<!-- <script>
 $(document).ready(function(){
 	
 	$("#cancelButton").click(function() {
@@ -256,7 +246,7 @@ $(document).ready(function(){
 
 	});
 });
-</script>
+</script> -->
 
 
 <script>
@@ -274,6 +264,68 @@ $(document).ready(function(){
             }
         }
 
+</script>
+
+<script>
+	var emp_id;
+
+	$(document).ready(function () {
+		$.post(baseUrl + "getSession/", {},
+			function (data, status) {
+				dataObj = JSON.parse(data);
+				if (dataObj.result == "fail") {
+					window.location.href = baseUrl
+				} else {
+					emp_id = dataObj.description;
+					// getUserData(emp_id);
+					console.log(emp_id);
+				}
+			});
+
+		$("#cancelButton").click(function () {
+			window.location.href = baseUrl + "homePage/"
+		});
+
+		$("#doneButton").click(function () {
+			var fd = new FormData();
+			var files = $('#profilepic')[0].files[0];
+			fd.append('id', emp_id);
+			fd.append('profile_logo', files);
+
+			$.ajax({
+				url: baseUrl + 'addProfilePicture/',
+				type: 'post',
+				data: fd,
+				contentType: false,
+				processData: false,
+				success: function (response, data, description) {
+
+					dataObj=JSON.parse(response);
+					if(dataObj.result=="fail") {
+						alert(dataObj.description);
+					}else{
+						alert(dataObj.description);
+						window.location.href = baseUrl + "homePage/"
+					}
+					// if (response != 0) {
+					// 	// $("#img").attr("src", response);
+					// 	// $(".preview img").show(); // Display image element
+					// 	// console.log(description.responseText);
+					// 	// console.log('true');
+					// 	console.log(response);
+					// 	// console.log(data);
+					// 	// console.log(description);
+					// } else {
+					// 	console.log(response);
+					// 	console.log(data);
+					// 	console.log(description);
+					// 	alert('file not uploaded');
+					// }
+				},
+			});
+		});
+
+	});
 </script>
 </body>
 </html>

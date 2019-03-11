@@ -38,10 +38,10 @@ def homePageContactLeads(request):
     return render(request, 'contactLeads.html')
 
 
+
 @csrf_exempt
 def forgotPassword(request):
     return render(request, 'forgotpassword.html')
-
 
 @csrf_exempt
 def logoutPage(request):
@@ -50,6 +50,9 @@ def logoutPage(request):
 
 @csrf_exempt
 def changedp(request):
+    currentSession = getSession(request, True)
+    if currentSession == '':
+        homePage(request)
     return render(request, 'change_dp.html')
 #----------------------- Api's ---------------------------#
 
@@ -200,7 +203,7 @@ def getNotification(request):
         time = time[:8]
         message = None
         id = request.POST.get("id", None)
-        noteType = request.POST.get("noteType", None)
+        # noteType = request.POST.get("noteType", None)
         if id == None or id == '':
             employee = None
             noteForAll = True
@@ -406,13 +409,14 @@ def getAssignedLeads(request):
                     eachRow = {}
             #     for i in range(len(leads))
             #         lead={}
-            #         lead['id']=leads[i].customer.id
+                    eachRow['id'] = lead.id
                     eachRow['fname'] = lead.fname
                     eachRow['lname'] = lead.lname
                     eachRow['email'] = lead.email
                     eachRow['phone'] = lead.phone
                     eachRow['address'] = lead.address
                     eachRow['pincode'] = lead.pincode
+                    eachRow['isInterested'] = lead.isInterested
                     leads_list.append(eachRow)
                 return success(leads_list)
         return fail("Error In Request")
@@ -461,7 +465,7 @@ def setCommit(request):
         else: 
             leadObj.isInterested = False
             leadObj.save()
-            return success("Lead stored as notCommitted")
+            return success("Lead stored as Not Committed")
     return fail("Error in request")
 
 
@@ -495,7 +499,7 @@ def editLead(request):
     if request.method == "POST":
         timeNow = str(datetime.datetime.now())
         # Also require employee id to store along with remarks
-        emp_id = request.POST.get("emp_id", None)
+        emp_id = request.POST.get("empid", None)
         leadID = request.POST.get("id", None)
         fname = request.POST.get("fname", None)
         lname = request.POST.get("lname", None)
@@ -505,7 +509,7 @@ def editLead(request):
         alternatePhone = request.POST.get("alternatePhone", None)
         purchaseDate = request.POST.get("purchaseDate", None)
         pincode = request.POST.get("pincode", None)
-        newComments = request.POST.get("comments", None)
+        comments = request.POST.get("comments", None)
         try:
             lead = Leads.objects.get(id=leadID)
         except Exception as e:
@@ -530,9 +534,10 @@ def editLead(request):
             lead.pincode = pincode
         if comments is not None:
             # this part need to be fixed
-            oldComment = lead.comments
-            newComment = oldComment + "\n\n\n" + "----------------------------" + "\n" + \
-                comments + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
+            lead.comments = comments
+            # oldComment = lead.comments
+            # newComment = oldComment + "\n\n\n" + "----------------------------" + "\n" + \
+            #     comments + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
         lead.save()
         return success("Lead info updated")
     return fail("Error in request")
@@ -542,13 +547,18 @@ def editLead(request):
 def getSingleLead(request):
     if (request.method == "POST"):
         leadID = request.POST.get("id", None)
-        leadObj = Leads.objects.get(id=leadID)
+        try:
+            leadObj = Leads.objects.get(id=leadID)
+        except expression as identifier:
+            return fail("Lead Not Found")
         lead = {}
+
+        lead['id'] = leadObj.id
         lead['fname'] = leadObj.fname
         lead['lname'] = leadObj.lname
         lead['email'] = leadObj.email
         lead['mobile'] = leadObj.phone
-        lead['alternativeMobile'] = leadObj.alternativeMobile
+        lead['alternatePhone'] = leadObj.alternatePhone
         lead['address'] = leadObj.address
         lead['purchaseDate'] = leadObj.purchaseDate
         lead['pincode'] = leadObj.pincode

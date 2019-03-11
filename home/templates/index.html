@@ -45,7 +45,7 @@
 
 <nav class="navbar">
 	<div class="container">
-		<a href="upload_dp.html"><img src="/static/images/Avatar.png" class="user"/></a>
+		<a href="../changedp"><img id="imageid" src="/static/images/Avatar.png" class="user"/></a>
 				<p id="loginTime" class="logintime"></p><br>
 				<p id="loginDate" class="logindate"></p>
 				<h1 class="username">Hello Diana Johns</h1>
@@ -78,7 +78,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-2 text-center">
-			<a href="call_histroy.html"><button type="button">&nbsp;&nbsp;&nbsp;Calls&nbsp;&nbsp;&nbsp;&nbsp;</button></a>
+			<a href="../homePageContactLeads"><button type="button">&nbsp;&nbsp;&nbsp;Calls&nbsp;&nbsp;&nbsp;&nbsp;</button></a>
 		</div>
 		<div class="col-lg-8">
 			<div class="progress">
@@ -92,7 +92,7 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-2 text-center">
-			<a href="commits_board.html"><button type="button">Commits&nbsp;</button></a>
+			<a href="../homePageCommittedLeads"><button type="button">Commits&nbsp;</button></a>
 		</div>
 		<div class="col-lg-8">
 			<div class="progress">
@@ -113,7 +113,7 @@
 		</div>
 		
 		<div class="col-lg-6 text-right">
-			<a href="after_change_dp.html"><span id="leadlist">Announcement</span></a>
+			<span id="leadlist" onclick="getNoitificationsTable(1002)">Announcement</span>
 		</div>
 	</div>
 </div>
@@ -145,7 +145,9 @@
 							</div>
 							<center>
 								<div class="single-call-icon">
-									<a href=""id="calldisconnect"><img src="/static/images/red-call-icon.png" height="80px" width="80px"></a>
+									<a href="" id="calldisconnect">
+										<img src="/static/images/red-call-icon.png" height="80px" width="80px">
+									</a>
 								</div>
 							</center>
 						</div>
@@ -165,8 +167,10 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-6">
-						<p style="color:#06BBE1;">LEAD ID: AQ023</p><p style="margin-left:60%;margin-top:-5vh;color:#06BBE1;">LEAD PH: 9900652507</p>
-						
+						<p style="color:#06BBE1;">LEAD ID: <span id="lead_id"></span></p>
+						<p style="margin-left:60%;margin-top:-5vh;color:#06BBE1;">
+							LEAD PH: <span id="lead_phone"></span>
+						</p>
 					</div>
 				</div>
 			</div>
@@ -179,7 +183,7 @@
 					<p>First Name</p>
 				</div>
 				<div class="col-lg-5">
-					<input type="text"class="modelname"/>
+					<input id="fnameLead" type="text" class="modelname" value=""/>
 			    </div>
 			</div>
 			<div class="row">
@@ -187,7 +191,15 @@
 					<p>Last Name</p>
 				</div>
 				<div class="col-lg-5">
-					<input type="text"class="modelname"/>
+					<input id="lnameLead" type="text" class="modelname"/>
+			    </div>
+			</div>
+			<div class="row">
+				<div class="col-lg-2">
+					<p>Email</p>
+				</div>
+				<div class="col-lg-5">
+					<input id="emailLead" type="text" class="modelname"/>
 			    </div>
 			</div>
 			<div class="row">
@@ -195,23 +207,31 @@
 					<p>Alternative number</p>
 				</div>
 				<div class="col-lg-5">
-					<input type="text"class="modelname"/>
+					<input id="alternateNumberLead" type="text" class="modelname"/>
 			    </div>
 			</div>
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-lg-2">
 					<p>City</p>
 				</div>
 				<div class="col-lg-5">
-					<input type="text"class="modelname"/>
+					<input id="cityLead" type="text" class="modelname"/>
 			    </div>
-			</div>
+			</div> -->
 			<div class="row">
 				<div class="col-lg-2">
 					<p>PIN</p>
 				</div>
 				<div class="col-lg-5">
-					<input type="text"class="modelname"/>
+					<input id="pinLead" type="text" class="modelname"/>
+			    </div>
+			</div>
+			<div class="row">
+				<div class="col-lg-2">
+					<p>Purchase Date</p>
+				</div>
+				<div class="col-lg-5">
+					<input id="dateLead" type="text" class="modelname"/>
 			    </div>
 			</div>
 			<div class="row">
@@ -219,7 +239,7 @@
 					<p>Address</p>
 				</div>
 				<div class="col-lg-5">
-					<textarea class="modelname"></textarea>
+					<textarea id="addressLead" class="modelname"></textarea>
 			    </div>
 			</div>
 			<div class="row">
@@ -227,12 +247,12 @@
 					<p>Remarks</p>
 				</div>
 				<div class="col-lg-5">
-					<textarea class="modelname"></textarea>
+					<textarea id="commentsLead" class="modelname"></textarea>
 			    </div>
 			</div>
 		</div>
         <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Update</button>  <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+			<button type="button" id="btnLead" class="btn btn-default" data-dismiss="modal" >Update</button>  <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
         </div>
       </div>
     </div>
@@ -304,17 +324,6 @@ $(document).ready(function(){
 });
 
 
-
-$('#commit').click(function(){
-	var val=$('#commit').val();
-	if(val=="SETCOMMIT"){
-		$('#commit').val("COMMIT");
-	}
-	else{
-		$('#commit').val("SETCOMMIT");
-	}
-})
-
 $('#pass').click(function(){
 	var val=$('#pass').val();
 	if(val=="PAUSE"){
@@ -329,6 +338,9 @@ $('#pass').click(function(){
 
 </script>
 <script>
+var emp_id;
+var lead_id;
+
 	$(document).ready(function() {
 		$.post( baseUrl + "getSession/",
 		{},
@@ -338,28 +350,131 @@ $('#pass').click(function(){
 				window.location.href = baseUrl
 			}else{
 				emp_id = dataObj.description;
+				getProfilePicture(emp_id);
 				getUserData(emp_id);
 			}
 		});
+
 	})
 
-	// $("#newLead").click(function () {
-	// 		if (empFinal == '')
-	// 			alert("You need to Login");
-	// 		else {
-	// 			fname = $("#fname").val();
-	// 			$.post(baseUrl + "/",
-	// 				{
-	// 					fname: fname,
-	// 				},
-	// 				function (data, status) {
-	// 					dataObj = JSON.parse(data);
-	// 					alert(dataObj.description);
-	// 					console.log(dataObj.description);
-	// 					console.log(data);
-	// 				});
-	// 		}
-	// 	});
+
+		function getProfilePicture(emp_id) {
+		$.post( baseUrl + "getProfilePicture/",
+		{
+			id: emp_id,
+		},
+		function(data, status) {
+			dataObj=JSON.parse(data);
+			if(dataObj.result=="fail") {
+				alert("Something's Wrong With Profile Picture")
+			}else{
+				// console.log(dataObj.description);
+				document.getElementById("imageid").src=".." + dataObj.description ;
+			}
+		});
+	}
+
+	function updateCommit(lead_id,isCommit){
+		$.post( baseUrl + "setCommit/",
+		{
+			lead_id: lead_id,
+			isCommit: isCommit,
+		},
+		function(data, status) {
+			dataObj=JSON.parse(data);
+			if(dataObj.result=="fail") {
+				alert("request failed")
+			}else{
+				// console.log(dataObj)
+				// var fname = dataObj.description['fname']
+				// alert("Good Job");
+			}
+			getCallTable(emp_id);
+		});
+	}
+
+
+function announceList(){
+
+}
+	
+	function setDetails(lead_id)
+	{
+		console.log(lead_id)
+		$.post( baseUrl + "editLead/",
+		{
+        id : lead_id,
+        fname : document.getElementById("fnameLead").value,
+        lname :document.getElementById("lnameLead").value,
+				address :document.getElementById("addressLead").value,
+        email :document.getElementById("emailLead").value,
+        alternatePhone:document.getElementById("alternateNumberLead").value,
+        purchaseDate :document.getElementById("dateLead").value,
+        pincode :document.getElementById("pinLead").value,
+        comments :document.getElementById("commentsLead").value,
+		},
+		function(data, status) {
+			dataObj=JSON.parse(data);
+			if(dataObj.result=="fail") {
+				alert("request failed")
+				console.log(dataObj)
+			}else{
+				console.log(dataObj)
+			}
+			getCallTable(emp_id);
+		});
+	}
+	
+	function callLead(lead_id)
+	{
+		console.log(lead_id)
+		$.post( baseUrl + "editLead/",
+		{
+        id : lead_id,
+		},
+		function(data, status) {
+			dataObj=JSON.parse(data);
+			if(dataObj.result=="fail") {
+				alert("request failed")
+				console.log(dataObj)
+			}else{
+				console.log(dataObj)
+			}
+			getCallTable(emp_id);
+		});
+  }
+
+
+
+
+	function getDetails(lead_id){
+		lead_id= lead_id
+		$.post( baseUrl + "displaySingleLead/",
+		{
+			id: lead_id,
+		},
+		function(data, status) {
+			dataObj=JSON.parse(data);
+			if(dataObj.result=="fail") {
+				alert("request failed")
+			}else{
+				console.log(dataObj)
+				document.getElementById("lead_id").innerText = lead_id;
+				document.getElementById("lead_phone").innerText = dataObj.description['mobile'];
+				document.getElementById("fnameLead").value = dataObj.description['fname'];
+				document.getElementById("lnameLead").value = dataObj.description['lname'];
+				document.getElementById("emailLead").value = dataObj.description['email'];
+				document.getElementById("alternateNumberLead").value = dataObj.description['alternatePhone'];
+				document.getElementById("pinLead").value = dataObj.description['pincode'];
+				document.getElementById("dateLead").value = dataObj.description['purchaseDate'];
+				document.getElementById("addressLead").value = dataObj.description['address'];
+				document.getElementById("commentsLead").value = dataObj.description['comments'];
+				document.getElementById("btnLead").setAttribute('onclick','setDetails('+lead_id+')')
+			}
+			getCallTable(emp_id);
+		});
+  }
+
 
 	function getUserData(emp_id) {
 		$.post( baseUrl + "getUserData/",
@@ -371,13 +486,28 @@ $('#pass').click(function(){
 			if(dataObj.result=="fail") {
 				alert("request failed")
 			}else{
-				console.log(dataObj)
+				// console.log(dataObj)
 				var fname = dataObj.description['fname']
 				var lname = dataObj.description['lname']
 				var loginTime = dataObj.description['loginTime']
 				var d = new Date(loginTime);
-				console.log("hello")
-				console.log(d)
+				var login = d.getMinutes()*60 + d.getHours()*60*60 + d.getSeconds()
+				var c = new Date();
+				var curDate = c.getMinutes()*60 + c.getHours()*60*60 + c.getSeconds()
+				// console.log(login)
+				// console.log(curDate)
+				// console.log(curDate -login)
+
+				a = Number(curDate -login);
+   			 var h = Math.floor(a / 3600);
+    		var m = Math.floor(a % 3600 / 60);
+    var s = Math.floor(a % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+    console.log(  hDisplay + mDisplay + sDisplay);
+
 				//cuz jan starts with 0
 				var date = d.getMonth() + 1
 
@@ -390,20 +520,97 @@ $('#pass').click(function(){
 		});
 	}
 
-	$('#commit').click(function () {
-			var val = $('#commit').val();
+	// $('#commit').click(function () {
+	// 		var val = $('#commit').val();
 
-			if (val == "SETCOMMIT") {
-				$('#commit').val("COMMIT");
+	// 		if (val == "SETCOMMIT") {
+	// 			$('#commit').val("COMMIT");
+	// 		}
+	// 		else {
+	// 			$('#commit').val("SETCOMMIT");
+	// 		}
+	// 	})
+
+
+function getNoitificationsTable(emp_id) {
+		document.getElementById('main-table').innerHTML=' ';
+		$.post( baseUrl + "getNotification/",
+		{
+			id: emp_id,
+		},
+		function(data, status){
+			dataObj = JSON.parse(data);
+			if(dataObj.result == 'fail') {
+				alert(dataObj.description);
+			}else{
+				// for (var i=0; i < dataObj.description.length; i++) {
+				// 	console.log(dataObj.description[i]['fname'])
+				// }
+				$("#main-table").append('--');				
+				$("#main-table").append('Only For You');
+				$("#main-table").append('----------------------');				
+
+				var columns = addAllColumnHeaders(dataObj.description);
+				for (var i = 0 ; i < dataObj.description.length ; i++) {
+					var row$ = $('<tr/>');
+					for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
+						var cellValue = dataObj.description[i][columns[colIndex]];
+						if(typeof cellValue === "boolean"){
+							lead_id = dataObj.description[i][columns[0]];
+						}
+						else{
+							if (cellValue == null) { 
+								cellValue = ""; 
+							}
+							row$.append($('<td/>').html(cellValue));
+						}
+					}
+					$("#main-table").append(row$);
+				}
 			}
-			else {
-				$('#commit').val("SETCOMMIT");
+		});
+		$.post( baseUrl + "getNotification/",
+		{},
+		function(data, status){
+			dataObj = JSON.parse(data);
+			if(dataObj.result == 'fail') {
+				alert(dataObj.description);
+			}else{
+				// for (var i=0; i < dataObj.description.length; i++) {
+				// 	console.log(dataObj.description[i]['fname'])
+				// }
+				$("#main-table").append('--');				
+				$("#main-table").append('For All');				
+				$("#main-table").append('----------------------');				
+
+				var columns = addAllColumnHeaders(dataObj.description);
+				for (var i = 0 ; i < dataObj.description.length ; i++) {
+					var row$ = $('<tr/>');
+					for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
+						var cellValue = dataObj.description[i][columns[colIndex]];
+						if(typeof cellValue === "boolean"){
+							lead_id = dataObj.description[i][columns[0]];
+						}
+						else{
+							if (cellValue == null) { 
+								cellValue = ""; 
+							}
+							row$.append($('<td/>').html(cellValue));
+						}
+					}
+					$("#main-table").append(row$);
+				}
 			}
-		})
+		});
+	}
+	
+
+
+
 
 
 	function getCallTable(emp_id) {
-		// document.getElementById('dataTable').innerHTML=' ';
+		document.getElementById('main-table').innerHTML=' ';
 		$.post( baseUrl + "getAssignedLeads/",
 		{
 			id: emp_id,
@@ -421,17 +628,35 @@ $('#pass').click(function(){
 					var row$ = $('<tr/>');
 					for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
 						var cellValue = dataObj.description[i][columns[colIndex]];
-						if (cellValue == null) { 
-							cellValue = ""; 
+						if(typeof cellValue === "boolean"){
+							lead_id = dataObj.description[i][columns[0]];
+							if(cellValue == false){
+								row$.append($('<td/>').html('<input type="button" class="btn" onclick="updateCommit('+lead_id+','+'1'+')" value="Set Commit">'));
+								row$.append($('<td/>').html('<input type="button" class="btn" data-toggle="modal" data-target="#myModal" onclick="getDetails('+lead_id+')" value="Details">'));
+								row$.append($('<td/>').html('<input type="button" class="btn" onclick="callLead('+lead_id+')" value="Call Now">'));
+							}
+							else if(cellValue == true){
+								row$.append($('<td/>').html('<input type="button" class="btn" onclick="updateCommit('+lead_id+',)"value="Un Commit">'));
+								row$.append($('<td/>').html('<input type="button" class="btn" data-toggle="modal" data-target="#myModal" onclick="getDetails('+lead_id+')" value="Details">'));
+								row$.append($('<td/>').html('<input type="button" class="btn" onclick="callLead('+lead_id+')" value="Call Now">'));
+							}
 						}
-							//arrange header
-							// var orderedCellValue = orderCells(cellValue);
+						else{
+							if (cellValue == null) { 
+								cellValue = ""; 
+							}
+								//arrange header
+								// var orderedCellValue = orderCells(cellValue);
 							row$.append($('<td/>').html(cellValue));
+						}
 					}
 					$("#main-table").append(row$);
-					row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">CallNow</button>'));
-					row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">SetCommit</button>'));
-					row$.append($('<td/>').html('<button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>'));
+					// row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">CallNow</button>'));
+					// row$.append($('<td/>').html('<button type="button" id='+dataObj.description[i][columns[0]]+' class="btn" onclick="upgateCommit('+dataObj.description[i][columns[7]]+')">Set Commit</button>'));
+					// row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">CallNow</button>'));
+					// row$.append($('<td/>').html('<button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>'));
+					// row$.append($('<td/>').html('<input type="button" class="btn" onclick="updateCommit('+dataObj.description[i][columns[0]]+',)"value="Un Commit">'));
+
 				}
 			}
 		});
@@ -447,12 +672,10 @@ $('#pass').click(function(){
 	function addAllColumnHeaders(myList) {
 		var columnSet = [];
 		var headerTr$ = $('<tr/>');
-
 		for (var i = 0 ; i < dataObj.description.length ; i++) {
 			var rowHash = dataObj.description[i];
 			for (var key in rowHash) {
-				// i'm not using alernative mobile number
-				if ($.inArray(key, columnSet) == -1){
+				 if ($.inArray(key, columnSet) == -1){
 					columnSet.push(key);
 					headerTr$.append($('<th />').html(key));
 				}
@@ -460,7 +683,6 @@ $('#pass').click(function(){
 		}
 		headerTr$.append($('<th />').html(' '));
 		$("#main-table").append(headerTr$);
-
 		return columnSet;
 	} 
 
