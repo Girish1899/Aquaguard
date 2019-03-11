@@ -149,16 +149,23 @@ a:hover
 }
 .user
 {
+	position: relative;
 	width:100px;
+	margin-top: 6%;
+	margin-left: 23%;
 	height:100px;
 	border-radius:50%;
-	margin-top:7vh;
+	overflow: hidden;
+	/* margin-top:7vh; */
 }
 .username
 {
-	margin-left:10%;
-	margin-top:-5vh;
-	color:#4B7594;
+	position: relative;
+	margin-left:2%;
+	display: inline;
+	/* margin-top:100px; */
+	/* color:#4B7594; */
+	color:white;
 	font-size:25px;
 	font-family:poppins;
 	font-weight:bold;
@@ -166,19 +173,21 @@ a:hover
 
 
 .logintime
-{	margin-top:-120px;
-   text-align:right;
+{	
+	margin-top:1%;
+  text-align:right;
 	font-family:poppins;
-	color:#FFF;
+	color:rgb(255, 255, 255);
 	font-weight:bold;
 	font-size:20px;
 }
 
 .logindate
-{	margin-top:-160px;
+{	
+	margin-right:6%;
   text-align:right;
 	font-family:poppins;
-	color:rgb(20, 0, 0);
+	color:rgb(255, 255, 255);
 	font-weight:bold;
 	font-size:20px;
 }
@@ -220,7 +229,7 @@ button:hover
 	background-color: #06BBE1;
 	color:white;
 }
-#pass
+#pauseButton
 {
 	border:1px solid #06BBE1;
 	border-radius:5px;
@@ -229,7 +238,7 @@ button:hover
 	color:#7CB9E8;
 	font-size: 25px;
 }
-#pass:hover
+#pauseButton:hover
 {
 	background-color: #06BBE1;
 	color:white;

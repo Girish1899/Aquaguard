@@ -21,8 +21,8 @@ from .EmployeeView import updateEmployee,uploadEmployeeProfilePic
 # from .adminViews import addNewLead, displayAssignedLeads, displaySingleLead, updateStatus,empLogin,getCallCount,setCallCount, loginPage, homePage, getSession
 
 
-from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads,getSingleLead, getLeadsNotContacted, storeLogoutTime, makeCall, addProfilePicture, getProfilePicture, setCommit
-from .adminViews import loginPage, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword
+from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads,getSingleLead, getLeadsNotContacted, storeLogoutTime, makeCall, addProfilePicture, getProfilePicture, setCommit, togglePause
+from .adminViews import loginPage, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword, callHistoryPage, commitHistoryPage
 
 from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads, getLeadsNotContacted, storeLogoutTime, makeCall
 from .adminViews import loginPage, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword
@@ -65,17 +65,20 @@ urlpatterns = [
     path("setNotification/", setNotification),
     path("getNotification/", getNotification),
     path("setCommit/", setCommit),
+    path("setPause/", togglePause),
 #----------------------------------------------#
     path("", loginPage),
     path("homePage/", homePage),
     path("homePageCommittedLeads/", homePageCommittedLeads),
     path("homePageContactLeads/", homePageContactLeads),
+    path("callHistoryPage/", callHistoryPage),
+    path("commitHistoryPage/", commitHistoryPage),
     path("changedp/", changedp),
     path("forgotPassword/", forgotPassword),
     path("logoutPage/", logoutPage),
 
 #-------------changes by rahul -----------------#
-    path("updateEmployee/",updateEmployee),
+    path("updateEmployee/", updateEmployee),
     # path("getProductDetail/",getProductDetails),
 
 ]

@@ -7,11 +7,13 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../static/css/my_style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
-  <link rel="stylesheet" href="../static/css/my_style.css">
-	<script type="text/javascript" src="/static/js/aquaguardTimer.js"></script>
+  <script type="text/javascript" src="/static/js/aquaguardTimer.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+
 <style>
 .call-card 
 {
@@ -43,400 +45,510 @@
 </head>
 <body>
 
-<nav class="navbar">
-	<div class="container">
-		<a href="upload_dp.html"><img src="/static/images/Avatar.png" class="user"/></a>
-				<p id="loginTime" class="logintime"></p><br>
+	<nav class="navbar">
+		<div class="row">
+			<div class="col-md-6">
+				<a href="upload_dp.html"><img src="/static/images/Avatar.png" class="user"/></a>
+				<h1 id="welcomeTag" class="username"></h1>
+			</div>
+			<div class="col-md-6" style="padding-right:10%; padding-top:1%">
+				<p id="loginTime" class="logintime"></p>
 				<p id="loginDate" class="logindate"></p>
-				<h1 class="username">Hello Diana Johns</h1>
-	</div>
-	
-</nav>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-lg-11">
-			<h1 class="dashboard">Your dashboard</h1>
+			</div>
 		</div>
-		
-		<div class="col-lg-1">
-		<i class="glyphicon glyphicon-menu-hamburger"style="color:#7CB9E8;font-size:35px;"id="menubar"></i>
-		</div>
-	</div>
-</div><br>
-<span class="iconbox">
-	<p><a href="">Print Salary slip</a>
-		<br>
-		<a href="change_password.html">Change Password</a>
-		<br>
-		<a href="report_an_issue.html">Report an issue</a>
-		<button style="font-size:50px;margin-top:-15vh;" class="close" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</p>
-</span>
+	</nav>
+	<div class="container-fluid">
 
-<div class="container">
-	<div class="row">
-		<div class="col-lg-2 text-center">
-			<a href="call_histroy.html"><button type="button">&nbsp;&nbsp;&nbsp;Calls&nbsp;&nbsp;&nbsp;&nbsp;</button></a>
+		<div class="row">
+			<div class="col-lg-11">
+				<h1 class="dashboard">Your dashboard</h1>
+			</div>
+			
+			<div class="col-lg-1">
+				<i class="glyphicon glyphicon-menu-hamburger"style="color:#7CB9E8;font-size:35px;"id="menubar"></i>
+			</div>
 		</div>
-		<div class="col-lg-8">
-			<div class="progress">
-					<div class="progress-bar" role="progressbar" aria-valuenow="17" aria-valuemin="0" aria-valuemax="100">
-					</div>
-				</div>
-		</div>
-		<div class="col-lg-2">
-			<span id="ID28">28/30</span>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-2 text-center">
-			<a href="commits_board.html"><button type="button">Commits&nbsp;</button></a>
-		</div>
-		<div class="col-lg-8">
-			<div class="progress">
-					<div class="progress-bar" role="progressbar" aria-valuenow="17" aria-valuemin="0" aria-valuemax="100">
-					</div>
-				</div>
-		</div>
-		<div class="col-lg-2">
-			<span id="ID28">16/30</span>
-		</div>
-	</div>
-</div>
-<br>
-<div class="container">
-	<div class="row">
-		<div class="col-lg-4">
-			<a href=""><span id="leadlist">Leads</span></a>
-		</div>
-		
-		<div class="col-lg-6 text-right">
-			<a href="after_change_dp.html"><span id="leadlist">Announcement</span></a>
-		</div>
-	</div>
-</div>
+	</div><br>
+	<span class="iconbox">
+		<p><a href="">Print Salary slip</a>
+			<br>
+			<a href="change_password.html">Change Password</a>
+			<br>
+			<a href="report_an_issue.html">Report an issue</a>
+			<button style="font-size:50px;margin-top:-15vh;" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</p>
+	</span>
 
-<div class="container ">
-	<div class="row">
-		<div class="col-lg-10">
-			<div id="table-scroll" class="table-scroll">
-				<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap scrollbar-ripe-malinka">
-						<table id="main-table" class="main-table">
-						</table> 
-						
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-2 text-center">
+				<button id="callsButton" type="button">&nbsp;&nbsp;&nbsp;Calls&nbsp;&nbsp;&nbsp;&nbsp;</button>
+			</div>
+			<div class="col-lg-8">
+				<div class="progress">
+						<div class="progress-bar" role="progressbar" aria-valuenow="17" aria-valuemin="0" aria-valuemax="100">
+				</div>
+					</div>
+			</div>
+			<div class="col-lg-2">
+				<span id="ID28">28/30</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-2 text-center">
+				<button id="commitsButton" type="button">Commits&nbsp;</button>
+			</div>
+			<div class="col-lg-8">
+				<div class="progress">
+						<div class="progress-bar" role="progressbar" aria-valuenow="17" aria-valuemin="0" aria-valuemax="100">
+						</div>
+					</div>
+			</div>
+			<div class="col-lg-2">
+				<span id="ID28">16/30</span>
+			</div>
+		</div>
+	</div>
+
+	<br>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4">
+				<a href=""><span id="leadlist">Leads</span></a>
+			</div>
+			
+			<div class="col-lg-6 text-right">
+				<a href="after_change_dp.html"><span id="leadlist">Announcement</span></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container ">
+		<div class="row">
+			<div class="col-lg-10">
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+						<div class="table-wrap scrollbar-ripe-malinka">
+							<table id="main-table" class="main-table"></table> 
 						</div>
 					</div>
 				</div>
 
 				<div class="col-lg-1 text-left">
 					<div class="call-card">
-							<div class="call-user-icon">
-								<center>
-									<img class="call-user-icon" src="/static/images/call-user-icon.png">
-								</center>
-							</div>
-							<div class="call-card-user-name">
-								<p class="caller-name">Joel Matts</p>
-								<p class="caller-id">CUST ID 0023493111834</p>
-								<p id="call-duration">01:29:43</p>
-							</div>
+						<div class="call-user-icon">
 							<center>
-								<div class="single-call-icon">
-									<a href=""id="calldisconnect"><img src="/static/images/red-call-icon.png" height="80px" width="80px"></a>
-								</div>
+								<img class="call-user-icon" src="/static/images/call-user-icon.png">
 							</center>
 						</div>
-				</div>
-
-
-			</div>
-</div>
-
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-6">
-						<p style="color:#06BBE1;">LEAD ID: AQ023</p><p style="margin-left:60%;margin-top:-5vh;color:#06BBE1;">LEAD PH: 9900652507</p>
-						
+						<div class="call-card-user-name">
+							<p class="caller-name">Joel Matts</p>
+							<p class="caller-id">CUST ID 0023493111834</p>
+							<p id="call-duration">01:29:43</p>
+						</div>
+						<center>
+							<div class="single-call-icon">
+								<a href=""id="calldisconnect"><img src="/static/images/red-call-icon.png" height="80px" width="80px"></a>
+							</div>
+						</center>
 					</div>
 				</div>
 			</div>
-		  </h4>
-        </div>
-        <div class="modal-body">
-		<div class="container">  
-			<div class="row">
-				<div class="col-lg-2">
-					<p>First Name</p>
+		</div>
+	</div>
+
+	<!-- This is to update new lead -->
+	<div class="modal fade" id="myModal2" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6">
+							<p style="color:#06BBE1;">LEAD ID: AQ023</p><p style="margin-left:60%;margin-top:-5vh;color:#06BBE1;">LEAD PH: 9900652507</p>
+							
+						</div>
+					</div>
 				</div>
-				<div class="col-lg-5">
-					<input type="text"class="modelname"/>
-			    </div>
+				</h4>
+					</div>
+					<div class="modal-body">
+			<div class="container">  
+				<div class="row">
+					<div class="col-lg-2">
+						<p>First Name</p>
+					</div>
+					<div class="col-lg-5">
+						<input type="text"class="modelname"/>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2">
+						<p>Last Name</p>
+					</div>
+					<div class="col-lg-5">
+						<input type="text"class="modelname"/>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2">
+						<p>Alternative number</p>
+					</div>
+					<div class="col-lg-5">
+						<input type="text"class="modelname"/>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2">
+						<p>City</p>
+					</div>
+					<div class="col-lg-5">
+						<input type="text"class="modelname"/>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2">
+						<p>PIN</p>
+					</div>
+					<div class="col-lg-5">
+						<input type="text"class="modelname"/>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2">
+						<p>Address</p>
+					</div>
+					<div class="col-lg-5">
+						<textarea class="modelname"></textarea>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2">
+						<p>Remarks</p>
+					</div>
+					<div class="col-lg-5">
+						<textarea class="modelname"></textarea>
+						</div>
+				</div>
 			</div>
-			<div class="row">
-				<div class="col-lg-2">
-					<p>Last Name</p>
-				</div>
-				<div class="col-lg-5">
-					<input type="text"class="modelname"/>
-			    </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Update</button>  <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
 			</div>
-			<div class="row">
-				<div class="col-lg-2">
-					<p>Alternative number</p>
 				</div>
-				<div class="col-lg-5">
-					<input type="text"class="modelname"/>
-			    </div>
-			</div>
-			<div class="row">
-				<div class="col-lg-2">
-					<p>City</p>
-				</div>
-				<div class="col-lg-5">
-					<input type="text"class="modelname"/>
-			    </div>
-			</div>
-			<div class="row">
-				<div class="col-lg-2">
-					<p>PIN</p>
-				</div>
-				<div class="col-lg-5">
-					<input type="text"class="modelname"/>
-			    </div>
-			</div>
-			<div class="row">
-				<div class="col-lg-2">
-					<p>Address</p>
-				</div>
-				<div class="col-lg-5">
-					<textarea class="modelname"></textarea>
-			    </div>
-			</div>
-			<div class="row">
-				<div class="col-lg-2">
-					<p>Remarks</p>
-				</div>
-				<div class="col-lg-5">
-					<textarea class="modelname"></textarea>
-			    </div>
 			</div>
 		</div>
-        <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Update</button>  <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-    </div>
 	</div>
-  </div>
+
+	
+	<!-- This is to show pause -->
+	<div id="myModal" class="modal fade" role="dialog" style="border: 3px solid #7CB9E8">
+		<div class="modal-dialog">
+			<div class="modal-content" style="background-color: rgb(135, 202, 193)">
+				<div class="modal-header">
+					<div style="margin-bottom: 150px">
+						<img src="/static/images/download.png" class="user"/>
+					</div>
+				</div>
+				<div class="modal-body">
+					<h4 class="modal-title text-center">Paused</h4>
+					<div class="text-center">    
+						<p id="ptime" style="font-weight: bold;"></p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="text-center">
+						<input type="submit" id="resume" value="Resume" class="btn btn-primary" style="color: #7CB9E8">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<br>
-<footer><br>
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-3">
-				<p class="time">Time Left <br>06:09:25</p>
-			</div>
-			<div class="col-lg-6 text-center">
-				<input type="button"id="pass" value="PAUSE">   <a href="logoutfeedback.html"><button type="button">LOGOUT</button></a>
 
-			
+	<footer><br>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<p class="time">Time Left</p>
+					<p id="runningTime" class="time"></p>
+					<!-- <p class="time">06:09:25<br> -->
+				</div>
+				<div class="col-lg-6 text-center">
+					<button id="pauseButton" type="button">PAUSE</button>  <button id="logoutButton" type="button">LOGOUT</button>
+				</div>
 			</div>
 		</div>
-	</div>
-</footer>
-<script>
-$(document).ready(function(){
-	$(".iconbox").hide();
-		$("#menubar").click(function(){
-		$('#menubar').hide();
-			$(".iconbox").show();
-});
-});
+	</footer>
 
-$(document).ready(function(){
+	<!-- All script starts here -->
+	<script>
 	
-		$(".close").click(function(){
-		$('#menubar').show();
+
+		$(document).ready(function(){
 			$(".iconbox").hide();
-});
-});
+				$("#menubar").click(function(){
+				$('#menubar').hide();
+					$(".iconbox").show();
+		});
+		});
 
-
-$(document).ready(function(){
-	
-		$("#menubar").click(function(){
-			$("#btn").hide();
-			$(".close").click(function(){
-		$('#btn').show();
-});
-});
-});
-
-
-$(document).ready(function(){
-	
-		$("#menubar").click(function(){
-			$("#btn1").hide();
-			$(".close").click(function(){
-		$('#btn1').show();
-});
-});
-});
-
-
-	$(".call-card").hide();
-		$("#callnow").click(function(){
-		
-			$(".call-card").show();
-
-
+		$(document).ready(function(){
 			
-});
-
-
-
-$('#commit').click(function(){
-	var val=$('#commit').val();
-	if(val=="SETCOMMIT"){
-		$('#commit').val("COMMIT");
-	}
-	else{
-		$('#commit').val("SETCOMMIT");
-	}
-})
-
-$('#pass').click(function(){
-	var val=$('#pass').val();
-	if(val=="PAUSE"){
-		$('#pass').val("RESUME");
-	}
-	else{
-		$('#pass').val("PAUSE");
-	}
-})
-
-
-
-</script>
-<script>
-	$(document).ready(function() {
-		$.post( baseUrl + "getSession/",
-		{},
-		function(data, status) {
-			dataObj=JSON.parse(data);
-			if(dataObj.result=="fail") {
-				window.location.href = baseUrl
-			}else{
-				emp_id = dataObj.description;
-				getUserData(emp_id);
-			}
+				$(".close").click(function(){
+				$('#menubar').show();
+					$(".iconbox").hide();
 		});
-	})
-
-	function getUserData(emp_id) {
-		$.post( baseUrl + "getUserData/",
-		{
-			id: emp_id,
-		},
-		function(data, status) {
-			dataObj=JSON.parse(data);
-			if(dataObj.result=="fail") {
-				alert("request failed")
-			}else{
-				console.log(dataObj)
-				var fname = dataObj.description['fname']
-				var lname = dataObj.description['lname']
-				var loginTime = dataObj.description['loginTime']
-				var d = new Date(loginTime);
-				console.log("hello")
-				console.log(d)
-				//cuz jan starts with 0
-				var date = d.getMonth() + 1
-
-				$("#loginTime").text('Logged in at: ' + d.getHours() + ' : ' + d.getMinutes())
-				$("#loginDate").text('DATE: ' + d.getDate() + '-' + date + '-' + d.getFullYear())
-
-				$("#welcomeTag").text(fname + ' ' +lname);
-				//To a change welcome
-			}
-			getCallTable(emp_id)
 		});
-	}
 
 
-	function getCallTable(emp_id) {
-		// document.getElementById('dataTable').innerHTML=' ';
-		$.post( baseUrl + "getAssignedLeads/",
-		{
-			id: emp_id,
-		},
-		function(data, status){
-			dataObj = JSON.parse(data);
-			if(dataObj.result == 'fail') {
-				alert("Sorry No Data Assigned Yet");
-			}else{
-				// for (var i=0; i < dataObj.description.length; i++) {
-				// 	console.log(dataObj.description[i]['fname'])
-				// }
-				var columns = addAllColumnHeaders(dataObj.description);
-				for (var i = 0 ; i < dataObj.description.length ; i++) {
-					var row$ = $('<tr/>');
-					for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
-						var cellValue = dataObj.description[i][columns[colIndex]];
-						if (cellValue == null) { 
-							cellValue = ""; 
-						}
-							//arrange header
-							// var orderedCellValue = orderCells(cellValue);
-							row$.append($('<td/>').html(cellValue));
+		$(document).ready(function(){
+			$("#menubar").click(function(){
+				$("#btn").hide();
+				$(".close").click(function(){
+			$('#btn').show();
+		});
+		});
+		});
+
+
+		$(document).ready(function(){
+			$("#menubar").click(function(){
+				$("#btn1").hide();
+				$(".close").click(function(){
+			$('#btn1').show();
+		});
+		});
+		});
+
+
+		$(".call-card").hide();
+		$("#callnow").click(function(){
+			$(".call-card").show();
+		});
+
+
+
+		$("#callsButton").click(function() {
+			//This page is temporary
+			window.location.href = baseUrl + "callHistoryPage/"
+		})
+
+
+		$("#commitsButton").click(function() {
+			//This page is temporary
+			window.location.href = baseUrl + "commitHistoryPage/"
+		})
+
+
+		$("#logoutButton").click(function() {
+			window.location.href = baseUrl + "logoutPage/"
+		});
+
+
+		$('#commit').click(function(){
+			var val=$('#commit').val();
+			if(val=="SETCOMMIT"){
+				$('#commit').val("COMMIT");
+			}
+			else{
+				$('#commit').val("SETCOMMIT");
+			}
+		})
+
+		// $('#pauseButton').click(function(){
+		// 	var val=$('#pauseButton').val();
+		// 	if(val=="PAUSE"){
+		// 		$('#pauseButton').val("RESUME");
+		// 	}
+		// 	else{
+		// 		$('#pauseButton').val("PAUSE");
+		// 	}
+		// })
+		</script>
+
+		<script>
+			var loginTime = ''
+			var emp_id = ''
+			var pauseDuration = ''
+
+			$(document).ready(function() {
+				$.post( baseUrl + "getSession/",
+				{},
+				function(data, status) {
+					dataObj=JSON.parse(data);
+					if(dataObj.result=="fail") {
+						window.location.href = baseUrl
+					}else{
+						emp_id = dataObj.description;
+						getUserData(emp_id);
 					}
-					$("#main-table").append(row$);
-					row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">CallNow</button>'));
-					row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">SetCommit</button>'));
-					row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">Details</button>'));
+				});
+			})
+
+		function getUserData(emp_id) {
+			$.post( baseUrl + "getUserData/",
+			{
+				id: emp_id,
+			},
+			function(data, status) {
+				dataObj=JSON.parse(data);
+				if(dataObj.result=="fail") {
+					alert("request failed")
+				}else{
+					console.log(dataObj)
+					var fname = dataObj.description['fname']
+					var lname = dataObj.description['lname']
+					loginTime = dataObj.description['loginTime']
+					var d = new Date(loginTime);
+
+					var date = d.getMonth() + 1
+
+					$("#loginTime").text('Logged in at: ' + d.getHours() + ' : ' + d.getMinutes())
+					$("#loginDate").text('Date: ' + d.getDate() + '-' + date + '-' + d.getFullYear())
+
+					$("#welcomeTag").text("Hello " + fname + ' ' +lname);
+					//To a change welcome
+				}
+				getCallTable(emp_id)
+			});
+		}
+
+
+		function getCallTable(emp_id) {
+			// document.getElementById('dataTable').innerHTML=' ';
+			$.post( baseUrl + "getAssignedLeads/",
+			{
+				id: emp_id,
+			},
+			function(data, status){
+				dataObj = JSON.parse(data);
+				if(dataObj.result == 'fail') {
+					alert("Sorry No Data Assigned Yet");
+				}else{
+					// for (var i=0; i < dataObj.description.length; i++) {
+					// 	console.log(dataObj.description[i]['fname'])
+					// }
+					var columns = addAllColumnHeaders(dataObj.description);
+					for (var i = 0 ; i < dataObj.description.length ; i++) {
+						var row$ = $('<tr/>');
+						for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
+							var cellValue = dataObj.description[i][columns[colIndex]];
+							if (cellValue == null) { 
+								cellValue = ""; 
+							}
+								//arrange header
+								// var orderedCellValue = orderCells(cellValue);
+								row$.append($('<td/>').html(cellValue));
+						}
+						$("#main-table").append(row$);
+						row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">CallNow</button>'));
+						row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">SetCommit</button>'));
+						row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">Details</button>'));
+					}
+				}
+			});
+		}
+				// $('#excelDataTable').DataTable();
+
+		function orderCells(headers) {
+			for (var header of headers) {
+				console.log(header)
+			}
+		}
+
+		function addAllColumnHeaders(myList) {
+			var columnSet = [];
+			var headerTr$ = $('<tr/>');
+
+			for (var i = 0 ; i < dataObj.description.length ; i++) {
+				var rowHash = dataObj.description[i];
+				for (var key in rowHash) {
+					// i'm not using alernative mobile number
+					if ($.inArray(key, columnSet) == -1){
+						columnSet.push(key);
+						headerTr$.append($('<th />').html(key));
+					}
 				}
 			}
-		});
-	}
-			// $('#excelDataTable').DataTable();
+			headerTr$.append($('<th />').html(' '));
+			$("#main-table").append(headerTr$);
 
-	function orderCells(headers) {
-		for (var header of headers) {
-			console.log(header)
-		}
-	}
+			return columnSet;
+		} 
 
-	function addAllColumnHeaders(myList) {
-		var columnSet = [];
-		var headerTr$ = $('<tr/>');
+		$(document).ready(function() {
+			setInterval(function() {
 
-		for (var i = 0 ; i < dataObj.description.length ; i++) {
-			var rowHash = dataObj.description[i];
-			for (var key in rowHash) {
-				// i'm not using alernative mobile number
-				if ($.inArray(key, columnSet) == -1){
-					columnSet.push(key);
-					headerTr$.append($('<th />').html(key));
+				var d = new Date(loginTime);
+				var login = d.getMinutes()*60 + d.getHours()*60*60 + d.getSeconds()
+				var c = new Date();
+				var curDate = c.getMinutes()*60 + c.getHours()*60*60 + c.getSeconds()
+
+				a = Number(curDate -login);
+				var h = Math.floor(a / 3600);
+				var m = Math.floor(a % 3600 / 60);
+				var s = Math.floor(a % 3600 % 60);
+
+				// var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+				// var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+				// var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+
+				var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+				var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+				var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+				$("#runningTime").text(h + ":" + m + "." + s)
+			// $("#runningTime").text(d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12:true }))
+			}, 1000)
+		})
+
+		// startTimer();
+
+		$("#pauseButton").click(function(e) {
+			e.preventDefault();
+			$('#myModal').modal('show');
+			startCounter();
+			$.post( baseUrl + "setPause/",
+			{
+				id: emp_id,
+				isPause: true
+			},
+			function(data, status) {
+				dataObj = JSON.parse(data);
+				if(dataObj.result == 'fail') {
+					alert(dataObj.description)
+				}else {
+					console.log(dataObj.description)
 				}
-			}
-		}
-		headerTr$.append($('<th />').html(' '));
-		$("#main-table").append(headerTr$);
 
-		return columnSet;
-	} 
+			})
+		})
 
-</script>
+		$('#resume').click(function(e){
+			e.preventDefault();
+			// location.reload();
+			resetCounter();
+			$("#myModal").modal("hide");
+			$.post(baseUrl + "setPause/",
+			{
+				id:emp_id,
+				isPause: false
+			},
+			function(data, status) {
+				dataObj = JSON.parse(data);
+				if(dataObj.result == 'fail') {
+					alert(dataObj.description)
+				}else {
+					pauseDuration = dataObj.description
+				}
+			})
+		})
+	</script>
+
 
 
 </body>

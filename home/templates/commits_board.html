@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Commits_page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../static/css/my_style.css">
+	<script type="text/javascript" src="../static/js/aquaguardTimer.js"></script>
+
+</head>
+<body>
+	<nav class="navbar">
+			<div class="row">
+				<div class="col-md-6">
+					<a href="upload_dp.html"><img src="/static/images/Avatar.png" class="user"/></a>
+					<h1 id="welcomeTag" class="username"></h1>
+				</div>
+				<div class="col-md-6" style="padding-right:10%; padding-top:1%">
+					<p id="loginTime" class="logintime"></p>
+					<p id="loginDate" class="logindate"></p>
+				</div>
+			</div>
+		</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-10 col-xl-10 col-md-10 col-sm-10 col-xs-10 ">
+				<h1 class="dashboard">Your dashboard</h1>
+			</div>
+			<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2 text-right">
+			<i class="glyphicon glyphicon-menu-hamburger"style="color:#7CB9E8;font-size:35px;"id="menubar"></i>
+			</div>
+		</div>
+	</div><br>
+	<span class="iconbox">
+		<p><a href="">Print Salary slip</a>
+			<br>
+			<a href="change_password.html">Change Password</a>
+			<br>
+			<a href="report_an_issue.html">Report an issue</a>
+			<button style="font-size:50px;margin-top:-11vh;" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</p>
+	</span>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-2 col-lg-offset-1  col-md-2 col-md-offset-1 col-xs-2 col-xs-offset-1 col-sm-2 col-sm-offset-1 col-xl-2 col-xl-offset-1">
+				<p style="font-family: Poppins;	font-size:20px;color:#06BBE1;font-weight:bold;">Commits</p>
+			</div>
+			<div class="col-lg-1 col-md-1 col-xs-1  col-sm-1 col-xl-1">
+				<label class="form-check-label">
+					<input type="radio" checked="checked" name="radio">
+						<span class="checkmark"></span>
+				</label>
+			</div>
+			<div class="col-lg-1 col-md-1 col-xs-1  col-sm-1 col-xl-1">
+				<p style="font-family: Poppins;font-size:20px;">Today</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-2 col-lg-offset-1  col-md-2 col-md-offset-1 col-xs-2 col-xs-offset-1 col-sm-2 col-sm-offset-1 col-xl-2 col-xl-offset-1">
+				<p style="font-family: Poppins;	font-size:20px;color:#06BBE1;font-weight:bold;">12</p>
+			</div>
+			<div class="col-lg-1 col-md-1 col-xs-1  col-sm-1 col-xl-1">
+				<label class="form-check-label">
+					<input type="radio" checked="checked" name="radio">
+						<span class="checkmark"></span>
+				</label>
+			</div>
+			<div class="col-lg-1 col-md-1 col-xs-1  col-sm-1 col-xl-1">
+				<p style="font-family: Poppins;font-size:20px;">From</p>
+			</div>
+			<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2">
+				<p style="font-family: Poppins;font-size:20px;"><input type="date" class="form-control"></p>
+			</div>
+			<div class="col-lg-1col-md-1 col-xs-1  col-sm-1 col-xl-1 text-left">
+				<p style="font-family: Poppins;font-size:20px;">To</p>
+			</div>
+			<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2">
+				<p style="font-family: Poppins;font-size:20px;"><input type="date" class="form-control"></p>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-xs-12  col-sm-12 col-xl-12  text-center">
+				<button type="button">SEARCH</button>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-xs-3  col-sm-3 col-xl-3">
+				<span id="leadlist">Call Histroy</span>
+			</div>
+			<div class="col-lg-7  col-md-7 col-xs-7  col-sm-7 col-xl-7 text-right">
+				<a href="after_change_dp.html"><span id="leadlist">Announcement</span></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container ">
+		<div class="row">
+			<div class="col-lg-10 col-md-10 col-xs-10  col-sm-10 col-xl-10">
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+						<div class="table-wrap scrollbar-ripe-malinka">
+							<table id="main-table" class="main-table"></table> 
+							
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-1 col-md-1 col-xs-1  col-sm-1 col-xl-1 text-left">
+						<div class="call-card">
+								<div class="call-user-icon">
+									<center>
+										<img class="call-user-icon" src="images/call-user-icon.png">
+									</center>
+								</div>
+								<div class="call-card-user-name">
+									<p class="caller-name">Joel Matts</p>
+									<p class="caller-id">CUST ID 0023493111834</p>
+									<p id="call-duration">01:29:43</p>
+								</div>
+								<center>
+									<div class="single-call-icon">
+										<a href=""id="calldisconnect"><img src="images/red-call-icon.png" height="80px" width="80px"></a>
+									</div>
+								</center>
+							</div>
+					</div>
+				</div>
+	</div>
+
+	<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+			
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6">
+							<p style="color:#06BBE1;">LeadID:AQ023</p><p style="margin-left:60%;margin-top:-5vh;color:#06BBE1;">Ph:9900652507</p>
+							<p style="color:#06BBE1;">Last Dialled by:Emp23 Vijetha</p><p style="margin-left:60%;margin-top:-5vh;color:#06BBE1;">Dialings done:04</p>
+							<p style="color:#06BBE1;">Last Dialled at:10.30 pm 21-02-2019</p>
+						</div>
+					</div>
+				</div>
+				</h4>
+					</div>
+					<div class="modal-body">
+			<div class="container">  
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2">
+						<p>First Name</p>
+					</div>
+					<div class="col-lg-5 col-md-5 col-xs-5  col-sm-5 col-xl-5">
+						<input type="text"class="modelname"/>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2">
+						<p>Last Name</p>
+					</div>
+					<div class="col-lg-5 col-md-5 col-xs-5  col-sm-5 col-xl-5">
+						<input type="text"class="modelname"/>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2">
+						<p>Alternative number</p>
+					</div>
+					<div class="col-lg-5 col-md-5 col-xs-5  col-sm-5 col-xl-5">
+						<input type="text"class="modelname"/>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2">
+						<p>City</p>
+					</div>
+					<div class="col-lg-5 col-md-5 col-xs-5  col-sm-5 col-xl-5">
+						<input type="text"class="modelname"/>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2">
+						<p>PIN</p>
+					</div>
+					<div class="col-lg-5 col-md-5 col-xs-5  col-sm-5 col-xl-5">
+						<input type="text"class="modelname"/>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2">
+						<p>Address</p>
+					</div>
+					<div class="col-lg-5 col-md-5 col-xs-5  col-sm-5 col-xl-5">
+						<textarea class="modelname"></textarea>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2">
+						<p>Remarks</p>
+					</div>
+					<div class="col-lg-5 col-md-5 col-xs-5  col-sm-5 col-xl-5">
+						<textarea class="modelname"></textarea>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2">
+						<p>Commit Status</p>
+					</div>
+					<div class="col-lg-5 col-md-5 col-xs-5  col-sm-5 col-xl-5">
+						<select class="form-control" id="exampleFormControlSelect1"style="width:50%;">
+							<option>Commit</option>
+							<option>Not Commit</option>
+						</select>
+						</div>
+				</div>
+			</div>
+					<br>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Update</button> <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+
+	<br>
+					
+	<footer><br>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-3 col-xs-3  col-sm-3 col-xl-3">
+					<p class="time">Time Left</p>
+					<p id="runningTime" class="time"></p>
+				</div>
+				<div class="col-lg-6 col-md-6 col-xs-6  col-sm-6 col-xl-6 text-center">
+					<button id="pauseButton" type="button"id="pass">PAUSE</button>  <button id="logoutButton" type="button">LOGOUT</button>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+	<script>
+	$(document).ready(function(){
+		$(".iconbox").hide();
+			$("#menubar").click(function(){
+			$('#menubar').hide();
+				$(".iconbox").show();
+	});
+	});
+
+	$(document).ready(function(){
+		
+			$(".close").click(function(){
+			$('#menubar').show();
+				$(".iconbox").hide();
+	});
+	});
+
+
+	$(document).ready(function(){
+			$("#menubar").click(function(){
+				$("#btn").hide();
+				$(".close").click(function(){
+					$('#btn').show();
+				});
+			});
+	});
+
+
+	$(document).ready(function(){
+		
+			$("#menubar").click(function(){
+				$("#btn1").hide();
+				$(".close").click(function(){
+			$('#btn1').show();
+	});
+	});
+	});
+
+
+		$(".call-card").hide();
+			$("#callnow").click(function(){
+			
+				$(".call-card").show();
+
+
+				
+	});
+
+
+
+	$('#pass').click(function(){
+		var val=$('#pass').val();
+		if(val=="PAUSE"){
+			$('#pass').val("RESUME");
+		}
+		else{
+			$('#pass').val("PAUSE");
+		}
+	})
+
+	</script>
+
+	<script>
+		var loginTime = ''
+		var emp_id = ''
+		var pauseDuration = ''
+
+		$(document).ready(function() {
+			console.log(baseUrl)
+			$.post( baseUrl + "getSession/",
+			{},
+			function(data, status) {
+				dataObj=JSON.parse(data);
+				if(dataObj.result=="fail") {
+					window.location.href = baseUrl
+				}else{
+					emp_id = dataObj.description;
+					getUserData(emp_id);
+				}
+			});
+		})
+
+		function getUserData(emp_id) {
+			$.post( baseUrl + "getUserData/",
+			{
+				id: emp_id,
+			},
+			function(data, status) {
+				dataObj=JSON.parse(data);
+				if(dataObj.result=="fail") {
+					alert("request failed")
+				}else{
+					console.log(dataObj)
+					var fname = dataObj.description['fname']
+					var lname = dataObj.description['lname']
+					loginTime = dataObj.description['loginTime']
+					var d = new Date(loginTime);
+
+					var date = d.getMonth() + 1
+
+					$("#loginTime").text('Logged in at: ' + d.getHours() + ' : ' + d.getMinutes())
+					$("#loginDate").text('Date: ' + d.getDate() + '-' + date + '-' + d.getFullYear())
+
+					$("#welcomeTag").text("Hello " + fname + ' ' +lname);
+					//To a change welcome
+				}
+				// getCallTable(emp_id)
+			});
+		}
+		$(document).ready(function() {
+				setInterval(function() {
+
+					var d = new Date(loginTime);
+					var login = d.getMinutes()*60 + d.getHours()*60*60 + d.getSeconds()
+					var c = new Date();
+					var curDate = c.getMinutes()*60 + c.getHours()*60*60 + c.getSeconds()
+
+					a = Number(curDate -login);
+					var h = Math.floor(a / 3600);
+					var m = Math.floor(a % 3600 / 60);
+					var s = Math.floor(a % 3600 % 60);
+
+					// var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+					// var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+					// var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+
+					var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+					var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+					var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+					$("#runningTime").text(h + ":" + m + "." + s)
+				// $("#runningTime").text(d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12:true }))
+				}, 1000)
+			})
+
+			// startTimer();
+
+			$("#pauseButton").click(function(e) {
+				e.preventDefault();
+				$('#myModal').modal('show');
+				startCounter();
+				$.post( baseUrl + "setPause/",
+				{
+					id: emp_id,
+					isPause: true
+				},
+				function(data, status) {
+					dataObj = JSON.parse(data);
+					if(dataObj.result == 'fail') {
+						alert(dataObj.description)
+					}else {
+						console.log(dataObj.description)
+					}
+
+				})
+			})
+
+			$('#resume').click(function(e){
+				e.preventDefault();
+				// location.reload();
+				resetCounter();
+				$("#myModal").modal("hide");
+				$.post(baseUrl + "setPause/",
+				{
+					id:emp_id,
+					isPause: false
+				},
+				function(data, status) {
+					dataObj = JSON.parse(data);
+					if(dataObj.result == 'fail') {
+						alert(dataObj.description)
+					}else {
+						pauseDuration = dataObj.description
+					}
+				})
+			})
+	</script>
+
+
+</body>
+</html>
+

@@ -5,6 +5,7 @@ from .models import Customers, Employee, Leads, EmpStatus, Notifications
 from django.shortcuts import HttpResponse, render
 from .tests import cleanDatabase, fill_database_with_dummy_values
 from django.utils import timezone
+from django.utils.dateparse import parse_date
 # from django_otp.oath import hotp
 import pytz
 import json
@@ -37,6 +38,14 @@ def homePageCommittedLeads(request):
 def homePageContactLeads(request):
     return render(request, 'contactLeads.html')
 
+@csrf_exempt
+def callHistoryPage(request):
+    return render(request, 'call_history.html')
+
+
+@csrf_exempt
+def commitHistoryPage(request):
+    return render(request, 'commits_board.html')
 
 @csrf_exempt
 def forgotPassword(request):
@@ -227,6 +236,7 @@ def getNotification(request):
 @csrf_exempt
 def togglePause(request):
     if (request.method == "POST"):
+        print("hello")
         timeNow = str(datetime.datetime.now())
         currDate = str(datetime.datetime.now().date())
 
@@ -235,23 +245,31 @@ def togglePause(request):
         if emp_id == None or emp_id == '':
             return fail("Enter Employee Id")
         try:
-            empObj = Employee.objects.get(id=emp_id)
-            empStatObj = EmpStatus.objects.filter(employeeID=empObj, date=currDate)
+            empObj = Employee.objects.get(empID=emp_id)
+            empStatObj = EmpStatus.objects.get(employeeID=empObj, date=currDate)
         except Exception as e:
             print(e)
             return fail("Couldn't get desired object")
-        if isPause is True:
-            empStatObj.pauseTime = timeNow
-            empStatObj.isPause = True
-            empStatObj.save()
-            return success("Pause time has been captured")
-        if isPause is False:
-            empStatObj.pauseTime = ''
-            empStatObj.isPause = False
-            empStatObj.save()
-            return success("Pause has been released")
+        else:
+            if isPause == 'true':
+                empStatObj.pauseTime = timeNow
+                empStatObj.isPause = True
+                empStatObj.save()
+                return success("Pause time has been captured")
+            if isPause == 'false':
+                duration = calculatePauseDuration(empStatObj.pauseTime)
+                empStatObj.pauseTime = ''
+                empStatObj.isPause = False
+                empStatObj.save()
+                return success(duration)
     return fail("Error in request")
 
+def calculatePauseDuration(pauseTime):
+    timeNow = datetime.datetime.now()
+    pTime = datetime.datetime.strptime(pauseTime, "%Y-%m-%d %H:%M:%S.%f")
+    deltaObj = datetime.timedelta(hours=pTime.hour, minutes=pTime.minute, seconds=pTime.second)
+    pauseDuration = timeNow - deltaObj
+    return str(pauseDuration)
 
 @csrf_exempt
 def storeEmpLog(emp, isLoggingIn):
