@@ -10,13 +10,15 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../static/css/my_style.css">
 	<script type="text/javascript" src="../static/js/aquaguardTimer.js"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 </head>
 <body>
 	<nav class="navbar">
 			<div class="row">
 				<div class="col-md-6">
-					<a href="upload_dp.html"><img src="/static/images/Avatar.png" class="user"/></a>
+					<img id="imageid" src="/static/images/Avatar.png" class="user"/>
 					<h1 id="welcomeTag" class="username"></h1>
 				</div>
 				<div class="col-md-6" style="padding-right:10%; padding-top:1%">
@@ -29,7 +31,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-10 col-xl-10 col-md-10 col-sm-10 col-xs-10 ">
-				<h1 class="dashboard">Your dashboard</h1>
+				<h1 id="goToDashboard" class="dashboard">Your dashboard</h1>
 			</div>
 			<div class="col-lg-2 col-md-2 col-xs-2  col-sm-2 col-xl-2 text-right">
 			<i class="glyphicon glyphicon-menu-hamburger"style="color:#7CB9E8;font-size:35px;"id="menubar"></i>
@@ -65,7 +67,7 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-2 col-lg-offset-1  col-md-2 col-md-offset-1 col-xs-2 col-xs-offset-1 col-sm-2 col-sm-offset-1 col-xl-2 col-xl-offset-1">
-				<p style="font-family: Poppins;	font-size:20px;color:#06BBE1;font-weight:bold;">12</p>
+				<p id="countCalls" style="font-family: Poppins;	font-size:20px;color:#06BBE1;font-weight:bold;">12</p>
 			</div>
 			<div class="col-lg-1 col-md-1 col-xs-1  col-sm-1 col-xl-1">
 				<label class="form-check-label">
@@ -100,9 +102,6 @@
 			<div class="col-lg-3 col-md-3 col-xs-3  col-sm-3 col-xl-3">
 				<span id="leadlist">Call Histroy</span>
 			</div>
-			<div class="col-lg-7  col-md-7 col-xs-7  col-sm-7 col-xl-7 text-right">
-				<a href="after_change_dp.html"><span id="leadlist">Announcement</span></a>
-			</div>
 		</div>
 	</div>
 
@@ -112,33 +111,45 @@
 				<div id="table-scroll" class="table-scroll">
 					<div id="faux-table" class="faux-table" aria="hidden"></div>
 						<div class="table-wrap scrollbar-ripe-malinka">
-							<table id="main-table" class="main-table"></table> 
-							
-							</div>
+								<table id="dataTable" class = "table table-hover dataTable">
+										<thead>
+											<tr>
+												<th>First name</th>
+												<th>Last name</th>
+												<th>Email</th>
+												<th>Phone Number</th>
+												<th>Address</th>
+												<th>Pincode</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
 						</div>
 					</div>
+				</div>
 
-					<div class="col-lg-1 col-md-1 col-xs-1  col-sm-1 col-xl-1 text-left">
-						<div class="call-card">
-								<div class="call-user-icon">
-									<center>
-										<img class="call-user-icon" src="images/call-user-icon.png">
-									</center>
-								</div>
-								<div class="call-card-user-name">
-									<p class="caller-name">Joel Matts</p>
-									<p class="caller-id">CUST ID 0023493111834</p>
-									<p id="call-duration">01:29:43</p>
-								</div>
+				<div class="col-lg-1 col-md-1 col-xs-1  col-sm-1 col-xl-1 text-left">
+					<div class="call-card">
+							<div class="call-user-icon">
 								<center>
-									<div class="single-call-icon">
-										<a href=""id="calldisconnect"><img src="images/red-call-icon.png" height="80px" width="80px"></a>
-									</div>
+									<img class="call-user-icon" src="images/call-user-icon.png">
 								</center>
 							</div>
-					</div>
+							<div class="call-card-user-name">
+								<p class="caller-name">Joel Matts</p>
+								<p class="caller-id">CUST ID 0023493111834</p>
+								<p id="call-duration">01:29:43</p>
+							</div>
+							<center>
+								<div class="single-call-icon">
+									<a href=""id="calldisconnect"><img src="images/red-call-icon.png" height="80px" width="80px"></a>
+								</div>
+							</center>
+						</div>
 				</div>
-	</div>
+			</div>
+		</div>
 
 	<div class="modal fade" id="myModal" role="dialog">
 			<div class="modal-dialog">
@@ -237,6 +248,30 @@
 		</div>
 		</div>
 
+			<!-- This is to show pause -->
+	<div id="modalForPause" class="modal fade" role="dialog" style="border: 3px solid #7CB9E8">
+		<div class="modal-dialog">
+			<div class="modal-content" style="background-color: rgb(135, 202, 193)">
+				<div class="modal-header">
+					<div style="margin-bottom: 150px">
+						<img src="/static/images/download.png" class="user"/>
+					</div>
+				</div>
+				<div class="modal-body">
+					<h4 class="modal-title text-center">Paused</h4>
+					<div class="text-center">    
+						<p id="ptime" style="font-weight: bold;"></p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="text-center">
+						<input type="submit" id="resume" value="Resume" class="btn btn-primary" style="color: #7CB9E8">
+					</div>
+				</div>
+      </div>
+    </div>
+	</div>
+
 	<br>
 					
 	<footer><br>
@@ -302,6 +337,9 @@
 				
 	});
 
+	$("#goToDashboard").click(function(){
+			window.location.href = baseUrl + "homePage/"
+		});
 
 
 	$('#pass').click(function(){
@@ -321,6 +359,50 @@
 		var emp_id = ''
 		var pauseDuration = ''
 
+
+		function fetchTableData(emp_id) { 
+			var table = $('#dataTable').DataTable();
+			$.ajax({
+			type: "post",
+			url: baseUrl+"getInterestedLeads/",
+			data: {
+				id: emp_id
+			},
+			success: function (data) {
+					data=JSON.parse(data);
+					// console.log(data);
+					document.getElementById("countCalls").innerHTML = Object.keys(data.description).length;
+					data=data.description;
+				$.each(data, function(key,value) {
+					table.row.add($(
+    '<tr>' +
+    '<td>'+value.fname+'</td>' +
+    '<td>'+value.lname+'</td>'+
+
+    '<td>'+value.email+'</td>' +
+    '<td>'+value.phone+'</td>' +
+    '<td>'+value.address+'</td>' +
+    '<td>'+value.pincode+'</td>' +
+
+  
+
+   '<td><input type="submit" class="btn btn-primary" value="Call now"></td>'+
+
+       
+
+
+
+    '</tr>'
+)).draw(false);
+
+
+				})
+
+			}
+		})
+	}
+
+
 		$(document).ready(function() {
 			console.log(baseUrl)
 			$.post( baseUrl + "getSession/",
@@ -331,10 +413,28 @@
 					window.location.href = baseUrl
 				}else{
 					emp_id = dataObj.description;
+					getProfilePicture(emp_id);
 					getUserData(emp_id);
+					fetchTableData(emp_id);
 				}
 			});
 		})
+		
+		function getProfilePicture(emp_id) {
+		$.post( baseUrl + "getProfilePicture/",
+		{
+			id: emp_id,
+		},
+		function(data, status) {
+			dataObj=JSON.parse(data);
+			if(dataObj.result=="fail") {
+				alert("Something's Wrong With Profile Picture")
+			}else{
+				// console.log(dataObj.description);
+				document.getElementById("imageid").src=".." + dataObj.description ;
+			}
+		});
+	}
 
 		function getUserData(emp_id) {
 			$.post( baseUrl + "getUserData/",
@@ -392,7 +492,7 @@
 
 			$("#pauseButton").click(function(e) {
 				e.preventDefault();
-				$('#myModal').modal('show');
+				$('#modalForPause').modal('show');
 				startCounter();
 				$.post( baseUrl + "setPause/",
 				{
@@ -414,7 +514,7 @@
 				e.preventDefault();
 				// location.reload();
 				resetCounter();
-				$("#myModal").modal("hide");
+				$("#modalForPause").modal("hide");
 				$.post(baseUrl + "setPause/",
 				{
 					id:emp_id,

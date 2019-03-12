@@ -1,6 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 # from django.core import serializers
-from .views import success,fail
+from .views import success, fail
 from .models import Customers, Employee, Leads, EmpStatus, Notifications
 from django.shortcuts import HttpResponse, render
 from .tests import cleanDatabase, fill_database_with_dummy_values
@@ -59,23 +59,26 @@ def logoutPage(request):
 
 @csrf_exempt
 def changedp(request):
+    currentSession = getSession(request, True)
+    if currentSession == '':
+        homePage(request)
     return render(request, 'change_dp.html')
 #----------------------- Api's ---------------------------#
 
 
 @csrf_exempt
 def storeSession(request):
-    id=request.POST.get("id", None)
+    id = request.POST.get("id", None)
     if(id == None or id == ''):
         return fail("Haven't received any emp_id to create session")
     else:
         try:
             request.session['emp_id'] = id
-            return success('Session has been created') 
+            return success('Session has been created')
         except Exception as e:
             return fail("Employee Id Not Foud")
 
-    
+
 @csrf_exempt
 def getSession(request, isLocalUse=None):
     if (request.method == "POST"):
@@ -116,8 +119,8 @@ def getUserData(request):
         if id == None or id == '':
             return fail("Enter Employee Id")
         try:
-            #get his first and lastname
-            employee = Employee.objects.get(empID = id)
+            # get his first and lastname
+            employee = Employee.objects.get(empID=id)
         except Exception as e:
             return fail("Employee Id Not Foud")
 
@@ -181,7 +184,7 @@ def setNotification(request):
         noteType = request.POST.get("noteType", None)
         date = str(datetime.datetime.now().date())
         time = str(datetime.datetime.now().time())
-        time = time[:8] 
+        time = time[:8]
         id = request.POST.get("id", None)
         message = request.POST.get("message", None)
         if message == None or message == '':
@@ -210,7 +213,7 @@ def getNotification(request):
         time = time[:8]
         message = None
         id = request.POST.get("id", None)
-        noteType = request.POST.get("noteType", None)
+        # noteType = request.POST.get("noteType", None)
         if id == None or id == '':
             employee = None
             noteForAll = True
@@ -219,15 +222,16 @@ def getNotification(request):
                 employee = Employee.objects.get(empID=id)
             except Exception as e:
                 return fail("Employee Id Not Found")
-        notes = Notifications.objects.all().filter(employeeID=employee, noteType=noteType, date=date, noteForAll=noteForAll)
+        notes = Notifications.objects.all().filter(
+            employeeID=employee, noteType=noteType, date=date, noteForAll=noteForAll)
         if len(notes) == 0:
             return fail("No Noification Today")
         else:
             notes_list = []
             for note in notes:
                 eachRow = {}
-                eachRow['message'] = note.message   
-                eachRow['time'] = note.time   
+                eachRow['message'] = note.message
+                eachRow['time'] = note.time
                 notes_list.append(eachRow)
             return success(notes_list)
     return fail("Bad request")
@@ -236,7 +240,6 @@ def getNotification(request):
 @csrf_exempt
 def togglePause(request):
     if (request.method == "POST"):
-        print("hello")
         timeNow = str(datetime.datetime.now())
         currDate = str(datetime.datetime.now().date())
 
@@ -420,13 +423,14 @@ def getAssignedLeads(request):
                     eachRow = {}
             #     for i in range(len(leads))
             #         lead={}
-            #         lead['id']=leads[i].customer.id
+                    eachRow['id'] = lead.id
                     eachRow['fname'] = lead.fname
                     eachRow['lname'] = lead.lname
                     eachRow['email'] = lead.email
                     eachRow['phone'] = lead.phone
                     eachRow['address'] = lead.address
                     eachRow['pincode'] = lead.pincode
+                    eachRow['isInterested'] = lead.isInterested
                     leads_list.append(eachRow)
                 return success(leads_list)
         return fail("Error In Request")
@@ -475,7 +479,7 @@ def setCommit(request):
         else: 
             leadObj.isInterested = False
             leadObj.save()
-            return success("Lead stored as notCommitted")
+            return success("Lead stored as Not Committed")
     return fail("Error in request")
 
 
@@ -483,6 +487,7 @@ def setCommit(request):
 @csrf_exempt
 def getLeadsNotContacted(request):
     if request.method == "POST":
+        print("------------------------------")
         leads = Leads.objects.all().filter(isContacted=False)
         if len(leads) == 0:
             return fail("No employee in db")
@@ -503,6 +508,29 @@ def getLeadsNotContacted(request):
             return success(leads_list)
     return fail("Error In Request")
 
+@csrf_exempt
+def getContactedLeads(request):
+    if request.method == "POST":
+        print("------------------------------")
+        leads = Leads.objects.all().filter(isContacted=True)
+        if len(leads) == 0:
+            return fail("No employee in db")
+        else:
+            leads_list = []
+            for lead in leads:
+                eachRow = {}
+        #     for i in range(len(leads))
+        #         lead={}
+        #         lead['id']=leads[i].customer.id
+                eachRow['fname'] = lead.fname
+                eachRow['lname'] = lead.lname
+                eachRow['email'] = lead.email
+                eachRow['phone'] = lead.phone
+                eachRow['address'] = lead.address
+                eachRow['pincode'] = lead.pincode   
+                leads_list.append(eachRow)
+            return success(leads_list)
+    return fail("Error In Request")
 
 @csrf_exempt
 def editLead(request):
@@ -546,28 +574,36 @@ def editLead(request):
             lead.pincode = pincode
         if comments is not None:
             # this part need to be fixed
-            oldComment = lead.comments 
-            newComment = oldComment + "\n\n\n" + "----------------------------" + "\n" + comments + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
+            lead.comments = comments
+            # oldComment = lead.comments
+            # newComment = oldComment + "\n\n\n" + "----------------------------" + "\n" + \
+            #     comments + "\n" + "----------------------------" + "\n" + timeNow + ' ' + emp_id
         lead.save()
         return success("Lead info updated")
     return fail("Error in request")
 
+
 @csrf_exempt
 def getSingleLead(request):
-    if (request.method=="POST"):
-        leadID = request.POST.get("id",None)
-        leadObj=Leads.objects.get(id = leadID)
-        lead={}
-        lead['fname']=leadObj.fname
-        lead['lname']=leadObj.lname
-        lead['email']=leadObj.email
-        lead['mobile']=leadObj.phone
-        lead['alternativeMobile']=leadObj.alternativeMobile
-        lead['address']=leadObj.address
-        lead['purchaseDate']=leadObj.purchaseDate
-        lead['pincode']=leadObj.pincode
-        lead['comments']=leadObj.comments
-        
+    if (request.method == "POST"):
+        leadID = request.POST.get("id", None)
+        try:
+            leadObj = Leads.objects.get(id=leadID)
+        except expression as identifier:
+            return fail("Lead Not Found")
+        lead = {}
+
+        lead['id'] = leadObj.id
+        lead['fname'] = leadObj.fname
+        lead['lname'] = leadObj.lname
+        lead['email'] = leadObj.email
+        lead['mobile'] = leadObj.phone
+        lead['alternatePhone'] = leadObj.alternatePhone
+        lead['address'] = leadObj.address
+        lead['purchaseDate'] = leadObj.purchaseDate
+        lead['pincode'] = leadObj.pincode
+        lead['comments'] = leadObj.comments
+
         return success(lead)
     return HttpResponse("Error In Request")
 

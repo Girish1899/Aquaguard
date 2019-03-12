@@ -17,11 +17,9 @@
         }
 
         .main-content img {
-            width: 10%;
+            width: 28%;
             height: 10%;
         }
-
-
 
         .main-content p {
             color: rgb(83, 191, 199);
@@ -81,14 +79,14 @@
 <body>
     <div class="container-fluid">
         <div class="row text-center main-content">
-            <img src="../static/images/logo.png"/> 
+            <img src="../static/images/logo.jpg"/> 
 				<form id="login-form" method="POST">
 					<input type="text" name="username" id="login-username" placeholder="Employee ID"style=""/><br><br>
 					<input type="password" name="password" id="login-password" placeholder="Employee Password"style=""/><br><br>
                     &nbsp;<button type="button" id="loginButton"><a style="text-decoration:none;color:white;">LOG IN</a></button>
 				</form>
                 <br>
-                <a id="forgotPassword">forgot password?</a>
+                <a onclick=alertUser() id="forgotPassword">forgot password?</a>
         </div>
     </div>
 
@@ -130,10 +128,14 @@
 
 <script>
     $(window).ready(function() {
-        $("#forgotPassword").click(function() {
-            window.location.href = baseUrl + "forgotPassword/"
-        });
+        // $("#forgotPassword").click(function() {
+        //     window.location.href = baseUrl + "forgotPassword/"
+        // });
     })
+
+    function alertUser() {
+        alert("Contact admin to reset your password");
+    };
 </script>
 
 

@@ -13,10 +13,10 @@
 <body>
 <nav class="navbar navbar-default nav-content">
     <div>
-        <p id="ab">You have been logged out securely!</p>        
+        <p id="ab" style="text-align: center">You have been logged out securely!</p>        
     </div>
     <div class="text-center main2-content"> 
-        <img src="/static/images/user_image.png" height="250px" width="250px">
+        <img id="imageid" class="logoutImage" src="/static/images/user_image.png">
         <p id="bc"></p>
     </div>
     <div class="text-center"> 
@@ -36,13 +36,31 @@
 	function(data, status) {
 		dataObj=JSON.parse(data);
 		if(dataObj.result=="fail") {
-			alert(dataObj.description);
+            alert(dataObj.description);
+            window.location.href = baseUrl
 		}else{
 			emp_id = dataObj.description;
-			getUserData(emp_id);
+            getUserData(emp_id);
+            getProfilePicture(emp_id)
             saveLogoutTime(emp_id);
 		}
-	});
+    });
+    
+    function getProfilePicture(emp_id) {
+		$.post( baseUrl + "getProfilePicture/",
+		{
+			id: emp_id,
+		},
+		function(data, status) {
+			dataObj=JSON.parse(data);
+			if(dataObj.result=="fail") {
+				alert("Something's Wrong With Profile Picture")
+			}else{
+				// console.log(dataObj.description);
+				document.getElementById("imageid").src=".." + dataObj.description ;
+			}
+		});
+	}
 
 	function getUserData(emp_id) {
 		$.post( baseUrl + "getUserData/",
