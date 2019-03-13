@@ -487,7 +487,6 @@ def setCommit(request):
 @csrf_exempt
 def getLeadsNotContacted(request):
     if request.method == "POST":
-        print("------------------------------")
         leads = Leads.objects.all().filter(isContacted=False)
         if len(leads) == 0:
             return fail("No employee in db")
