@@ -41,7 +41,7 @@
 		</div>
 	</nav>
 
-<div class="container">
+<!-- <div class="container">
 	<div class="row">
 		<div class="col-lg-10 col-xl-10 col-md-10 col-sm-10 col-xs-10 ">
 			<h1 id="goToDashboard" class="dashboard">Your dashboard</h1>
@@ -50,7 +50,19 @@
 			<i class="glyphicon glyphicon-menu-hamburger"style="color:#7CB9E8;font-size:35px;"id="menubar"></i>
 		</div>
 	</div>
-</div><br>
+</div><br> -->
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-lg-11">
+				<h1 id="goToDashboard" class="dashboard">Your dashboard</h1>
+			</div>
+			
+			<div class="col-lg-1">
+				<i class="glyphicon glyphicon-menu-hamburger"style="color:#7CB9E8;font-size:35px;"id="menubar"></i>
+			</div>
+		</div>
+	</div><br>
 
 <span class="iconbox">
 	<p><a href="">Print Salary slip</a>
@@ -124,7 +136,8 @@
 
 	<div class="container ">
 		<div class="row">
-			<div class="col-lg-10  col-md-10 col-xs-10  col-sm-10 col-xl-10">
+			<!-- <div class="col-lg-10  col-md-10 col-xs-10  col-sm-10 col-xl-10"> -->
+				<div>
 				<div id="table-scroll" class="table-scroll">
 					<div id="faux-table" class="faux-table" aria="hidden"></div>
 					<div class="table-wrap scrollbar-ripe-malinka">
@@ -137,7 +150,9 @@
 											<th>Phone Number</th>
 											<th>Address</th>
 											<th>Pincode</th>
-											<th>Action</th>
+											<th>Actions</th>
+											<th></th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody></tbody>
@@ -378,6 +393,7 @@
 			</div>
 		</div>
 	</div>
+	</div>
 
 	<br>
         
@@ -446,7 +462,7 @@
 	});
 
 	$("#goToDashboard").click(function(){
-			window.location.href = baseUrl + "homePage/"
+			window.location.href = baseUrl + "tc_homePage/"
 		});
 
 
@@ -484,32 +500,95 @@
 					data=data.description;
 				$.each(data, function(key,value) {
 					table.row.add($(
-    '<tr>' +
-    '<td>'+value.fname+'</td>' +
-    '<td>'+value.lname+'</td>'+
+					'<tr>' +
+					'<td>'+value.fname+'</td>' +
+					'<td>'+value.lname+'</td>'+
+					'<td>'+value.email+'</td>' +
+					'<td>'+value.phone+'</td>' +
+					'<td>'+value.address+'</td>' +
+					'<td>'+value.pincode+'</td>' +
+					'<td><input type="button" onClick=test() class="btn btn-primary" value="Set Commit"></td>'+
+					'<td><input type="button" class="btn btn-primary" value="Details"></td>'+
+					'<td><input type="submit" class="btn btn-primary" value="Call now"></td>'+
+					'</tr>')).draw(false);
+							})
+						}
+					})
+				}
 
-    '<td>'+value.email+'</td>' +
-    '<td>'+value.phone+'</td>' +
-    '<td>'+value.address+'</td>' +
-    '<td>'+value.pincode+'</td>' +
-
-  
-
-   '<td><input type="submit" class="btn btn-primary" value="Call now"></td>'+
-
-       
-
-
-
-    '</tr>'
-)).draw(false);
-
-
-				})
-
+			function test() {
+				alert("Hello")
 			}
-		})
-	}
+
+// function getCallTable(emp_id) {
+// 		document.getElementById('dataTable').innerHTML=' ';
+// 		$.post( baseUrl + "getAssignedLeads/",
+// 		{
+// 			id: emp_id,
+// 		},
+// 		function(data, status){
+// 			dataObj = JSON.parse(data);
+// 			if(dataObj.result == 'fail') {
+// 				alert("Sorry No Data Assigned Yet");
+// 			}else{
+// 				// for (var i=0; i < dataObj.description.length; i++) {
+// 				// 	console.log(dataObj.description[i]['fname'])
+// 				// }
+// 				var columns = addAllColumnHeaders(dataObj.description);
+// 				for (var i = 0 ; i < dataObj.description.length ; i++) {
+// 					var row$ = $('<tr/>');
+// 					for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
+// 						var cellValue = dataObj.description[i][columns[colIndex]];
+// 						if(typeof cellValue === "boolean"){
+// 							lead_id = dataObj.description[i][columns[0]];
+// 							if(cellValue == false){
+// 								row$.append($('<td/>').html('<input type="button" class="btn" onclick="updateCommit('+lead_id+','+'1'+')" value="Set Commit">'));
+// 								row$.append($('<td/>').html('<input type="button" class="btn" data-toggle="modal" data-target="#myModal" onclick="getDetails('+lead_id+')" value="Details">'));
+// 								row$.append($('<td/>').html('<input type="button" class="btn" onclick="callLead('+lead_id+')" value="Call Now">'));
+// 							}
+// 							else if(cellValue == true){
+// 								row$.append($('<td/>').html('<input type="button" class="btn" onclick="updateCommit('+lead_id+',)"value="Un Commit">'));
+// 								row$.append($('<td/>').html('<input type="button" class="btn" data-toggle="modal" data-target="#myModal" onclick="getDetails('+lead_id+')" value="Details">'));
+// 								row$.append($('<td/>').html('<input type="button" class="btn" onclick="callLead('+lead_id+')" value="Call Now">'));
+// 							}
+// 						}
+// 						else{
+// 							if (cellValue == null) { 
+// 								cellValue = ""; 
+// 							}
+// 								//arrange header
+// 								// var orderedCellValue = orderCells(cellValue);
+// 							row$.append($('<td/>').html(cellValue));
+// 						}
+// 					}
+// 					$("#dataTable").append(row$);
+// 					// row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">CallNow</button>'));
+// 					// row$.append($('<td/>').html('<button type="button" id='+dataObj.description[i][columns[0]]+' class="btn" onclick="upgateCommit('+dataObj.description[i][columns[7]]+')">Set Commit</button>'));
+// 					// row$.append($('<td/>').html('<button type="button" class="btn btn-secondary callButton">CallNow</button>'));
+// 					// row$.append($('<td/>').html('<button type="button" class="btn"data-toggle="modal" data-target="#myModal">Details</button>'));
+// 					// row$.append($('<td/>').html('<input type="button" class="btn" onclick="updateCommit('+dataObj.description[i][columns[0]]+',)"value="Un Commit">'));
+
+// 				}
+// 			}
+// 		});
+// 	}
+
+// 	function addAllColumnHeaders(myList) {
+// 		var columnSet = [];
+// 		var headerTr$ = $('<tr/>');
+// 		for (var i = 0 ; i < dataObj.description.length ; i++) {
+// 			var rowHash = dataObj.description[i];
+// 			for (var key in rowHash) {
+// 				 if ($.inArray(key, columnSet) == -1){
+// 					columnSet.push(key);
+// 					headerTr$.append($('<th />').html(key));
+// 				}
+// 			}
+// 		}
+// 		headerTr$.append($('<th />').html(' '));
+// 		$("#dataTable").append(headerTr$);
+// 		return columnSet;
+// 	} 
 
 		$(document).ready(function() {
 			$.post( baseUrl + "getSession/",
@@ -523,6 +602,7 @@
 					getProfilePicture(emp_id);
 					getUserData(emp_id);
 					fetchTableData(emp_id);
+					// getCallTable(emp_id);
 				}
 			});
 		})

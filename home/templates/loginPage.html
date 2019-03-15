@@ -98,6 +98,7 @@
     $("#loginButton").click(function(){
         var emp_id = $('#login-username').val();
         var emp_password = $('#login-password').val();
+        var homePage = ''
 
         $.post( baseUrl + "empLoginCheck/",
         {
@@ -109,6 +110,11 @@
             if(dataObj.result == "fail") {
                 alert(dataObj.description);
             } else if( dataObj.result == "success"){
+                if (dataObj.description === 'ad') {
+                    homePage = "ad_homePage/";
+                } else if (dataObj.description ==="tc") {
+                    homePage = "tc_homePage/";
+                }
                 $.post( baseUrl + "storeSession/",
                 {
                     id: emp_id,
@@ -118,7 +124,7 @@
                     if(dataObj.result == "fail") {
                         alert(dataObj.description)
                     } else if( dataObj.result == "success"){
-                        window.location.href = baseUrl + "homePage/"
+                        window.location.href = baseUrl + homePage
                     }
                 });
             }

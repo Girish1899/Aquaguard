@@ -26,24 +26,50 @@ def createNewEmployee(request):
     return HttpResponse("Invalid Page")
 
 
-def displayAllEmployee(request):
-    employees=Employee.objects.filter(isActive=True)
-    print(employees)
-    print("DATA IS OUTPUTTED OVER HERE")
+@csrf_exempt
+def getAllEmployees(request):
+    employees=Employee.objects.all()
     employee_list=[]
     print(len(employees))
-    if(len(employees)==0):
+    if (len(employees)==0):
         return fail("No employee in db")
     else:
         for i in range(len(employees)):
             emp={}
-            emp['fname']=employees[i].first_name
-            emp['lname']=employees[i].last_name
+            emp['fname']=employees[i].fname
+            emp['lname']=employees[i].lname
             emp['email']=employees[i].email
             emp['phone']=employees[i].phone
-            emp['category']=employees[i].type
+            emp['category']=employees[i].role
+            emp['id']=employees[i].id
+            emp['isActive']=employees[i].isActive
+            emp['pincode']=employees[i].pincode
+            employee_list.append(emp)
+
+        return success(employee_list)
+
+
+@csrf_exempt
+def getAllActiveEmployees(request):
+    try:
+        employees=Employee.objects.filter(isActive=True)
+    except Exception as e:
+        return fail("Some thing went wrong")
+    employee_list=[]
+    if (len(employees)==0):
+        return fail("No employees active at the moment")
+    else:
+        for i in range(len(employees)):
+            emp={}
+            emp['fname']=employees[i].fname
+            emp['lname']=employees[i].lname
+            emp['email']=employees[i].email
+            emp['phone']=employees[i].phone
+            emp['address']=employees[i].address
+            emp['role']=employees[i].role
             emp['id']=employees[i].id
             emp['pincode']=employees[i].pincode
+            emp['picture']=employees[i].profile_logo.url
             employee_list.append(emp)
 
         return success(employee_list)

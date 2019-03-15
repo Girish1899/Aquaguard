@@ -16,20 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from .views import login,registration
-from .EmployeeView import updateEmployee,uploadEmployeeProfilePic
 # from .ProductViews import deleteDevice,getProductDetails
 # from .adminViews import addNewLead, displayAssignedLeads, displaySingleLead, updateStatus,empLogin,getCallCount,setCallCount, loginPage, homePage, getSession
 
-
-from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads,getSingleLead, getLeadsNotContacted, storeLogoutTime, makeCall, addProfilePicture, getProfilePicture, setCommit,editLead, togglePause, getContactedLeads
-from .adminViews import loginPage, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword, callHistoryPage, commitHistoryPage
-
-from .adminViews import empLoginCheck, getSession, getAssignedLeads, getUserData, storeSession, flushSession, getInterestedLeads, getLeadsNotContacted, storeLogoutTime, makeCall
-from .adminViews import loginPage, homePage, logoutPage, homePageCommittedLeads, homePageContactLeads, changedp, forgotPassword
-from .adminViews import addProfilePicture, getProfilePicture, setNotification, getNotification
-
-# from .EmployeeView import createNewEmployee,displayAllEmployee,deactivateEmployee
-# from .Ticketview import CustomerProblemRegistration,displayAllTickets,checkPhone,checkMail,existCustomerProblemRegistration
+from .adminViews import *
+from .EmployeeView import *
 
 urlpatterns = [
     # path("registerEmployee/",createNewEmployee),
@@ -63,15 +54,19 @@ urlpatterns = [
     path("storeLogoutTime/", storeLogoutTime),
     path("addProfilePic/", uploadEmployeeProfilePic),
     path("makeCall/", makeCall),
+    path("getAllEmployees/", getAllEmployees),
+    path("getAllActiveEmployees/", getAllActiveEmployees),
     path("addProfilePicture/", addProfilePicture),
     path("getProfilePicture/", getProfilePicture),
     path("setNotification/", setNotification),
     path("getNotification/", getNotification),
     path("setCommit/", setCommit),
     path("setPause/", togglePause),
+    path("deleteSingleLead/", deleteSingleLead),
 #----------------------------------------------#
     path("", loginPage),
-    path("homePage/", homePage),
+    path("tc_homePage/", tc_homePage),
+    path("ad_homePage/", ad_homePage),
     path("homePageCommittedLeads/", homePageCommittedLeads),
     path("homePageContactLeads/", homePageContactLeads),
     path("callHistoryPage/", callHistoryPage),

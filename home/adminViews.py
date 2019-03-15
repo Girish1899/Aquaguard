@@ -22,11 +22,20 @@ def loginPage(request):
 
 
 @csrf_exempt
-def homePage(request):
+def tc_homePage(request):
     currentSession = getSession(request, True)
     if currentSession == '':
         loginPage(request)
     return render(request, 'index.html')
+
+
+
+@csrf_exempt
+def ad_homePage(request):
+    currentSession = getSession(request, True)
+    if currentSession == '':
+        loginPage(request)
+    return render(request, 'admin_employee.html')
 
 
 @csrf_exempt
@@ -61,7 +70,8 @@ def logoutPage(request):
 def changedp(request):
     currentSession = getSession(request, True)
     if currentSession == '':
-        homePage(request)
+        #condition to check what home page to redirect
+        tc_homePage(request)
     return render(request, 'change_dp.html')
 #----------------------- Api's ---------------------------#
 
@@ -74,9 +84,10 @@ def storeSession(request):
     else:
         try:
             request.session['emp_id'] = id
-            return success('Session has been created')
         except Exception as e:
             return fail("Employee Id Not Foud")
+        
+        return success("Session stored")
 
 
 @csrf_exempt
@@ -278,10 +289,22 @@ def calculatePauseDuration(pauseTime):
 def storeEmpLog(emp, isLoggingIn):
     timeNow = datetime.datetime.now()
     dateToString = str(datetime.datetime.now().date())
-    if isLoggingIn is True:
-        try:
-            # The try would pass if it isn't a new employee, else there wont be an entry with date column
-            empStatus = EmpStatus.objects.get(employeeID = emp, date = str(datetime.datetime.now().date()))
+    try:
+        # The try would pass if it isn't a new employee, else there wont be an entry with date column
+        empStatus = EmpStatus.objects.get(employeeID = emp, date = str(datetime.datetime.now().date()))
+    except Exception as e:
+        # This is for a new employee.
+        empStatus = EmpStatus()
+        empStatus.employeeID = emp
+        empStatus.loginTime = timeNow
+        empStatus.date = dateToString
+        empStatus.save()
+
+        #employee made active
+        emp.isActive = True
+        emp.save()
+    finally:
+        if isLoggingIn is True:
 
             # If it is a new day the login timstamp need to be stored
             if empStatus.date != str(datetime.datetime.now().date()):
@@ -293,29 +316,17 @@ def storeEmpLog(emp, isLoggingIn):
                 #employee made active
                 emp.isActive = True
                 emp.save()
-        except Exception as e:
-            # This is for a new employee.
-            empStatus = EmpStatus()
-            empStatus.employeeID = emp
-            empStatus.loginTime = timeNow
-            empStatus.date = dateToString
+        else:
+            empStatus.logoutTime = timeNow
             empStatus.save()
 
-            #employee made active
-            emp.isActive = True
+            #employee made inactive
+            emp.isActive = False
             emp.save()
 
-    else:
-        empStatus.logoutTime = timeNow
-        empStatus.save()
-
-        #employee made inactive
-        emp.isActive = False
-        emp.save()
-
-        # print("This is the time now")
-        # print(timeNow.time().replace(second=0, microsecond=0))
-        # print(timeNow.date())
+            # print("This is the time now")
+            # print(timeNow.time().replace(second=0, microsecond=0))
+            # print(timeNow.date())
 
 
 @csrf_exempt
@@ -352,12 +363,12 @@ def empLoginCheck(request):
                 return fail("Wrong password")
                 
             #handle session here
-            storeSession(request)
+            # storeSession(request)
 
             #store employee login information here.
             storeEmpLog(employee, True)
 
-            return success('employee logged in')
+            return success(employee.role)
     return fail("Error in Request")
 
 
@@ -374,6 +385,9 @@ def storeLogoutTime(request):
             empStatus = EmpStatus.objects.get(employeeID = employee, date = dateToday)
             empStatus.logoutTime = timeNow
             empStatus.save()
+
+            #Make employee inactive
+            storeEmpLog(employee, False)
         return success("logoutTime has been saved")
     return fail("Bad request")
 
@@ -398,6 +412,20 @@ def addNewLead(request):
         lead.save()
         return success("New Lead created!")
     return fail("Invalid Admin Page")
+
+@csrf_exempt
+def deleteSingleLead(request):
+    if request.method == "POST":
+        LeadID = request.POST.get("id", None)
+        if LeadID == None or LeadID == "":
+            return fail("Id hasn't been provided")
+        try:
+            leadObj = Leads.objects.get(id = LeadID)
+        except Exception as e:
+            return fail("Lead not found")
+        leadObj.delete()       
+        return success("The lead has been deleted")
+    return fail("Error in request")
 
 
 # This should get you all leads that you have given to deal with
@@ -502,7 +530,7 @@ def getLeadsNotContacted(request):
                 eachRow['email'] = lead.email
                 eachRow['phone'] = lead.phone
                 eachRow['address'] = lead.address
-                eachRow['pincode'] = lead.pincode   
+                eachRow['pincode'] = lead.pincode
                 leads_list.append(eachRow)
             return success(leads_list)
     return fail("Error In Request")

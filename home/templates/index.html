@@ -9,7 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="../static/css/my_style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
-  <script type="text/javascript" src="/static/js/aquaguardTimer.js"></script>
+  <script type="text/javascript" src="../static/js/aquaguardTimer.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
@@ -118,7 +118,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-4">
+			<div class="col-lg-6">
 				<a href=""><span id="leadlist">Leads</span></a>
 			</div>
 			
@@ -131,7 +131,7 @@
 
 	<div class="container ">
 		<div class="row">
-			<div class="col-lg-10">
+			<div style="position: relative">
 				<div id="table-scroll" class="table-scroll">
 					<div id="faux-table" class="faux-table" aria="hidden"></div>
 						<div class="table-wrap scrollbar-ripe-malinka">
@@ -145,6 +145,8 @@
 												<th>Address</th>
 												<th>Pincode</th>
 												<th>Action</th>
+												<th></th>
+												<th></th>
 											</tr>
 										</thead>
 										<tbody></tbody>
@@ -312,7 +314,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3">
-					<p class="time">Time Left</p>
+					<p class="time">Time Left</p> 
 					<p id="runningTime" class="time"></p>
 					<!-- <p class="time">06:09:25<br> -->
 				</div>
@@ -380,7 +382,7 @@ $(document).ready(function(){
 		});
 
 		$("#goToDashboard").click(function(){
-			window.location.href = baseUrl + "homePage/"
+			window.location.href = baseUrl + "tc_homePage/"
 		});
 
 
@@ -420,29 +422,18 @@ function fetchTableData(emp_id) {
 					data=data.description;
 				$.each(data, function(key,value) {
 					table.row.add($(
-    '<tr>' +
-    '<td>'+value.fname+'</td>' +
-    '<td>'+value.lname+'</td>'+
-
-    '<td>'+value.email+'</td>' +
-    '<td>'+value.phone+'</td>' +
-    '<td>'+value.address+'</td>' +
-    '<td>'+value.pincode+'</td>' +
-
-  
-
-   '<td><input type="submit" class="btn btn-primary" value="Call now"></td>'+
-
-       
-
-
-
-    '</tr>'
-)).draw(false);
-
-
+						'<tr>' +
+						'<td>'+value.fname+'</td>' +
+						'<td>'+value.lname+'</td>'+
+						'<td>'+value.email+'</td>' +
+						'<td>'+value.phone+'</td>' +
+						'<td>'+value.address+'</td>' +
+						'<td>'+value.pincode+'</td>' +
+						'<td><input type="button" class="btn btn-primary" value="Set Commit"></td>'+
+						'<td><input type="button" class="btn btn-primary" value="Details"></td>'+
+						'<td><input type="button" class="btn btn-primary" value="Call now"></td>'+
+						'</tr>')).draw(false);
 				})
-
 			}
 		})
 	}
@@ -583,50 +574,26 @@ function announceList(){
   }
 
 
-	function getUserData(emp_id) {
-		$.post( baseUrl + "getUserData/",
-		{
-			id: emp_id,
-		},
-		function(data, status) {
-			dataObj=JSON.parse(data);
-			if(dataObj.result=="fail") {
-				alert("request failed")
-			}else{
-				// console.log(dataObj)
-				var fname = dataObj.description['fname']
-				var lname = dataObj.description['lname']
-				var loginTime = dataObj.description['loginTime']
-				var d = new Date(loginTime);
-				var login = d.getMinutes()*60 + d.getHours()*60*60 + d.getSeconds()
-				var c = new Date();
-				var curDate = c.getMinutes()*60 + c.getHours()*60*60 + c.getSeconds()
-				// console.log(login)
-				// console.log(curDate)
-				// console.log(curDate -login)
+	// function getUserData(emp_id) {
+	// 	$.post( baseUrl + "getUserData/",
+	// 	{
+	// 		id: emp_id,
+	// 	},
+	// 	function(data, status) {
+	// 		dataObj=JSON.parse(data);
+	// 		if(dataObj.result=="fail") {
+	// 			alert("request failed")
+	// 		}else{
 
-				a = Number(curDate -login);
-   			 var h = Math.floor(a / 3600);
-    		var m = Math.floor(a % 3600 / 60);
-    var s = Math.floor(a % 3600 % 60);
+	// 			$("#loginTime").text('Logged in at: ' + d.getHours() + ' : ' + d.getMinutes())
+	// 			$("#loginDate").text('DATE: ' + d.getDate() + '-' + date + '-' + d.getFullYear())
 
-    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-    console.log(  hDisplay + mDisplay + sDisplay);
-
-				//cuz jan starts with 0
-				var date = d.getMonth() + 1
-
-				$("#loginTime").text('Logged in at: ' + d.getHours() + ' : ' + d.getMinutes())
-				$("#loginDate").text('DATE: ' + d.getDate() + '-' + date + '-' + d.getFullYear())
-
-				$("#welcomeTag").text(fname + ' ' +lname);
-				//To a change welcome
-			}
-			getCallTable(emp_id)
-		});
-	}
+	// 			$("#welcomeTag").text(fname + ' ' +lname);
+	// 			//To a change welcome
+	// 		}
+	// 		getCallTable(emp_id)
+	// 	});
+	// }
 
 		function getUserData(emp_id) {
 			$.post( baseUrl + "getUserData/",
@@ -649,7 +616,8 @@ function announceList(){
 					$("#loginTime").text('Logged in at: ' + d.getHours() + ' : ' + d.getMinutes())
 					$("#loginDate").text('Date: ' + d.getDate() + '-' + date + '-' + d.getFullYear())
 
-					$("#welcomeTag").text("Hello " + fname + ' ' +lname);
+					fullName = makeItUpper(fname, lname)
+					$("#welcomeTag").text("Hello " + fullName);
 					//To a change welcome
 				}
 				// getCallTable(emp_id)
