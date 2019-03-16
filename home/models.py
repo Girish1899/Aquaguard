@@ -32,6 +32,7 @@ class EmpStatus(models.Model):
     date = models.CharField(max_length=10, null=True)
     isPause = models.BooleanField(default=False)
     pauseTime = models.CharField(max_length=10, null=True)
+    pauseTime = models.CharField(max_length=10, null=True)
 
 
 class Notifications(models.Model):
